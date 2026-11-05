@@ -1,0 +1,777 @@
+{
+  "track": "javascript",
+  "title": "JavaScript desde cero",
+  "language": "javascript",
+  "description": "Aprende a programar en el navegador y en Node: datos, lógica, funciones y tu primer proyecto.",
+  "level": "principiante",
+  "modules": [
+    {
+      "title": "Fundamentos",
+      "summary": "Variables, decisiones y repetición para escribir los primeros programas.",
+      "lessons": [
+        {
+          "slug": "variables-y-tipos",
+          "title": "Variables y tipos",
+          "summary": "Guardar datos con const y let y entender qué tipo tiene cada valor.",
+          "minutes": 15,
+          "objectives": [
+            "Declarar variables con const y let y elegir la adecuada.",
+            "Reconocer los tipos primitivos y comprobarlos con typeof.",
+            "Convertir texto en número y detectar NaN."
+          ],
+          "body_md": "## Guardar datos con nombre\n\nUn programa necesita recordar cosas: un nombre, una cantidad, un resultado. En JavaScript eso se hace con variables, y desde 2015 hay dos formas de declararlas.\n\n```js\nconst nombre = 'Ana';   // no cambia\nlet intentos = 0;       // puede cambiar\nintentos = intentos + 1;\n```\n\nUsa `const` por defecto. Solo cambia a `let` cuando el valor vaya a reasignarse de verdad. `const` no significa que el valor sea inmutable: significa que el nombre no puede apuntar a otro valor. Un array declarado con `const` se puede modificar por dentro. `var` sigue existiendo por compatibilidad, pero tiene un alcance que confunde: no lo uses en código nuevo.\n\n### Los tipos que importan\n\n```js\nconst texto = 'hola';    // string\nconst entero = 42;        // number\nconst decimal = 3.14;     // number\nconst activo = true;      // boolean\nconst nada = null;        // ausencia intencional\nlet sinAsignar;           // undefined\n```\n\n`typeof` devuelve el tipo como texto: `typeof 'hola'` es `'string'` y `typeof 42` es `'number'`. Dos rarezas históricas: `typeof null` devuelve `'object'`, y un array también es `'object'`. Para saber si algo es un array, usa `Array.isArray(valor)`.\n\nLos números son siempre de coma flotante, así que `0.1 + 0.2` no da exactamente `0.3`. Para dinero conviene trabajar en céntimos y dividir al final, o formatear con `toFixed(2)` al mostrar.\n\n### Plantillas de texto\n\nConcatenar con comillas simples se vuelve incómodo:\n\n```js\nconst nombre = 'Ana';\nconst edad = 30;\nconsole.log('Hola, ' + nombre + '. Tienes ' + edad + ' años.');\nconsole.log(`Hola, ${nombre}. Tienes ${edad} años.`);\n```\n\nLas plantillas usan comillas invertidas y `${}`. Dentro de las llaves cabe cualquier expresión: `` `Total: ${precio * 2}` ``. Son más legibles y evitan olvidar un espacio.\n\n### Convertir texto en número\n\nLo que llega por teclado o por un formulario siempre es texto. `Number('42')` da `42`, pero `Number('cuarenta')` da `NaN`, un valor especial que significa «no es un número». `parseInt('42px')` devuelve `42` porque lee hasta donde puede; `Number('42px')` devuelve `NaN`.\n\n`NaN` no es igual a nada, ni siquiera a sí mismo: `NaN === NaN` es `false`. Para comprobarlo se usa `Number.isNaN(valor)`.\n\n### Errores típicos\n\n- Usar `var` por costumbre y sufrir su alcance de función.\n- Declarar con `const` y reasignar después: lanza un error.\n- Sumar texto y número sin querer: `'2' + 3` da `'23'`, no `5`.\n- Confundir `null` con `undefined`: el primero lo pones tú, el segundo lo pone el lenguaje.\n- Comparar `NaN` con `===` y creer que el resultado es verdadero.\n\n### Para fijarlo\n\nAbre la consola del navegador o ejecuta un archivo con Node. Declara tres constantes con tu nombre, tu edad y si estudias, e imprime una frase con plantilla. Después prueba `Number('12')`, `Number('doce')` y `typeof null` para ver las rarezas en directo.",
+          "exercises": [
+            {
+              "slug": "saludo-con-datos",
+              "title": "Saludo con datos",
+              "kind": "stdout",
+              "prompt_md": "Lee un nombre y una edad separados por espacios y muestra una frase con el formato `Hola, Ana. Tienes 30 años.` Usa una plantilla de texto.",
+              "starter_code": "const data = require('fs').readFileSync(0, 'utf8').trim().split(/\\s+/);\nconst nombre = data[0];\n// convierte la edad y muestra la frase\n",
+              "solution_code": "const data = require('fs').readFileSync(0, 'utf8').trim().split(/\\s+/);\nconst nombre = data[0];\nconst edad = Number(data[1]);\nconsole.log(`Hola, ${nombre}. Tienes ${edad} años.`);\n",
+              "tests": [
+                {
+                  "name": "Nombre y edad",
+                  "stdin": "Ana 30\n",
+                  "expected_stdout": "Hola, Ana. Tienes 30 años."
+                },
+                {
+                  "name": "Otro nombre",
+                  "stdin": "Luis 45\n",
+                  "expected_stdout": "Hola, Luis. Tienes 45 años."
+                }
+              ],
+              "hints": [
+                "Los datos llegan como texto: conviértelos con Number.",
+                "La plantilla se escribe con comillas invertidas y ${}."
+              ]
+            },
+            {
+              "slug": "edad-en-dias",
+              "title": "Edad en días",
+              "kind": "stdout",
+              "prompt_md": "Lee una edad en años y muestra cuántos días ha vivido esa persona, contando 365 días por año. Muestra solo el número.",
+              "starter_code": "const data = require('fs').readFileSync(0, 'utf8').trim().split(/\\s+/);\nconst edad = Number(data[0]);\n// calcula y muestra los días\n",
+              "solution_code": "const data = require('fs').readFileSync(0, 'utf8').trim().split(/\\s+/);\nconst edad = Number(data[0]);\nconsole.log(edad * 365);\n",
+              "tests": [
+                {
+                  "name": "Treinta años",
+                  "stdin": "30\n",
+                  "expected_stdout": "10950"
+                },
+                {
+                  "name": "Dieciocho años",
+                  "stdin": "18\n",
+                  "expected_stdout": "6570"
+                }
+              ],
+              "hints": [
+                "Multiplica la edad por 365.",
+                "console.log muestra el resultado; no hace falta texto adicional."
+              ]
+            }
+          ],
+          "quiz": [
+            {
+              "question": "¿Qué devuelve typeof null?",
+              "options": [
+                "'object'",
+                "'null'",
+                "'undefined'",
+                "'boolean'"
+              ],
+              "answer_index": 0,
+              "explanation": "Es una rareza histórica del lenguaje: null se declara como objeto, aunque no lo sea."
+            },
+            {
+              "question": "¿Cuál es la diferencia entre const y let?",
+              "options": [
+                "const no permite reasignar el nombre; let sí.",
+                "const solo admite números; let admite texto.",
+                "let no puede usarse dentro de funciones.",
+                "No hay diferencia práctica."
+              ],
+              "answer_index": 0,
+              "explanation": "const fija la referencia, no el contenido: un array const se puede modificar por dentro."
+            }
+          ]
+        },
+        {
+          "slug": "operadores-y-condicionales",
+          "title": "Operadores y condicionales",
+          "summary": "Comparar con === y decidir con if, else y el operador ternario.",
+          "minutes": 15,
+          "objectives": [
+            "Usar operadores aritméticos, de comparación y lógicos.",
+            "Escribir condiciones con if, else if y else en el orden correcto.",
+            "Distinguir los valores truthy de los falsy."
+          ],
+          "body_md": "## Decidir y comparar\n\nUn programa deja de ser una lista de instrucciones cuando puede elegir. Para elegir necesita comparar, y para comparar hay que entender qué devuelve cada operador.\n\n### Aritméticos y de asignación\n\n```js\nconst suma = 7 + 3;        // 10\nconst resto = 7 % 3;       // 1\nconst potencia = 2 ** 5;   // 32\nlet total = 10;\ntotal += 5;                // 15\n```\n\n`%` devuelve el resto de la división y es la herramienta para saber si un número es par: `n % 2 === 0`. `**` es la potencia. Los operadores de asignación compuesta (`+=`, `-=`, `*=`) abrevian una operación sobre la misma variable.\n\n### Comparar bien\n\n```js\n5 === 5      // true\n'5' === 5    // false, tipos distintos\n'5' == 5     // true, compara convirtiendo\n```\n\nUsa siempre `===` y `!==`. El operador `==` convierte tipos antes de comparar y produce resultados que sorprenden: `'' == 0` es `true` y `null == undefined` también. La comparación estricta es la única que se puede predecir leyendo el código.\n\nPara ordenar o comparar rangos: `>`, `<`, `>=`, `<=`. Con texto, `'a' < 'b'` compara por orden alfabético, lo que no siempre coincide con el orden que espera una persona.\n\n### Condicionales\n\n```js\nconst nota = 75;\n\nif (nota >= 90) {\n  console.log('Excelente');\n} else if (nota >= 60) {\n  console.log('Aprobado');\n} else {\n  console.log('Reprobado');\n}\n```\n\nLas condiciones se evalúan de arriba abajo y se ejecuta la primera que se cumpla. Por eso el orden importa: si compruebas `nota >= 60` antes que `nota >= 90`, un 95 entrará en la primera rama y nunca verás «Excelente».\n\nEl operador ternario resume una elección entre dos valores:\n\n```js\nconst estado = nota >= 60 ? 'aprobado' : 'reprobado';\n```\n\nSi necesitas tres o más ramas, `if` se lee mejor que ternarios anidados.\n\n### Truthy y falsy\n\nEn una condición no hace falta comparar con `true`. Estos valores se consideran falsos: `false`, `0`, `''`, `null`, `undefined` y `NaN`. Todo lo demás es verdadero, incluidos `'0'`, `[]` y `{}`. Esa es la causa de muchos errores: un array vacío es truthy.\n\n```js\nif (texto) {\n  console.log('hay texto');\n}\n```\n\n### switch\n\nPara comparar un valor contra varias opciones fijas:\n\n```js\nswitch (dia) {\n  case 'lunes':\n    console.log('Inicio de semana');\n    break;\n  default:\n    console.log('Otro día');\n}\n```\n\nCada `case` necesita `break` o seguirá ejecutando el siguiente. Olvidarlo se llama fallthrough y casi nunca es lo que quieres.\n\n### Errores típicos\n\n- Usar `==` y confiar en la conversión implícita.\n- Comparar un número con un texto: `edad === '30'` es falso aunque se vea igual.\n- Ordenar mal las ramas del `if`.\n- Olvidar el `break` en un `switch`.\n- Usar un array vacío como condición y creer que es falso.\n\n### Para fijarlo\n\nEscribe un programa que reciba una nota y muestre Excelente, Notable, Aprobado o Reprobado. Prueba con 95, 75, 60 y 40, y comprueba que cada valor cae en la rama correcta.",
+          "exercises": [
+            {
+              "slug": "par-o-impar",
+              "title": "Par o impar",
+              "kind": "stdout",
+              "prompt_md": "Lee un número entero y muestra `par` si es divisible por 2 y `impar` en caso contrario.",
+              "starter_code": "const data = require('fs').readFileSync(0, 'utf8').trim().split(/\\s+/);\nconst n = Number(data[0]);\n// decide e imprime par o impar\n",
+              "solution_code": "const data = require('fs').readFileSync(0, 'utf8').trim().split(/\\s+/);\nconst n = Number(data[0]);\nif (n % 2 === 0) {\n  console.log('par');\n} else {\n  console.log('impar');\n}\n",
+              "tests": [
+                {
+                  "name": "Siete",
+                  "stdin": "7\n",
+                  "expected_stdout": "impar"
+                },
+                {
+                  "name": "Doce",
+                  "stdin": "12\n",
+                  "expected_stdout": "par"
+                }
+              ],
+              "hints": [
+                "El resto de la división se obtiene con %.",
+                "Compara el resto con 0 usando ===."
+              ]
+            },
+            {
+              "slug": "clasificar-nota",
+              "title": "Clasificar una nota",
+              "kind": "stdout",
+              "prompt_md": "Lee una nota entre 0 y 100 y muestra `Excelente` si es 90 o más, `Notable` si es 70 o más, `Aprobado` si es 60 o más y `Reprobado` en el resto.",
+              "starter_code": "const data = require('fs').readFileSync(0, 'utf8').trim().split(/\\s+/);\nconst nota = Number(data[0]);\n// ordena las comprobaciones de mayor a menor\n",
+              "solution_code": "const data = require('fs').readFileSync(0, 'utf8').trim().split(/\\s+/);\nconst nota = Number(data[0]);\nif (nota >= 90) {\n  console.log('Excelente');\n} else if (nota >= 70) {\n  console.log('Notable');\n} else if (nota >= 60) {\n  console.log('Aprobado');\n} else {\n  console.log('Reprobado');\n}\n",
+              "tests": [
+                {
+                  "name": "Nota alta",
+                  "stdin": "95\n",
+                  "expected_stdout": "Excelente"
+                },
+                {
+                  "name": "Nota media",
+                  "stdin": "75\n",
+                  "expected_stdout": "Notable"
+                },
+                {
+                  "name": "Nota justa",
+                  "stdin": "60\n",
+                  "expected_stdout": "Aprobado"
+                },
+                {
+                  "name": "Nota baja",
+                  "stdin": "40\n",
+                  "expected_stdout": "Reprobado"
+                }
+              ],
+              "hints": [
+                "Comprueba primero la condición más alta.",
+                "Si empiezas por >= 60, un 95 nunca llegará a Excelente."
+              ]
+            }
+          ],
+          "quiz": [
+            {
+              "question": "¿Qué devuelve 5 === '5'?",
+              "options": [
+                "false, porque los tipos son distintos.",
+                "true, porque el valor es el mismo.",
+                "NaN.",
+                "Un error de sintaxis."
+              ],
+              "answer_index": 0,
+              "explanation": "La comparación estricta exige el mismo tipo; '5' es texto y 5 es número."
+            },
+            {
+              "question": "¿Cuál de estos valores es falsy?",
+              "options": [
+                "El texto vacío ''",
+                "El texto '0'",
+                "Un array vacío []",
+                "El número 1"
+              ],
+              "answer_index": 0,
+              "explanation": "'' es falsy; '0' y [] son truthy aunque parezcan vacíos."
+            }
+          ]
+        },
+        {
+          "slug": "bucles",
+          "title": "Bucles",
+          "summary": "Repetir trabajo con for y while y acumular resultados.",
+          "minutes": 15,
+          "objectives": [
+            "Escribir un bucle for con inicio, condición y avance.",
+            "Acumular totales y contar coincidencias dentro de un bucle.",
+            "Recorrer arrays con for...of y controlar el flujo con break y continue."
+          ],
+          "body_md": "## Repetir sin copiar y pegar\n\nSi tienes que hacer algo cinco veces, escribes un bucle; si tienes que hacerlo mil, también. Los bucles son la diferencia entre un programa y una calculadora manual.\n\n### for clásico\n\n```js\nfor (let i = 1; i <= 5; i++) {\n  console.log(i);\n}\n```\n\nSe lee en tres partes separadas por punto y coma: dónde empieza (`let i = 1`), cuándo continúa (`i <= 5`) y cómo avanza (`i++`). Mientras la condición sea verdadera, el cuerpo se ejecuta. Si la condición nunca se vuelve falsa, el bucle no termina y bloquea la pestaña o el proceso.\n\n### Acumular resultados\n\n```js\nlet total = 0;\nfor (let i = 1; i <= 10; i++) {\n  total += i;\n}\nconsole.log(total);   // 55\n```\n\nEl patrón del acumulador aparece constantemente: una variable fuera del bucle, una operación dentro y el resultado al final. Lo mismo sirve para concatenar texto o para contar cuántas veces se cumple algo.\n\n```js\nlet pares = 0;\nfor (let i = 1; i <= 20; i++) {\n  if (i % 2 === 0) pares++;\n}\n```\n\n### while\n\n`while` repite mientras se cumpla una condición que tú controlas dentro:\n\n```js\nlet energia = 3;\nwhile (energia > 0) {\n  console.log(`Quedan ${energia}`);\n  energia--;\n}\n```\n\nÚsalo cuando no sepas de antemano cuántas vueltas harán falta. Si la condición depende de algo que no cambia dentro del bucle, tendrás un bucle infinito. En Node puedes cortarlo con Ctrl+C.\n\n### Recorrer arrays\n\n```js\nconst frutas = ['pan', 'leche', 'cafe'];\nfor (const fruta of frutas) {\n  console.log(fruta);\n}\n```\n\n`for...of` recorre los valores y evita el índice cuando no lo necesitas. Si necesitas la posición, `forEach` recibe el índice como segundo argumento, o vuelve al `for` clásico. No uses `for...in` para arrays: recorre las claves como texto y puede incluir propiedades heredadas.\n\n### break y continue\n\n`break` sale del bucle; `continue` salta a la siguiente vuelta. Ambos tienen su lugar, pero abusar de ellos hace que el flujo sea difícil de seguir.\n\n```js\nfor (let i = 1; i <= 10; i++) {\n  if (i === 4) continue;\n  if (i === 8) break;\n  console.log(i);\n}\n```\n\n### Errores típicos\n\n- Empezar en 0 y terminar en `<= n`, produciendo una vuelta de más.\n- Olvidar incrementar la variable del `while`.\n- Declarar el acumulador dentro del bucle y perder el total.\n- Usar `for...in` con arrays.\n- Modificar el array mientras lo recorres, con resultados difíciles de predecir.\n\n### Para fijarlo\n\nEscribe un bucle que sume los números del 1 al 100 y muestre el total. Después muestra la tabla de multiplicar del 3 del 1 al 5. Cambia la condición de corte y observa cuántas líneas salen.",
+          "exercises": [
+            {
+              "slug": "tabla-de-multiplicar",
+              "title": "Tabla de multiplicar",
+              "kind": "stdout",
+              "prompt_md": "Lee un número y muestra su tabla de multiplicar del 1 al 5 con el formato `3 x 1 = 3`, una línea por producto.",
+              "starter_code": "const data = require('fs').readFileSync(0, 'utf8').trim().split(/\\s+/);\nconst n = Number(data[0]);\n// recorre del 1 al 5 y muestra cada línea\n",
+              "solution_code": "const data = require('fs').readFileSync(0, 'utf8').trim().split(/\\s+/);\nconst n = Number(data[0]);\nfor (let i = 1; i <= 5; i++) {\n  console.log(`${n} x ${i} = ${n * i}`);\n}\n",
+              "tests": [
+                {
+                  "name": "Tabla del 3",
+                  "stdin": "3\n",
+                  "expected_stdout": "3 x 1 = 3\n3 x 2 = 6\n3 x 3 = 9\n3 x 4 = 12\n3 x 5 = 15"
+                },
+                {
+                  "name": "Tabla del 7",
+                  "stdin": "7\n",
+                  "expected_stdout": "7 x 1 = 7\n7 x 2 = 14\n7 x 3 = 21\n7 x 4 = 28\n7 x 5 = 35"
+                }
+              ],
+              "hints": [
+                "Un for de 1 a 5 resuelve el recorrido.",
+                "La plantilla escribe los tres valores en el mismo orden que el ejemplo."
+              ]
+            },
+            {
+              "slug": "suma-hasta-n",
+              "title": "Suma acumulada",
+              "kind": "stdout",
+              "prompt_md": "Lee un número n y muestra la suma de todos los enteros desde 1 hasta n con el formato `Suma: 15`.",
+              "starter_code": "const data = require('fs').readFileSync(0, 'utf8').trim().split(/\\s+/);\nconst n = Number(data[0]);\n// acumula y muestra el total\n",
+              "solution_code": "const data = require('fs').readFileSync(0, 'utf8').trim().split(/\\s+/);\nconst n = Number(data[0]);\nlet total = 0;\nfor (let i = 1; i <= n; i++) {\n  total += i;\n}\nconsole.log(`Suma: ${total}`);\n",
+              "tests": [
+                {
+                  "name": "Hasta 5",
+                  "stdin": "5\n",
+                  "expected_stdout": "Suma: 15"
+                },
+                {
+                  "name": "Hasta 10",
+                  "stdin": "10\n",
+                  "expected_stdout": "Suma: 55"
+                }
+              ],
+              "hints": [
+                "Declara el total antes del bucle.",
+                "Suma cada valor dentro del bucle y muestra el total al salir."
+              ]
+            }
+          ],
+          "quiz": [
+            {
+              "question": "¿Qué hace el bucle for (let i = 0; i < 3; i++)?",
+              "options": [
+                "Ejecuta el cuerpo tres veces, con i igual a 0, 1 y 2.",
+                "Ejecuta el cuerpo cuatro veces.",
+                "Ejecuta el cuerpo dos veces.",
+                "No ejecuta nada porque empieza en 0."
+              ],
+              "answer_index": 0,
+              "explanation": "La condición i < 3 deja de cumplirse cuando i vale 3, así que hay tres vueltas."
+            },
+            {
+              "question": "¿Para qué sirve break dentro de un bucle?",
+              "options": [
+                "Para salir del bucle inmediatamente.",
+                "Para saltar a la siguiente vuelta.",
+                "Para reiniciar el contador.",
+                "Para declarar una variable nueva."
+              ],
+              "answer_index": 0,
+              "explanation": "break termina el bucle; continue salta a la siguiente iteración."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Datos y funciones",
+      "summary": "Funciones, arrays y objetos para organizar la información.",
+      "lessons": [
+        {
+          "slug": "funciones",
+          "title": "Funciones",
+          "summary": "Agrupar pasos con nombre y devolver resultados con return.",
+          "minutes": 16,
+          "objectives": [
+            "Declarar funciones con parámetros y devolver un valor.",
+            "Escribir funciones flecha con y sin llaves.",
+            "Entender el ámbito y el valor por defecto de los parámetros."
+          ],
+          "body_md": "## Funciones: nombrar un bloque de trabajo\n\nUna función agrupa pasos y les pone nombre. Sirve para no repetir código y, sobre todo, para poder leerlo: `calcularTotal(precios)` dice más que cinco líneas de sumas.\n\n### Declarar y llamar\n\n```js\nfunction saludar(nombre) {\n  return `Hola, ${nombre}`;\n}\n\nconst mensaje = saludar('Ana');\nconsole.log(mensaje);   // Hola, Ana\n```\n\n`nombre` es el parámetro; `'Ana'`, el argumento. `return` devuelve un valor y termina la función en ese punto. Una función sin `return` devuelve `undefined`, y ese es el origen de muchos `undefined` inesperados.\n\n```js\nfunction saludar(nombre) {\n  console.log(`Hola, ${nombre}`);\n}\n\nconst resultado = saludar('Ana');   // imprime, pero resultado es undefined\n```\n\nSi la función solo imprime, no devuelve. Decide qué quieres: efecto o valor.\n\n### Parámetros con valor por defecto\n\n```js\nfunction precioFinal(base, impuesto = 0.21) {\n  return base * (1 + impuesto);\n}\n\nprecioFinal(100);        // 121\nprecioFinal(100, 0.1);   // 110\n```\n\nEl valor por defecto se usa solo si el argumento es `undefined`. Pasar `0` sí cuenta como valor.\n\n### Funciones flecha\n\n```js\nconst doble = (n) => n * 2;\nconst sumar = (a, b) => {\n  const total = a + b;\n  return total;\n};\n```\n\nSin llaves, el valor de la expresión se devuelve solo. Con llaves, necesitas `return`. Las funciones flecha no tienen su propio `this`, algo que importa en el DOM; para el resto, son una forma compacta de escribir lo mismo.\n\n### Ámbito\n\nUna variable declarada dentro de una función solo existe ahí:\n\n```js\nfunction calcular() {\n  const interno = 5;\n  return interno;\n}\n\nconsole.log(interno);   // ReferenceError\n```\n\nFuera no se ve. Y una función puede leer variables del ámbito donde se define, pero no modificar las de otra función. Si necesitas compartir un dato, pásalo como parámetro o devuélvelo: es más claro que usar variables globales.\n\n### Nombres que explican\n\nUn buen nombre dice qué devuelve: `calcularTotal`, `esPar`, `formatearPrecio`. Evita `procesar`, `hacer` y `funcion1`. Si el nombre necesita un comentario para entenderse, probablemente la función hace demasiadas cosas.\n\n### Funciones que reciben funciones\n\nEn JavaScript una función es un valor: se puede guardar en una variable y pasar como argumento. Eso permite escribir `aplicar(precios, doble)` sin repetir el recorrido. Es la base de `map`, `filter` y de los listeners del DOM que verás más adelante. No necesitas dominarlo hoy; basta con reconocer que `(n) => n * 2` es un valor que se pasa igual que un número.\n\n### Errores típicos\n\n- Olvidar el `return` y recibir `undefined`.\n- Llamar a la función antes de definirla cuando es una constante flecha.\n- Confundir parámetro con argumento al leer el código.\n- Escribir `return` y añadir más código debajo: no se ejecutará.\n- Usar variables globales para todo y perder el rastro de quién las cambia.\n\n### Para fijarlo\n\nEscribe `esPar(n)` que devuelva un booleano y `promedio(a, b, c)` que devuelva la media. Llámalas con varios valores y muestra el resultado con una plantilla. Después cambia un `return` por un `console.log` y observa la diferencia.",
+          "exercises": [
+            {
+              "slug": "funcion-promedio",
+              "title": "Función promedio",
+              "kind": "stdout",
+              "prompt_md": "Lee tres números y muestra su promedio con un decimal y el formato `Promedio: 4.0`. Escribe una función que calcula la media.",
+              "starter_code": "const data = require('fs').readFileSync(0, 'utf8').trim().split(/\\s+/);\n\nfunction promedio(a, b, c) {\n  // devuelve la media\n}\n\n// muestra el resultado con un decimal\n",
+              "solution_code": "const data = require('fs').readFileSync(0, 'utf8').trim().split(/\\s+/);\n\nfunction promedio(a, b, c) {\n  return (a + b + c) / 3;\n}\n\nconst resultado = promedio(Number(data[0]), Number(data[1]), Number(data[2]));\nconsole.log(`Promedio: ${resultado.toFixed(1)}`);\n",
+              "tests": [
+                {
+                  "name": "Tres, cuatro y cinco",
+                  "stdin": "3 4 5\n",
+                  "expected_stdout": "Promedio: 4.0"
+                },
+                {
+                  "name": "Diez, veinte y treinta",
+                  "stdin": "10 20 30\n",
+                  "expected_stdout": "Promedio: 20.0"
+                }
+              ],
+              "hints": [
+                "Suma los tres parámetros y divide entre 3.",
+                "toFixed(1) deja un decimal y devuelve texto."
+              ]
+            },
+            {
+              "slug": "funcion-potencia",
+              "title": "Función potencia",
+              "kind": "stdout",
+              "prompt_md": "Lee una base y un exponente y muestra `2 ^ 10 = 1024`. Usa una función que calcule la potencia.",
+              "starter_code": "const data = require('fs').readFileSync(0, 'utf8').trim().split(/\\s+/);\n\nfunction potencia(base, exponente) {\n  // devuelve la potencia\n}\n\n// muestra la línea con el formato pedido\n",
+              "solution_code": "const data = require('fs').readFileSync(0, 'utf8').trim().split(/\\s+/);\n\nfunction potencia(base, exponente) {\n  return base ** exponente;\n}\n\nconst base = Number(data[0]);\nconst exponente = Number(data[1]);\nconsole.log(`${base} ^ ${exponente} = ${potencia(base, exponente)}`);\n",
+              "tests": [
+                {
+                  "name": "Dos a la décima",
+                  "stdin": "2 10\n",
+                  "expected_stdout": "2 ^ 10 = 1024"
+                },
+                {
+                  "name": "Tres a la cuarta",
+                  "stdin": "3 4\n",
+                  "expected_stdout": "3 ^ 4 = 81"
+                }
+              ],
+              "hints": [
+                "El operador ** eleva a una potencia.",
+                "Devuelve el resultado con return y muéstralo fuera."
+              ]
+            }
+          ],
+          "quiz": [
+            {
+              "question": "¿Qué devuelve una función sin return?",
+              "options": [
+                "undefined",
+                "null",
+                "0",
+                "El último valor calculado"
+              ],
+              "answer_index": 0,
+              "explanation": "Sin return explícito, el valor devuelto es undefined."
+            },
+            {
+              "question": "En una función flecha sin llaves, ¿qué devuelve la función?",
+              "options": [
+                "El valor de la expresión.",
+                "undefined siempre.",
+                "Un objeto vacío.",
+                "El último console.log."
+              ],
+              "answer_index": 0,
+              "explanation": "Sin llaves hay return implícito; con llaves hace falta escribirlo."
+            }
+          ]
+        },
+        {
+          "slug": "arrays",
+          "title": "Arrays",
+          "summary": "Listas ordenadas y las operaciones map, filter y reduce.",
+          "minutes": 16,
+          "objectives": [
+            "Crear arrays, recorrerlos y acceder a sus elementos por índice.",
+            "Transformar y filtrar con map y filter sin mutar el original.",
+            "Sumar valores con reduce y usar el valor inicial correcto."
+          ],
+          "body_md": "## Arrays: listas con orden\n\nUn array guarda varios valores en orden. Es la estructura que usarás para todo lo que sea una colección: tareas, precios, nombres, resultados.\n\n### Crear y recorrer\n\n```js\nconst frutas = ['pan', 'leche', 'cafe'];\nconsole.log(frutas[0]);        // pan\nconsole.log(frutas.length);    // 3\nconsole.log(frutas[frutas.length - 1]);   // cafe\n```\n\nLos índices empiezan en 0. El último elemento está en `length - 1`; pedir un índice que no existe devuelve `undefined`, no un error, así que conviene comprobar antes.\n\n```js\nfrutas.push('arroz');   // añade al final\nfrutas.pop();           // quita el último\nfrutas.unshift('agua'); // añade al principio\nfrutas.shift();         // quita el primero\n```\n\n### Transformar con map\n\n`map` crea un array nuevo aplicando una función a cada elemento:\n\n```js\nconst precios = [10, 20, 30];\nconst conIva = precios.map((precio) => precio * 1.21);\nconsole.log(conIva);   // [12.1, 24.2, 36.3]\n```\n\nEl array original no cambia. Ese detalle es la clave: `map` devuelve, no modifica.\n\n### Filtrar y reducir\n\n```js\nconst numeros = [4, 8, 15, 16, 23, 42];\nconst mayores = numeros.filter((n) => n > 10);\nconsole.log(mayores);   // [15, 16, 23, 42]\n\nconst total = numeros.reduce((suma, n) => suma + n, 0);\nconsole.log(total);     // 108\n```\n\n`filter` conserva los elementos que cumplen la condición. `reduce` recorre el array acumulando un valor; el segundo argumento es el valor inicial. Sin el valor inicial, `reduce` usa el primer elemento y puede fallar con arrays vacíos.\n\n### Buscar y comprobar\n\n```js\nnumeros.includes(15);            // true\nnumeros.indexOf(15);             // 2\nnumeros.find((n) => n > 20);     // 23\nnumeros.some((n) => n < 0);      // false\nnumeros.every((n) => n > 0);     // true\n```\n\n`find` devuelve el primer elemento que cumple; `some` y `every` devuelven booleanos. Para objetos, `find` es más útil que `indexOf`, que compara por identidad.\n\n### Copiar sin compartir\n\n```js\nconst copia = [...numeros];\nconst parte = numeros.slice(0, 3);\n```\n\n`slice` devuelve una porción sin tocar el original; `splice` sí modifica el array. La sintaxis de propagación `...` crea una copia superficial: los objetos internos siguen siendo los mismos.\n\n### Ordenar con criterio\n\n`sort` ordena el array, pero por defecto convierte todo a texto: `[10, 9, 100].sort()` da `[10, 100, 9]`. Para números hay que pasar una función de comparación:\n\n```js\nconst ordenados = [...numeros].sort((a, b) => a - b);\n```\n\nLa copia con `...` evita modificar el original, porque `sort` sí lo cambia. Ordenar de mayor a menor es tan simple como invertir la resta: `(a, b) => b - a`.\n\n### Errores típicos\n\n- Usar `map` sin `return` y obtener un array de `undefined`.\n- Confundir `slice` con `splice`.\n- Recorrer con `for` y salirse del rango: `i <= length` en vez de `i < length`.\n- Modificar un array mientras `forEach` lo recorre.\n- Creer que `map` cambia el array original.\n\n### Para fijarlo\n\nCrea un array con cinco números. Muestra el total con `reduce`, los mayores que 10 con `filter` y cada número multiplicado por 2 con `map`. Después comprueba que el array original sigue igual.",
+          "exercises": [
+            {
+              "slug": "suma-de-lista",
+              "title": "Total y promedio",
+              "kind": "stdout",
+              "prompt_md": "Lee un número n, después n números, y muestra `Total: 24` y `Promedio: 4.8` con un decimal.",
+              "starter_code": "const data = require('fs').readFileSync(0, 'utf8').trim().split(/\\s+/);\nconst n = Number(data[0]);\n// convierte el resto a números y calcula\n",
+              "solution_code": "const data = require('fs').readFileSync(0, 'utf8').trim().split(/\\s+/);\nconst n = Number(data[0]);\nconst numeros = data.slice(1, 1 + n).map(Number);\nconst total = numeros.reduce((suma, x) => suma + x, 0);\nconsole.log(`Total: ${total}`);\nconsole.log(`Promedio: ${(total / n).toFixed(1)}`);\n",
+              "tests": [
+                {
+                  "name": "Cinco números",
+                  "stdin": "5 4 8 2 9 1\n",
+                  "expected_stdout": "Total: 24\nPromedio: 4.8"
+                },
+                {
+                  "name": "Cuatro decenas",
+                  "stdin": "4 10 20 30 40\n",
+                  "expected_stdout": "Total: 100\nPromedio: 25.0"
+                }
+              ],
+              "hints": [
+                "slice(1, 1 + n) toma solo los números.",
+                "reduce necesita el valor inicial 0."
+              ]
+            },
+            {
+              "slug": "mayor-y-menor",
+              "title": "Mayor y menor",
+              "kind": "stdout",
+              "prompt_md": "Lee un número n, después n números, y muestra el mayor y el menor con el formato `Mayor: 9` y `Menor: 1`.",
+              "starter_code": "const data = require('fs').readFileSync(0, 'utf8').trim().split(/\\s+/);\nconst n = Number(data[0]);\n// encuentra el mayor y el menor\n",
+              "solution_code": "const data = require('fs').readFileSync(0, 'utf8').trim().split(/\\s+/);\nconst n = Number(data[0]);\nconst numeros = data.slice(1, 1 + n).map(Number);\nconsole.log(`Mayor: ${Math.max(...numeros)}`);\nconsole.log(`Menor: ${Math.min(...numeros)}`);\n",
+              "tests": [
+                {
+                  "name": "Lista variada",
+                  "stdin": "6 3 9 1 7 2 8\n",
+                  "expected_stdout": "Mayor: 9\nMenor: 1"
+                },
+                {
+                  "name": "Con repetidos",
+                  "stdin": "3 5 5 2\n",
+                  "expected_stdout": "Mayor: 5\nMenor: 2"
+                }
+              ],
+              "hints": [
+                "Math.max y Math.min reciben números sueltos.",
+                "La sintaxis ... extiende el array en argumentos."
+              ]
+            }
+          ],
+          "quiz": [
+            {
+              "question": "¿Qué devuelve map sobre un array?",
+              "options": [
+                "Un array nuevo con los resultados.",
+                "El mismo array modificado.",
+                "Un número con el total.",
+                "undefined."
+              ],
+              "answer_index": 0,
+              "explanation": "map crea un array nuevo; el original queda intacto."
+            },
+            {
+              "question": "¿Qué hace filter?",
+              "options": [
+                "Conserva los elementos que cumplen la condición.",
+                "Transforma cada elemento.",
+                "Ordena el array.",
+                "Suma todos los elementos."
+              ],
+              "answer_index": 0,
+              "explanation": "filter devuelve un array nuevo con los elementos para los que la función devuelve true."
+            }
+          ]
+        },
+        {
+          "slug": "objetos",
+          "title": "Objetos",
+          "summary": "Fichas con propiedades nombradas, métodos y desestructuración.",
+          "minutes": 15,
+          "objectives": [
+            "Crear objetos y acceder a sus propiedades con punto y corchetes.",
+            "Escribir métodos y usar this correctamente.",
+            "Desestructurar propiedades y recorrer un objeto con Object.entries."
+          ],
+          "body_md": "## Objetos: agrupar datos con nombre\n\nUn array es una lista; un objeto es una ficha. Cuando los datos describen una misma cosa —una persona, un producto, una tarea—, el objeto permite nombrarlos en lugar de recordar posiciones.\n\n### Crear y acceder\n\n```js\nconst persona = {\n  nombre: 'Ana',\n  edad: 30,\n  ciudad: 'Madrid',\n};\n\nconsole.log(persona.nombre);      // Ana\nconsole.log(persona['edad']);     // 30\n```\n\nEl punto es lo habitual. Los corchetes sirven cuando la clave está en una variable: `persona[clave]`. Las claves son texto aunque no lleven comillas al escribirlas.\n\n### Modificar y añadir\n\n```js\npersona.edad = 31;\npersona.correo = 'ana@ejemplo.com';\ndelete persona.ciudad;\n```\n\nLos objetos declarados con `const` se pueden modificar: lo que no cambia es la referencia. Para comprobar si una clave existe, `'edad' in persona` o `Object.hasOwn(persona, 'edad')`.\n\n### Métodos\n\nUna función dentro de un objeto es un método:\n\n```js\nconst tarea = {\n  titulo: 'Estudiar JS',\n  hecha: false,\n  marcar() {\n    this.hecha = true;\n  },\n};\n\ntarea.marcar();\nconsole.log(tarea.hecha);   // true\n```\n\nDentro de un método, `this` apunta al objeto desde el que se llama. Con funciones flecha `this` no funciona igual, así que para métodos usa la forma corta `marcar() {}`.\n\n### Desestructurar\n\n```js\nconst { nombre, edad } = persona;\nconst { ciudad = 'Sin ciudad' } = persona;\n```\n\nLa desestructuración extrae propiedades a variables con el mismo nombre y admite valores por defecto. Es cómoda cuando pasas un objeto a una función:\n\n```js\nfunction presentar({ nombre, edad }) {\n  return `${nombre} tiene ${edad} años`;\n}\n```\n\n### Recorrer un objeto\n\n```js\nconst claves = Object.keys(persona);\nconst valores = Object.values(persona);\nconst pares = Object.entries(persona);\n\nfor (const [clave, valor] of pares) {\n  console.log(`${clave}: ${valor}`);\n}\n```\n\n`Object.entries` devuelve pares que puedes desestructurar en el propio bucle. El orden es el de inserción, salvo en claves numéricas, que se ordenan primero.\n\n### Copiar y combinar\n\n```js\nconst copia = { ...persona };\nconst actualizada = { ...persona, edad: 31 };\n```\n\nLa propagación copia las propiedades y, si repites una clave después, gana la última. La copia es superficial: un objeto anidado se comparte.\n\n### De objeto a texto y vuelta\n\n`JSON.stringify` convierte un objeto en texto y `JSON.parse` hace el camino inverso. Es lo que ocurre cuando guardas algo o lo envías por la red:\n\n```js\nconst texto = JSON.stringify({ nombre: 'Ana', edad: 30 });\nconst recuperado = JSON.parse(texto);\n```\n\nLos métodos y las referencias se pierden en el viaje: solo sobreviven los datos. Tenlo en cuenta si esperas recuperar un objeto idéntico.\n\n### Errores típicos\n\n- Acceder a una propiedad que no existe y recibir `undefined` sin darse cuenta.\n- Confundir el objeto con su copia y modificar el original sin querer.\n- Usar `this` dentro de una función flecha como método.\n- Recorrer con `for...in` y encontrarse propiedades heredadas.\n- Comparar dos objetos con `===`: solo son iguales si son el mismo objeto.\n\n### Para fijarlo\n\nCrea un objeto con tres propiedades, cambia una, añade otra y recórrelo con `Object.entries`. Después crea una copia con la sintaxis de propagación y modifica la copia: comprueba que el original no cambia.",
+          "exercises": [
+            {
+              "slug": "ficha-de-persona",
+              "title": "Ficha de persona",
+              "kind": "stdout",
+              "prompt_md": "Lee nombre, edad y ciudad, guárdalos en un objeto y muestra tres líneas: `Nombre: Ana`, `Edad: 30` y `Ciudad: Madrid`.",
+              "starter_code": "const data = require('fs').readFileSync(0, 'utf8').trim().split(/\\s+/);\n// crea el objeto y muestra sus propiedades\n",
+              "solution_code": "const data = require('fs').readFileSync(0, 'utf8').trim().split(/\\s+/);\nconst persona = {\n  nombre: data[0],\n  edad: Number(data[1]),\n  ciudad: data[2],\n};\nconsole.log(`Nombre: ${persona.nombre}`);\nconsole.log(`Edad: ${persona.edad}`);\nconsole.log(`Ciudad: ${persona.ciudad}`);\n",
+              "tests": [
+                {
+                  "name": "Ana de Madrid",
+                  "stdin": "Ana 30 Madrid\n",
+                  "expected_stdout": "Nombre: Ana\nEdad: 30\nCiudad: Madrid"
+                },
+                {
+                  "name": "Luis de Lima",
+                  "stdin": "Luis 45 Lima\n",
+                  "expected_stdout": "Nombre: Luis\nEdad: 45\nCiudad: Lima"
+                }
+              ],
+              "hints": [
+                "Las propiedades se separan con comas dentro de las llaves.",
+                "Accede con persona.nombre, no con persona[0]."
+              ]
+            },
+            {
+              "slug": "carrito-de-compras",
+              "title": "Carrito de compras",
+              "kind": "stdout",
+              "prompt_md": "Lee la cantidad de productos y luego pares de nombre y precio. Muestra una línea por producto con dos decimales (`pan: 2.50`) y al final `Total: 7.00`.",
+              "starter_code": "const data = require('fs').readFileSync(0, 'utf8').trim().split(/\\s+/);\nconst n = Number(data[0]);\n// recorre los pares nombre/precio y acumula\n",
+              "solution_code": "const data = require('fs').readFileSync(0, 'utf8').trim().split(/\\s+/);\nconst n = Number(data[0]);\nlet total = 0;\nfor (let i = 0; i < n; i++) {\n  const nombre = data[1 + i * 2];\n  const precio = Number(data[2 + i * 2]);\n  total += precio;\n  console.log(`${nombre}: ${precio.toFixed(2)}`);\n}\nconsole.log(`Total: ${total.toFixed(2)}`);\n",
+              "tests": [
+                {
+                  "name": "Tres productos",
+                  "stdin": "3 pan 2.5 leche 3 agua 1.5\n",
+                  "expected_stdout": "pan: 2.50\nleche: 3.00\nagua: 1.50\nTotal: 7.00"
+                },
+                {
+                  "name": "Dos productos",
+                  "stdin": "2 cafe 4 arroz 1.25\n",
+                  "expected_stdout": "cafe: 4.00\narroz: 1.25\nTotal: 5.25"
+                }
+              ],
+              "hints": [
+                "El nombre está en la posición 1 + i * 2 y el precio en 2 + i * 2.",
+                "toFixed(2) unifica los decimales al mostrar."
+              ]
+            }
+          ],
+          "quiz": [
+            {
+              "question": "¿Cómo se accede a la propiedad nombre de un objeto persona?",
+              "options": [
+                "persona.nombre",
+                "persona->nombre",
+                "persona(nombre)",
+                "nombre.persona"
+              ],
+              "answer_index": 0,
+              "explanation": "El punto accede a la propiedad; los corchetes se reservan para claves dinámicas."
+            },
+            {
+              "question": "¿Qué devuelve Object.entries(persona)?",
+              "options": [
+                "Un array de pares [clave, valor].",
+                "Un array solo con las claves.",
+                "Un array solo con los valores.",
+                "Una copia del objeto."
+              ],
+              "answer_index": 0,
+              "explanation": "Entries devuelve pares, lo que permite recorrerlos con for...of y desestructurar."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Navegador y proyecto",
+      "summary": "El DOM, los eventos y un proyecto completo con pruebas.",
+      "lessons": [
+        {
+          "slug": "dom-y-eventos",
+          "title": "DOM y eventos",
+          "summary": "Seleccionar elementos, cambiar contenido y reaccionar a clics y envíos.",
+          "minutes": 18,
+          "objectives": [
+            "Seleccionar elementos con querySelector y querySelectorAll.",
+            "Cambiar texto, clases y atributos sin usar innerHTML con datos ajenos.",
+            "Escuchar eventos y evitar el envío por defecto de un formulario."
+          ],
+          "body_md": "## DOM y eventos: mover la página desde el código\n\nEl DOM es el árbol de elementos que el navegador construye a partir del HTML. JavaScript puede leerlo, cambiarlo y reaccionar a lo que hace el usuario.\n\n### Seleccionar elementos\n\n```js\nconst titulo = document.querySelector('h1');\nconst tarjetas = document.querySelectorAll('.tarjeta');\nconst boton = document.querySelector('#enviar');\n```\n\n`querySelector` devuelve el primer elemento que coincide y `querySelectorAll`, todos. Aceptan cualquier selector CSS. Si el elemento no existe, `querySelector` devuelve `null`, y llamar a una propiedad sobre `null` lanza un error.\n\n### Leer y cambiar contenido\n\n```js\ntitulo.textContent = 'Nuevo título';\ntitulo.classList.add('destacado');\ntarjeta.dataset.estado = 'hecha';\n```\n\n`textContent` lee o escribe texto plano; `innerHTML` interpreta HTML. Usa `textContent` salvo que necesites insertar etiquetas de verdad, y nunca con datos que venga del usuario: `innerHTML` con texto ajeno abre la puerta a inyección de código. `classList` añade, quita y alterna clases. Los atributos `data-*` se leen y escriben con `dataset`.\n\n### Crear elementos\n\n```js\nconst lista = document.querySelector('#lista');\nconst item = document.createElement('li');\nitem.textContent = 'Nueva tarea';\nlista.append(item);\n```\n\nCrear un elemento no lo muestra: hay que insertarlo con `append`, `prepend`, `before` o `after`. `append` admite texto y varios nodos; `appendChild` solo nodos.\n\n### Escuchar eventos\n\n```js\nconst boton = document.querySelector('#enviar');\n\nboton.addEventListener('click', () => {\n  console.log('Pulsado');\n});\n```\n\nEl segundo argumento es la función que se ejecuta cuando ocurre el evento. Algunos eventos útiles: `click`, `submit`, `input`, `change`, `keydown`. Para un formulario, escucha `submit` y llama a `evento.preventDefault()` si quieres gestionarlo tú y evitar que la página se recargue.\n\n```js\nformulario.addEventListener('submit', (evento) => {\n  evento.preventDefault();\n  const texto = campo.value.trim();\n  if (!texto) return;\n  agregarTarea(texto);\n  campo.value = '';\n});\n```\n\n### El orden importa\n\nSi el script está en `<head>` sin `defer`, se ejecuta antes de que existan los elementos y `querySelector` devuelve `null`. Dos soluciones: colocar el `<script>` al final del `<body>` o añadir el atributo `defer`.\n\n### Delegación de eventos\n\nSi la lista crece con elementos nuevos, añadir un listener a cada uno se vuelve frágil. Escucha en el contenedor y averigua qué hijo recibió el clic:\n\n```js\nlista.addEventListener('click', (evento) => {\n  const item = evento.target.closest('li');\n  if (!item) return;\n  item.classList.toggle('hecha');\n});\n```\n\n`evento.target` es el elemento exacto que se pulsó y `closest` sube hasta el `li` más cercano. La delegación funciona con elementos que aún no existían cuando registraste el listener, algo imprescindible en listas dinámicas.\n\n### Errores típicos\n\n- Seleccionar un elemento antes de que el DOM exista.\n- Usar `innerHTML` con texto que escribió el usuario.\n- Añadir el mismo listener varias veces dentro de un bucle.\n- Olvidar `preventDefault` en un `submit` y ver la página recargarse.\n- Comprobar solo el caso feliz y no el campo vacío.\n\n### Para fijarlo\n\nCrea un botón y un párrafo. Al pulsar el botón, cambia el texto del párrafo y añade una clase. Después añade un segundo botón que deshaga el cambio y observa cómo se combinan los listeners.",
+          "exercises": [
+            {
+              "slug": "html-de-lista",
+              "title": "Generar el HTML de una lista",
+              "kind": "stdout",
+              "prompt_md": "Lee un número n y después n palabras. Muestra el HTML de una lista: la etiqueta `<ul>`, una línea por elemento con dos espacios de sangría y `<li>palabra</li>`, y la etiqueta `</ul>`.",
+              "starter_code": "const data = require('fs').readFileSync(0, 'utf8').trim().split(/\\s+/);\nconst n = Number(data[0]);\n// imprime la lista con el formato pedido\n",
+              "solution_code": "const data = require('fs').readFileSync(0, 'utf8').trim().split(/\\s+/);\nconst n = Number(data[0]);\nconst items = data.slice(1, 1 + n);\nconsole.log('<ul>');\nitems.forEach((item) => console.log(`  <li>${item}</li>`));\nconsole.log('</ul>');\n",
+              "tests": [
+                {
+                  "name": "Tres elementos",
+                  "stdin": "3 pan leche cafe\n",
+                  "expected_stdout": "<ul>\n  <li>pan</li>\n  <li>leche</li>\n  <li>cafe</li>\n</ul>"
+                },
+                {
+                  "name": "Dos elementos",
+                  "stdin": "2 sol luna\n",
+                  "expected_stdout": "<ul>\n  <li>sol</li>\n  <li>luna</li>\n</ul>"
+                }
+              ],
+              "hints": [
+                "La sangría son dos espacios dentro de la plantilla.",
+                "forEach recorre los elementos; console.log añade el salto de línea."
+              ]
+            }
+          ],
+          "quiz": [
+            {
+              "question": "¿Qué devuelve document.querySelector('.tarjeta') si no existe?",
+              "options": [
+                "null",
+                "undefined",
+                "Un array vacío",
+                "Un error de sintaxis"
+              ],
+              "answer_index": 0,
+              "explanation": "querySelector devuelve null cuando no encuentra coincidencias; hay que comprobarlo antes de usarlo."
+            },
+            {
+              "question": "¿Para qué se usa event.preventDefault() en un submit?",
+              "options": [
+                "Para evitar que la página se recargue y gestionar el envío con código.",
+                "Para borrar los campos del formulario.",
+                "Para impedir que el usuario escriba.",
+                "Para validar el correo automáticamente."
+              ],
+              "answer_index": 0,
+              "explanation": "preventDefault cancela el comportamiento del navegador; el formulario no se envía de la forma habitual."
+            }
+          ]
+        },
+        {
+          "slug": "primer-proyecto",
+          "title": "Primer proyecto",
+          "summary": "De la idea al código: validar, calcular, formatear y probar casos límite.",
+          "minutes": 20,
+          "objectives": [
+            "Separar lectura de datos, cálculo y presentación en funciones.",
+            "Formatear dinero con toFixed y validar entradas inválidas.",
+            "Probar un programa con casos normales y casos límite."
+          ],
+          "body_md": "## Primer proyecto: de la idea al código\n\nYa tienes las piezas. Un proyecto pequeño las junta y te obliga a decidir. El ejercicio clásico es una calculadora de propina, y sirve porque tiene entrada, cálculo y salida.\n\n### Definir antes de escribir\n\nAntes de teclear, responde tres preguntas: qué entra, qué sale y qué casos raros hay. Para la propina: entran el total y el porcentaje; sale la propina y el total final; los casos raros son un total vacío, un porcentaje negativo o texto en lugar de números.\n\n### Leer y validar\n\n```js\nconst data = require('fs').readFileSync(0, 'utf8').trim().split(/\\s+/);\nconst total = Number(data[0]);\nconst porcentaje = Number(data[1]);\n\nif (Number.isNaN(total) || Number.isNaN(porcentaje)) {\n  console.log('Datos inválidos');\n} else {\n  const propina = (total * porcentaje) / 100;\n  console.log(`Propina: ${propina.toFixed(2)}`);\n  console.log(`Total: ${(total + propina).toFixed(2)}`);\n}\n```\n\n`toFixed(2)` deja dos decimales y devuelve texto. Es lo correcto para mostrar dinero, aunque internamente conviene no encadenar operaciones sobre ese texto.\n\n### Estructura en funciones\n\nCuando el programa crece, separa responsabilidades:\n\n```js\nfunction calcularPropina(total, porcentaje) {\n  return (total * porcentaje) / 100;\n}\n\nfunction formatear(valor) {\n  return valor.toFixed(2);\n}\n\nconst propina = calcularPropina(20, 15);\nconsole.log(`Propina: ${formatear(propina)}`);\n```\n\nCada función hace una cosa y se puede probar por separado. Si un resultado sale mal, sabes dónde mirar.\n\n### Probar con casos límite\n\nPrueba siempre cuatro casos: un valor normal, un cero, un valor grande y una entrada inválida. Con la propina: `20 15`, `0 10`, `1000 20` y una entrada vacía. Los tres primeros deben dar resultados predecibles; el cuarto, un mensaje claro en vez de `NaN`.\n\n### Depurar sin adivinar\n\n`console.log` sigue siendo la herramienta más rápida. Imprime los valores justo después de leerlos y comprueba el tipo:\n\n```js\nconsole.log(typeof total, total);\n```\n\nSi ves `string 20`, olvidaste convertir. Si ves `number NaN`, la conversión falló. Coloca los mensajes de depuración en los puntos donde el dato cambia, no en todas partes.\n\n### Cerrar el proyecto\n\nAntes de dar algo por terminado, repasa una lista corta: los datos se validan al entrar, el cálculo está en una función propia, la salida tiene el formato pedido, los casos límite no producen `NaN` y no quedan mensajes de depuración. Con eso, un ejercicio de veinte líneas se comporta como una herramienta.\n\n### Errores típicos\n\n- Calcular antes de validar y mostrar `NaN`.\n- Mezclar la lectura de datos con el cálculo en una sola función larga.\n- Olvidar `toFixed` y mostrar `3.0000000000000004`.\n- Probar solo el caso feliz.\n- Dejar los `console.log` de depuración en la versión final.\n\n### Para fijarlo\n\nEscribe el programa completo en un archivo, ejecútalo con Node y pásale los cuatro casos. Después divídelo en dos funciones y comprueba que la salida no cambia. Ese es el primer paso para que un proyecto pequeño siga siendo mantenible.",
+          "exercises": [
+            {
+              "slug": "calculadora-de-propina",
+              "title": "Calculadora de propina",
+              "kind": "stdout",
+              "prompt_md": "Lee el total de una cuenta y un porcentaje de propina. Muestra `Propina: 3.00` y `Total: 23.00`, con dos decimales.",
+              "starter_code": "const data = require('fs').readFileSync(0, 'utf8').trim().split(/\\s+/);\nconst total = Number(data[0]);\nconst porcentaje = Number(data[1]);\n// calcula la propina y muestra las dos líneas\n",
+              "solution_code": "const data = require('fs').readFileSync(0, 'utf8').trim().split(/\\s+/);\nconst total = Number(data[0]);\nconst porcentaje = Number(data[1]);\nconst propina = (total * porcentaje) / 100;\nconsole.log(`Propina: ${propina.toFixed(2)}`);\nconsole.log(`Total: ${(total + propina).toFixed(2)}`);\n",
+              "tests": [
+                {
+                  "name": "Veinte al quince",
+                  "stdin": "20 15\n",
+                  "expected_stdout": "Propina: 3.00\nTotal: 23.00"
+                },
+                {
+                  "name": "Cincuenta al diez",
+                  "stdin": "50 10\n",
+                  "expected_stdout": "Propina: 5.00\nTotal: 55.00"
+                }
+              ],
+              "hints": [
+                "La propina es total por porcentaje dividido entre 100.",
+                "Formatea cada resultado con toFixed(2) al mostrarlo."
+              ]
+            }
+          ],
+          "quiz": [
+            {
+              "question": "¿Qué hace toFixed(2)?",
+              "options": [
+                "Devuelve un texto con dos decimales redondeados.",
+                "Devuelve un número con dos decimales exactos.",
+                "Redondea el número a la unidad.",
+                "Convierte el número en booleano."
+              ],
+              "answer_index": 0,
+              "explanation": "toFixed devuelve una cadena; se usa al mostrar, no para seguir calculando."
+            },
+            {
+              "question": "¿Cuál es el primer paso antes de calcular en un programa con entrada?",
+              "options": [
+                "Convertir y validar los datos de entrada.",
+                "Formatear la salida.",
+                "Escribir el console.log final.",
+                "Dividir el código en diez funciones."
+              ],
+              "answer_index": 0,
+              "explanation": "Si los datos no son números, el cálculo produce NaN; conviene validar antes."
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "labs": [
+    {
+      "slug": "lista-de-tareas",
+      "title": "Lista de tareas en consola",
+      "summary": "Construye por pasos una lista de tareas con marcas, avance e informe final.",
+      "minutes": 75,
+      "steps": [
+        {
+          "title": "Guardar y numerar las tareas",
+          "instructions_md": "Lee la cantidad de tareas y después sus nombres. Muestra la lista numerada, una tarea por línea, con el formato `1. pan`. La lista se guarda en un array antes de imprimirla.",
+          "kind": "stdout",
+          "starter_code": "const data = require('fs').readFileSync(0, 'utf8').trim().split(/\\s+/);\nconst total = Number(data[0]);\n// crea el array y muestra la lista numerada\n",
+          "tests": [
+            {
+              "name": "Tres tareas",
+              "stdin": "3 pan leche cafe\n",
+              "expected_stdout": "1. pan\n2. leche\n3. cafe"
+            },
+            {
+              "name": "Dos tareas",
+              "stdin": "2 sol luna\n",
+              "expected_stdout": "1. sol\n2. luna"
+            }
+          ]
+        },
+        {
+          "title": "Marcar tareas completadas",
+          "instructions_md": "Lee la cantidad de tareas, sus nombres, la cantidad de tareas hechas y los nombres de esas tareas. Muestra cada tarea con una marca: `1. [x] pan` si está hecha y `1. [ ] leche` si no.",
+          "kind": "stdout",
+          "starter_code": "const data = require('fs').readFileSync(0, 'utf8').trim().split(/\\s+/);\nconst n = Number(data[0]);\n// lee las tareas hechas y muestra la lista con marcas\n",
+          "tests": [
+            {
+              "name": "Dos hechas de tres",
+              "stdin": "3 pan leche cafe\n2 pan cafe\n",
+              "expected_stdout": "1. [x] pan\n2. [ ] leche\n3. [x] cafe"
+            },
+            {
+              "name": "Una hecha de cuatro",
+              "stdin": "4 js css html sql\n1 css\n",
+              "expected_stdout": "1. [ ] js\n2. [x] css\n3. [ ] html\n4. [ ] sql"
+            }
+          ]
+        },
+        {
+          "title": "Calcular el avance",
+          "instructions_md": "Con los mismos datos del paso anterior, muestra dos líneas: `Hechas: 2 de 3` y `Avance: 67%`. El porcentaje se redondea al entero más cercano.",
+          "kind": "stdout",
+          "starter_code": "const data = require('fs').readFileSync(0, 'utf8').trim().split(/\\s+/);\n// calcula el porcentaje y muestra el avance\n",
+          "tests": [
+            {
+              "name": "Dos de tres",
+              "stdin": "3 pan leche cafe\n2 pan cafe\n",
+              "expected_stdout": "Hechas: 2 de 3\nAvance: 67%"
+            },
+            {
+              "name": "Una de cuatro",
+              "stdin": "4 js css html sql\n1 css\n",
+              "expected_stdout": "Hechas: 1 de 4\nAvance: 25%"
+            }
+          ]
+        },
+        {
+          "title": "Añadir una tarea nueva",
+          "instructions_md": "Lee la cantidad de tareas, sus nombres y una tarea nueva. Añádela al array con push, muestra la lista numerada y termina con `Total: 4`.",
+          "kind": "stdout",
+          "starter_code": "const data = require('fs').readFileSync(0, 'utf8').trim().split(/\\s+/);\nconst n = Number(data[0]);\n// añade la tarea nueva y muestra la lista completa\n",
+          "tests": [
+            {
+              "name": "Añadir arroz",
+              "stdin": "3 pan leche cafe\narroz\n",
+              "expected_stdout": "1. pan\n2. leche\n3. cafe\n4. arroz\nTotal: 4"
+            },
+            {
+              "name": "Añadir tres",
+              "stdin": "2 uno dos\ntres\n",
+              "expected_stdout": "1. uno\n2. dos\n3. tres\nTotal: 3"
+            }
+          ]
+        },
+        {
+          "title": "Informe final",
+          "instructions_md": "Junta todo: lee las tareas y las hechas y muestra un informe de cuatro líneas con el total, las hechas, las pendientes y el porcentaje redondeado: `Tareas: 5`, `Hechas: 3`, `Pendientes: 2`, `Avance: 60%`.",
+          "kind": "stdout",
+          "starter_code": "const data = require('fs').readFileSync(0, 'utf8').trim().split(/\\s+/);\n// calcula el informe completo\n",
+          "tests": [
+            {
+              "name": "Cinco con tres hechas",
+              "stdin": "5 pan leche cafe arroz te\n3 pan cafe te\n",
+              "expected_stdout": "Tareas: 5\nHechas: 3\nPendientes: 2\nAvance: 60%"
+            },
+            {
+              "name": "Cuatro con dos hechas",
+              "stdin": "4 a b c d\n2 a c\n",
+              "expected_stdout": "Tareas: 4\nHechas: 2\nPendientes: 2\nAvance: 50%"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

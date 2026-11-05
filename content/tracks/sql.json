@@ -1,0 +1,1052 @@
+{
+  "track": "sql",
+  "title": "SQL desde cero",
+  "language": "sql",
+  "description": "Consulta, resume y modifica datos con SQLite, el motor de base de datos que ya viene con Python.",
+  "level": "principiante",
+  "modules": [
+    {
+      "title": "Consultas básicas",
+      "summary": "Leer tablas, filtrar filas y controlar el orden del resultado.",
+      "lessons": [
+        {
+          "slug": "que-es-una-base-de-datos",
+          "title": "Qué es una base de datos",
+          "summary": "Entiende qué guarda una base de datos relacional y cómo pedirle datos con SELECT.",
+          "minutes": 12,
+          "objectives": [
+            "Distinguir tablas, filas y columnas en una base de datos relacional.",
+            "Escribir una consulta SELECT que devuelva solo las columnas necesarias.",
+            "Reconocer cómo SQLite ejecuta una consulta y qué se compara en los ejercicios."
+          ],
+          "body_md": "## Qué guarda una base de datos\n\nUna base de datos es un programa que almacena información de forma ordenada y permite recuperarla haciendo preguntas. En vez de abrir un archivo y buscar a ojo, describes lo que quieres y el motor responde con filas de datos. Las bases de datos relacionales guardan todo en tablas, y SQL es el idioma con el que se les habla.\n\nCódigo Cero usa SQLite, un motor completo que vive en un solo archivo y no necesita servidor. Cada ejercicio crea sus tablas en memoria, ejecuta tu consulta y compara el resultado con el esperado. Por eso puedes practicar sin instalar nada más.\n\n## Tablas, filas y columnas\n\nImagina una hoja de cálculo con reglas. Cada tabla tiene columnas con nombre y tipo, y cada fila es un registro completo. Este es el contenido de una tabla de libros:\n\n| id | titulo | autor | anio |\n|----|--------|-------|------|\n| 1 | Cien años de soledad | Gabriel García Márquez | 1967 |\n| 2 | Rayuela | Julio Cortázar | 1963 |\n| 3 | La casa verde | Mario Vargas Llosa | 1966 |\n\nY así se crea:\n\n```sql\nCREATE TABLE libros (\n    id INTEGER PRIMARY KEY,\n    titulo TEXT NOT NULL,\n    autor TEXT,\n    anio INTEGER\n);\n```\n\nCada columna declara qué acepta: `INTEGER` para números enteros, `TEXT` para texto. `PRIMARY KEY` indica la columna que identifica cada fila sin ambigüedad. `NOT NULL` impide dejar el campo vacío.\n\n## Pedir datos con SELECT\n\n`SELECT` lee datos. Indicas las columnas que quieres y la tabla donde están:\n\n```sql\nSELECT titulo, autor\nFROM libros;\n```\n\nEl resultado tiene dos columnas y una fila por libro. `SELECT *` devuelve todas las columnas; es cómodo para explorar, pero en consultas reales conviene nombrar solo lo necesario. También puedes cambiar el nombre de una columna en el resultado con `AS`:\n\n```sql\nSELECT titulo AS obra, anio AS publicado\nFROM libros;\n```\n\nEl alias solo afecta a la salida; la tabla no cambia. Y el orden de las filas no está garantizado: el resultado es un conjunto. Para ordenarlo se usa `ORDER BY`, que verás más adelante.\n\n## Mayúsculas y espacios\n\nSQL no distingue mayúsculas en las palabras clave, pero la convención es escribirlas en mayúsculas y los nombres de tablas y columnas en minúsculas. Las líneas nuevas y los espacios sobran: siempre que respetes el orden de las cláusulas, la consulta significa lo mismo.\n\n## Errores típicos\n\n- Olvidar el punto y coma final. SQLite lo tolera en muchos casos, pero otros motores no.\n- Escribir `FROM libros SELECT titulo`: el orden es siempre `SELECT` y después `FROM`.\n- Confundir el nombre de una columna con el de la tabla.\n- Usar comillas dobles para texto: en SQL el texto va entre comillas simples, `'Rayuela'`.\n- Creer que `SELECT *` es la norma. Nombra las columnas que necesitas.",
+          "exercises": [
+            {
+              "slug": "catalogo-de-libros",
+              "title": "Título y año de cada libro",
+              "kind": "sql",
+              "prompt_md": "La tabla `libros` tiene las columnas `id`, `titulo`, `autor` y `anio`.\n\nEscribe una consulta que devuelva el título y el año de todos los libros, en ese orden de columnas.\n\nEl resultado debe tener dos columnas: `titulo` y `anio`.",
+              "starter_code": "-- Tabla disponible: libros(id, titulo, autor, anio)\n",
+              "solution_code": "SELECT titulo, anio FROM libros;",
+              "tests": [
+                {
+                  "name": "Catálogo de tres libros",
+                  "setup": "CREATE TABLE libros (id INTEGER PRIMARY KEY, titulo TEXT, autor TEXT, anio INTEGER);\nINSERT INTO libros (id, titulo, autor, anio) VALUES\n  (1, 'Cien años de soledad', 'Gabriel García Márquez', 1967),\n  (2, 'Rayuela', 'Julio Cortázar', 1963),\n  (3, 'La casa verde', 'Mario Vargas Llosa', 1966);",
+                  "expected_rows": [
+                    [
+                      "Cien años de soledad",
+                      1967
+                    ],
+                    [
+                      "Rayuela",
+                      1963
+                    ],
+                    [
+                      "La casa verde",
+                      1966
+                    ]
+                  ]
+                },
+                {
+                  "name": "Catálogo de dos libros",
+                  "setup": "CREATE TABLE libros (id INTEGER PRIMARY KEY, titulo TEXT, autor TEXT, anio INTEGER);\nINSERT INTO libros (id, titulo, autor, anio) VALUES\n  (1, 'El túnel', 'Ernesto Sabato', 1948),\n  (2, 'Pedro Páramo', 'Juan Rulfo', 1955);",
+                  "expected_rows": [
+                    [
+                      "El túnel",
+                      1948
+                    ],
+                    [
+                      "Pedro Páramo",
+                      1955
+                    ]
+                  ]
+                }
+              ],
+              "hints": [
+                "Las columnas que quieres mostrar se escriben después de SELECT, separadas por comas.",
+                "La tabla se indica con FROM libros."
+              ]
+            },
+            {
+              "slug": "ficha-completa",
+              "title": "La ficha completa",
+              "kind": "sql",
+              "prompt_md": "A veces necesitas todas las columnas de una tabla para inspeccionarla.\n\nEscribe una consulta que devuelva todas las columnas de la tabla `libros` para cada uno de sus registros.",
+              "starter_code": "-- Tabla disponible: libros(id, titulo, autor, anio)\n",
+              "solution_code": "SELECT * FROM libros;",
+              "tests": [
+                {
+                  "name": "Dos libros completos",
+                  "setup": "CREATE TABLE libros (id INTEGER PRIMARY KEY, titulo TEXT, autor TEXT, anio INTEGER);\nINSERT INTO libros (id, titulo, autor, anio) VALUES\n  (1, 'Rayuela', 'Julio Cortázar', 1963),\n  (2, 'Ficciones', 'Jorge Luis Borges', 1944);",
+                  "expected_rows": [
+                    [
+                      1,
+                      "Rayuela",
+                      "Julio Cortázar",
+                      1963
+                    ],
+                    [
+                      2,
+                      "Ficciones",
+                      "Jorge Luis Borges",
+                      1944
+                    ]
+                  ]
+                }
+              ],
+              "hints": [
+                "Existe un atajo para no enumerar todas las columnas.",
+                "El atajo es el asterisco: SELECT * FROM ..."
+              ]
+            }
+          ],
+          "quiz": [
+            {
+              "question": "¿Qué parte de la consulta indica de qué tabla se leen los datos?",
+              "options": [
+                "SELECT",
+                "FROM",
+                "WHERE",
+                "ORDER BY"
+              ],
+              "answer_index": 1,
+              "explanation": "FROM nombra la tabla; SELECT solo elige las columnas."
+            },
+            {
+              "question": "¿Qué devuelve `SELECT titulo FROM libros`?",
+              "options": [
+                "Todas las columnas de la tabla",
+                "Una sola fila con el título más largo",
+                "La columna titulo de cada fila de la tabla",
+                "La estructura de la tabla"
+              ],
+              "answer_index": 2,
+              "explanation": "SELECT titulo proyecta esa columna en todas las filas; no filtra ni ordena."
+            }
+          ]
+        },
+        {
+          "slug": "filtrar-con-where",
+          "title": "Filtrar con WHERE",
+          "summary": "Selecciona solo las filas que te interesan con comparaciones, patrones y listas.",
+          "minutes": 14,
+          "objectives": [
+            "Escribir condiciones con WHERE usando operadores de comparación.",
+            "Combinar condiciones con AND, OR y paréntesis sin ambigüedad.",
+            "Usar LIKE, IN, BETWEEN e IS NULL según el tipo de dato."
+          ],
+          "body_md": "## Filtrar filas\n\nCasi nunca quieres toda la tabla. `WHERE` se coloca después de `FROM` y decide qué filas pasan al resultado: solo las que cumplen la condición. El resto se descarta antes de que lo veas.\n\n```sql\nSELECT titulo, anio\nFROM peliculas\nWHERE genero = 'drama';\n```\n\nEl texto va entre comillas simples; los números, sin comillas. Si escribes `WHERE anio = 1994` comparas números. Si escribes `'1994'` comparas texto y el resultado puede sorprenderte.\n\n## Operadores de comparación\n\nDispones de `=`, `<>` (distinto; también se acepta `!=`), `<`, `>`, `<=` y `>=`. Se combinan con `AND`, `OR` y `NOT`:\n\n```sql\nSELECT titulo\nFROM peliculas\nWHERE genero = 'drama'\n  AND duracion > 120;\n```\n\n`AND` exige que se cumplan las dos condiciones; `OR`, al menos una. Mezclarlos sin paréntesis es una fuente clásica de errores, porque `AND` se evalúa antes que `OR`. Si dudas, escribe los paréntesis:\n\n```sql\nWHERE (genero = 'drama' OR genero = 'comedia') AND anio >= 2000\n```\n\n## Patrones, rangos y listas\n\n`LIKE` compara texto con patrones: `%` representa cualquier cantidad de caracteres y `_` exactamente uno. `LIKE 'Mar%'` encuentra lo que empieza por Mar; `LIKE '%ez'` lo que termina en ez. En SQLite no distingue mayúsculas de minúsculas en el alfabeto latino básico.\n\n`BETWEEN` resume un rango inclusivo, `IN` compara con una lista y `IS NULL` detecta valores ausentes:\n\n```sql\nSELECT nombre FROM clientes WHERE ciudad IN ('Lima', 'Bogotá');\nSELECT titulo FROM libros WHERE anio BETWEEN 1990 AND 1999;\nSELECT nombre FROM socios WHERE correo IS NULL;\n```\n\n## NULL no es un valor cualquiera\n\n`NULL` significa «sin valor» y no es igual a nada, ni siquiera a otro `NULL`. Por eso `correo = NULL` no devuelve filas: hay que usar `IS NULL` o `IS NOT NULL`.\n\nLa base de datos recorre la tabla, evalúa la condición fila por fila y conserva las que dan verdadero. Si una fila tiene `NULL` en la columna comparada, la condición no es verdadera y la fila queda fuera. Esa es la razón de que un `WHERE duracion > 120` descarte las películas sin duración registrada.\n\n## Un filtro se combina con lo que ya sabes\n\n`WHERE` no cambia las columnas que muestra `SELECT`, solo reduce las filas. Puedes filtrar y renombrar a la vez, y el orden de las cláusulas sigue siendo `SELECT`, `FROM`, `WHERE`.\n\n## Errores típicos\n\n- Escribir `WHERE correo = NULL` en lugar de `WHERE correo IS NULL`.\n- Usar comillas dobles para texto: `\"drama\"` se interpreta como nombre de columna.\n- Olvidar los paréntesis al mezclar `AND` y `OR`.\n- Poner `%` solo al principio cuando se busca un prefijo: `LIKE '%Mar'` no es lo mismo que `LIKE 'Mar%'`.\n- Colocar `WHERE` antes de `FROM`: el orden de las cláusulas es fijo.",
+          "exercises": [
+            {
+              "slug": "peliculas-drama-largas",
+              "title": "Dramas de más de dos horas",
+              "kind": "sql",
+              "prompt_md": "La tabla `peliculas` tiene las columnas `id`, `titulo`, `genero`, `duracion` (minutos) y `anio`.\n\nEscribe una consulta que devuelva el título de las películas cuyo género sea exactamente `drama` y cuya duración sea mayor que 120 minutos.\n\nDevuelve una sola columna: `titulo`.",
+              "starter_code": "-- Tabla disponible: peliculas(id, titulo, genero, duracion, anio)\n",
+              "solution_code": "SELECT titulo FROM peliculas WHERE genero = 'drama' AND duracion > 120;",
+              "tests": [
+                {
+                  "name": "Catálogo variado",
+                  "setup": "CREATE TABLE peliculas (id INTEGER PRIMARY KEY, titulo TEXT, genero TEXT, duracion INTEGER, anio INTEGER);\nINSERT INTO peliculas (id, titulo, genero, duracion, anio) VALUES\n  (1, 'El padrino', 'drama', 175, 1972),\n  (2, 'Interestelar', 'ciencia ficción', 169, 2014),\n  (3, 'Amélie', 'comedia', 122, 2001),\n  (4, 'Roma', 'drama', 135, 2018),\n  (5, 'Toy Story', 'animación', 81, 1995),\n  (6, 'La La Land', 'drama', 128, 2016);",
+                  "expected_rows": [
+                    [
+                      "El padrino"
+                    ],
+                    [
+                      "Roma"
+                    ],
+                    [
+                      "La La Land"
+                    ]
+                  ]
+                },
+                {
+                  "name": "Dramas cortos",
+                  "setup": "CREATE TABLE peliculas (id INTEGER PRIMARY KEY, titulo TEXT, genero TEXT, duracion INTEGER, anio INTEGER);\nINSERT INTO peliculas (id, titulo, genero, duracion, anio) VALUES\n  (1, 'Casablanca', 'drama', 102, 1942),\n  (2, 'El séptimo sello', 'drama', 96, 1957),\n  (3, 'Ciudad de Dios', 'drama', 130, 2002),\n  (4, 'Up', 'animación', 96, 2009);",
+                  "expected_rows": [
+                    [
+                      "Ciudad de Dios"
+                    ]
+                  ]
+                }
+              ],
+              "hints": [
+                "Necesitas dos condiciones unidas: género y duración.",
+                "El texto se escribe entre comillas simples: 'drama'."
+              ]
+            },
+            {
+              "slug": "clientes-con-mar",
+              "title": "Clientes que empiezan por Mar",
+              "kind": "sql",
+              "prompt_md": "La tabla `clientes` tiene las columnas `id`, `nombre`, `ciudad` y `correo`.\n\nEscribe una consulta que devuelva el nombre de los clientes cuyo nombre empieza por `Mar`. Devuelve una sola columna: `nombre`.",
+              "starter_code": "-- Tabla disponible: clientes(id, nombre, ciudad, correo)\n",
+              "solution_code": "SELECT nombre FROM clientes WHERE nombre LIKE 'Mar%';",
+              "tests": [
+                {
+                  "name": "Cinco clientes",
+                  "setup": "CREATE TABLE clientes (id INTEGER PRIMARY KEY, nombre TEXT, ciudad TEXT, correo TEXT);\nINSERT INTO clientes (id, nombre, ciudad, correo) VALUES\n  (1, 'María López', 'Lima', 'maria@correo.com'),\n  (2, 'Ana Ruiz', 'Bogotá', 'ana@correo.com'),\n  (3, 'Marcos Díaz', 'Quito', 'marcos@correo.com'),\n  (4, 'Lucía Paz', 'Lima', NULL),\n  (5, 'Marina Soto', 'Cali', 'marina@correo.com');",
+                  "expected_rows": [
+                    [
+                      "María López"
+                    ],
+                    [
+                      "Marcos Díaz"
+                    ],
+                    [
+                      "Marina Soto"
+                    ]
+                  ]
+                },
+                {
+                  "name": "Otro listado",
+                  "setup": "CREATE TABLE clientes (id INTEGER PRIMARY KEY, nombre TEXT, ciudad TEXT, correo TEXT);\nINSERT INTO clientes (id, nombre, ciudad, correo) VALUES\n  (1, 'Mario Pérez', 'Lima', 'mario@correo.com'),\n  (2, 'Ana Ruiz', 'Bogotá', 'ana@correo.com'),\n  (3, 'Pedro Gil', 'Quito', NULL),\n  (4, 'Marta Vidal', 'Cali', 'marta@correo.com');",
+                  "expected_rows": [
+                    [
+                      "Mario Pérez"
+                    ],
+                    [
+                      "Marta Vidal"
+                    ]
+                  ]
+                }
+              ],
+              "hints": [
+                "El patrón se escribe con LIKE y comillas simples.",
+                "El signo % representa cualquier cantidad de caracteres, incluidos cero."
+              ]
+            }
+          ],
+          "quiz": [
+            {
+              "question": "¿Qué consulta devuelve las películas con duración mayor que 120?",
+              "options": [
+                "SELECT * FROM peliculas WHERE duracion > 120;",
+                "SELECT * FROM peliculas WHERE duracion => 120;",
+                "SELECT * FROM peliculas HAVING duracion > 120;",
+                "SELECT * FROM peliculas ORDER BY duracion > 120;"
+              ],
+              "answer_index": 0,
+              "explanation": "El operador mayor que es >; => no existe como comparador y HAVING es para grupos."
+            },
+            {
+              "question": "¿Cómo se comprueba si una columna no tiene valor?",
+              "options": [
+                "columna = NULL",
+                "columna == NULL",
+                "columna IS NULL",
+                "columna LIKE NULL"
+              ],
+              "answer_index": 2,
+              "explanation": "NULL no es igual a nada; se comprueba con IS NULL o IS NOT NULL."
+            }
+          ]
+        },
+        {
+          "slug": "ordenar-y-limitar",
+          "title": "Ordenar y limitar resultados",
+          "summary": "Controla el orden de las filas y recorta la salida para quedarte con lo que importa.",
+          "minutes": 13,
+          "objectives": [
+            "Ordenar un resultado con ORDER BY, ascendente y descendente.",
+            "Usar varias claves de orden y LIMIT con OFFSET.",
+            "Detectar cuándo un orden ambiguo vuelve impredecible un resultado."
+          ],
+          "body_md": "## El orden no está garantizado\n\nUna consulta sin `ORDER BY` devuelve las filas en el orden que le convenga al motor: normalmente el de inserción, pero no es una promesa. Si el resultado debe salir ordenado, hay que pedirlo explícitamente. `ORDER BY` va al final y recibe una o varias columnas:\n\n```sql\nSELECT titulo, anio\nFROM libros\nORDER BY anio;\n```\n\nDe menor a mayor es el orden ascendente por defecto. `DESC` lo invierte:\n\n```sql\nSELECT titulo, anio\nFROM libros\nORDER BY anio DESC;\n```\n\n## Varias claves de orden\n\nCuando dos filas empatan en la primera columna, decides con la segunda:\n\n```sql\nSELECT autor, titulo, anio\nFROM libros\nORDER BY autor ASC, anio DESC;\n```\n\nAsí los libros se agrupan por autor y, dentro de cada autor, el más reciente aparece primero. Puedes ordenar por una columna que no muestras, y también por un alias definido en el `SELECT`:\n\n```sql\nSELECT titulo, anio AS publicado FROM libros ORDER BY publicado DESC;\n```\n\n## Recortar el resultado con LIMIT\n\n`LIMIT` se escribe después de `ORDER BY` y fija cuántas filas quieres:\n\n```sql\nSELECT producto, unidades\nFROM ventas\nORDER BY unidades DESC\nLIMIT 3;\n```\n\nEso devuelve los tres productos más vendidos. Sin `ORDER BY`, `LIMIT 3` elige tres filas cualesquiera: casi nunca es lo que buscas. `OFFSET` salta filas y sirve para paginar:\n\n```sql\nSELECT titulo FROM libros ORDER BY titulo LIMIT 10 OFFSET 10;\n```\n\n## Cuidado con los empates\n\nSi dos filas empatan justo en el corte del `LIMIT`, el motor puede devolver una u otra. En un ejercicio con tests conviene ordenar por una columna con valores únicos, como `id`, o añadir esa columna como último criterio de orden. Así el resultado es siempre el mismo. Y si el empate decide qué fila entra y cuál no, el ejercicio deja de ser determinista: evítalo.\n\n## Ordenar con números, fechas y textos\n\nLos textos se ordenan alfabéticamente y las fechas en formato ISO (`2024-03-01`) se ordenan solas como texto. Los números se ordenan como números, no como texto: `9` va antes que `10`. Si la columna guarda números como texto, prepárate para resultados raros.\n\n## Qué se compara en los ejercicios\n\nLos ejercicios comparan el resultado como conjunto de filas: el orden no cuenta. Eso no quita importancia a `ORDER BY`: si usas `LIMIT`, el orden decide qué filas quedan dentro y cuáles se descartan. Ordena siempre antes de recortar y elige una columna con valores únicos para desempatar.\n\n## Errores típicos\n\n- Escribir `LIMIT 3 ORDER BY unidades`: `LIMIT` va al final.\n- Confiar en que la tabla ya viene ordenada por `id`.\n- Ordenar texto que contiene números (`'10'` antes que `'9'`) y esperar orden numérico.\n- Usar `OFFSET` sin un `ORDER BY` estable: la página cambia entre consultas.\n- Olvidar `DESC` y obtener los peores resultados en lugar de los mejores.",
+          "exercises": [
+            {
+              "slug": "top-3-ventas",
+              "title": "Los tres productos más vendidos",
+              "kind": "sql",
+              "prompt_md": "La tabla `ventas` tiene las columnas `id`, `producto`, `unidades` y `precio`.\n\nEscribe una consulta que devuelva el producto y las unidades de los tres productos con más unidades vendidas, en las columnas `producto` y `unidades`.",
+              "starter_code": "-- Tabla disponible: ventas(id, producto, unidades, precio)\n",
+              "solution_code": "SELECT producto, unidades FROM ventas ORDER BY unidades DESC LIMIT 3;",
+              "tests": [
+                {
+                  "name": "Cinco productos",
+                  "setup": "CREATE TABLE ventas (id INTEGER PRIMARY KEY, producto TEXT, unidades INTEGER, precio INTEGER);\nINSERT INTO ventas (id, producto, unidades, precio) VALUES\n  (1, 'Cuaderno', 120, 8),\n  (2, 'Lápiz', 95, 2),\n  (3, 'Mochila', 88, 45),\n  (4, 'Regla', 41, 3),\n  (5, 'Compás', 30, 12);",
+                  "expected_rows": [
+                    [
+                      "Cuaderno",
+                      120
+                    ],
+                    [
+                      "Lápiz",
+                      95
+                    ],
+                    [
+                      "Mochila",
+                      88
+                    ]
+                  ]
+                },
+                {
+                  "name": "Cuatro productos",
+                  "setup": "CREATE TABLE ventas (id INTEGER PRIMARY KEY, producto TEXT, unidades INTEGER, precio INTEGER);\nINSERT INTO ventas (id, producto, unidades, precio) VALUES\n  (1, 'Goma', 60, 1),\n  (2, 'Tijeras', 55, 6),\n  (3, 'Carpeta', 54, 4),\n  (4, 'Marcador', 12, 3);",
+                  "expected_rows": [
+                    [
+                      "Goma",
+                      60
+                    ],
+                    [
+                      "Tijeras",
+                      55
+                    ],
+                    [
+                      "Carpeta",
+                      54
+                    ]
+                  ]
+                }
+              ],
+              "hints": [
+                "Primero ordena de mayor a menor por unidades.",
+                "Después de ORDER BY, añade LIMIT 3."
+              ]
+            },
+            {
+              "slug": "empleado-mas-antiguo",
+              "title": "El empleado más antiguo",
+              "kind": "sql",
+              "prompt_md": "La tabla `empleados` tiene las columnas `id`, `nombre`, `puesto`, `salario` y `ingreso` (fecha en formato `AAAA-MM-DD`).\n\nEscribe una consulta que devuelva el nombre y la fecha de ingreso del empleado que llegó primero a la empresa. Devuelve las columnas `nombre` e `ingreso`.",
+              "starter_code": "-- Tabla disponible: empleados(id, nombre, puesto, salario, ingreso)\n",
+              "solution_code": "SELECT nombre, ingreso FROM empleados ORDER BY ingreso ASC LIMIT 1;",
+              "tests": [
+                {
+                  "name": "Fechas distintas",
+                  "setup": "CREATE TABLE empleados (id INTEGER PRIMARY KEY, nombre TEXT, puesto TEXT, salario INTEGER, ingreso TEXT);\nINSERT INTO empleados (id, nombre, puesto, salario, ingreso) VALUES\n  (1, 'Ana', 'Analista', 1800, '2021-06-01'),\n  (2, 'Luis', 'Técnico', 1500, '2019-02-15'),\n  (3, 'Marta', 'Jefa', 2600, '2022-09-30');",
+                  "expected_rows": [
+                    [
+                      "Luis",
+                      "2019-02-15"
+                    ]
+                  ]
+                },
+                {
+                  "name": "Otro equipo",
+                  "setup": "CREATE TABLE empleados (id INTEGER PRIMARY KEY, nombre TEXT, puesto TEXT, salario INTEGER, ingreso TEXT);\nINSERT INTO empleados (id, nombre, puesto, salario, ingreso) VALUES\n  (1, 'Pedro', 'Diseñador', 1700, '2020-01-10'),\n  (2, 'Sofía', 'Soporte', 1400, '2018-11-05'),\n  (3, 'Diego', 'Gerente', 3000, '2015-04-20');",
+                  "expected_rows": [
+                    [
+                      "Diego",
+                      "2015-04-20"
+                    ]
+                  ]
+                }
+              ],
+              "hints": [
+                "Las fechas en formato ISO se ordenan bien como texto.",
+                "Solo necesitas la primera fila después de ordenar: LIMIT 1."
+              ]
+            }
+          ],
+          "quiz": [
+            {
+              "question": "¿En qué posición va LIMIT dentro de una consulta?",
+              "options": [
+                "Antes de SELECT",
+                "Entre SELECT y FROM",
+                "Después de ORDER BY",
+                "Antes de WHERE"
+              ],
+              "answer_index": 2,
+              "explanation": "El orden de cláusulas termina en ORDER BY y luego LIMIT."
+            },
+            {
+              "question": "¿Qué hace `ORDER BY anio DESC`?",
+              "options": [
+                "Ordena de menor a mayor por año",
+                "Ordena de mayor a menor por año",
+                "Elimina los años repetidos",
+                "Filtra las filas sin año"
+              ],
+              "answer_index": 1,
+              "explanation": "DESC invierte el orden ascendente por defecto."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Resumir y combinar",
+      "summary": "Agregados, grupos y uniones entre tablas relacionadas.",
+      "lessons": [
+        {
+          "slug": "funciones-agregadas",
+          "title": "Funciones agregadas",
+          "summary": "Resume tablas enteras con COUNT, SUM, AVG, MIN y MAX sin perder de vista los NULL.",
+          "minutes": 13,
+          "objectives": [
+            "Usar COUNT, SUM, AVG, MIN y MAX para resumir un conjunto de filas.",
+            "Explicar la diferencia entre COUNT(*) y COUNT(columna).",
+            "Reconocer cuándo un agregado devuelve NULL o decimales."
+          ],
+          "body_md": "## Resumir muchas filas en una\n\nLas funciones agregadas toman un conjunto de filas y devuelven un único valor. Son la herramienta para responder «cuántos», «cuánto» o «cuál es el máximo».\n\n```sql\nSELECT COUNT(*) AS pedidos, SUM(total) AS facturado\nFROM pedidos;\n```\n\nEl resultado es una sola fila con dos columnas. `COUNT(*)` cuenta filas; `SUM` suma los valores de una columna numérica; `AVG` calcula la media; `MIN` y `MAX` dan el menor y el mayor. Los alias con `AS` hacen legible la salida.\n\n## COUNT(*) no es COUNT(columna)\n\n`COUNT(*)` cuenta filas aunque tengan huecos. `COUNT(columna)` cuenta solo las filas donde esa columna no es `NULL`. La diferencia importa:\n\n```sql\nSELECT COUNT(*) AS socios, COUNT(correo) AS con_correo\nFROM socios;\n```\n\nSi hay diez socios y tres sin correo, el resultado será `10` y `7`. Lo mismo pasa con `SUM` y `AVG`: ignoran los `NULL`. Y si la tabla está vacía, `COUNT` devuelve `0`, pero `SUM` y `AVG` devuelven `NULL`, no cero.\n\n## Redondear y cuidar los tipos\n\n`AVG` casi siempre produce decimales. `ROUND` corta a los decimales que pidas:\n\n```sql\nSELECT ROUND(AVG(precio), 2) AS media\nFROM productos;\n```\n\nFíjate en que el resultado de `AVG` es un número real aunque los valores sean enteros: la media de 10 y 20 es `15.0`. Si comparas ese valor con un entero, hazlo con cuidado.\n\nEl alias no es decorativo: cuando el resultado llega a la aplicación, el nombre de la columna es lo que se lee. Sin `AS`, muchas bases de datos devuelven nombres como `MIN(precio)`, incómodos de usar.\n\n## Varios agregados en la misma fila\n\nPuedes combinar agregados distintos, siempre que todos resuman la tabla completa:\n\n```sql\nSELECT MIN(precio) AS minimo,\n       MAX(precio) AS maximo,\n       ROUND(AVG(precio), 2) AS media\nFROM productos;\n```\n\nCada expresión se calcula sobre el mismo conjunto de filas y produce una sola fila de salida. Si además quieres el detalle por categoría, necesitas `GROUP BY`.\n\n## Un agregado no se mezcla con columnas sueltas\n\nEsto falla o da un resultado engañoso:\n\n```sql\nSELECT titulo, COUNT(*) FROM libros;\n```\n\n`COUNT(*)` resume toda la tabla y `titulo` pertenece a una fila concreta: el motor no sabe cuál elegir. Para eso existe `GROUP BY`, que llega en la próxima lección.\n\n## Agregados en condiciones\n\nUn agregado no puede ir en `WHERE`, porque `WHERE` se evalúa fila a fila y todavía no existe el resumen. Si necesitas filtrar por el resultado de un agregado, se hace con `HAVING` o con una subconsulta.\n\n## Errores típicos\n\n- Suponer que `SUM` devuelve `0` con la tabla vacía: devuelve `NULL`.\n- Contar con `COUNT(columna)` y extrañarse de que el número sea menor que las filas.\n- Comparar el resultado de `AVG` con un entero sin pensar en los decimales.\n- Poner un alias con espacios sin comillas.\n- Mezclar columnas y agregados sin `GROUP BY`.",
+          "exercises": [
+            {
+              "slug": "resumen-de-pedidos",
+              "title": "Cuántos pedidos y cuánto suman",
+              "kind": "sql",
+              "prompt_md": "La tabla `pedidos` tiene las columnas `id`, `cliente` y `total`.\n\nEscribe una consulta que devuelva, en una sola fila, la cantidad de pedidos y la suma de sus totales. Usa los alias `pedidos` y `total`.",
+              "starter_code": "-- Tabla disponible: pedidos(id, cliente, total)\n",
+              "solution_code": "SELECT COUNT(*) AS pedidos, SUM(total) AS total FROM pedidos;",
+              "tests": [
+                {
+                  "name": "Cinco pedidos",
+                  "setup": "CREATE TABLE pedidos (id INTEGER PRIMARY KEY, cliente TEXT, total INTEGER);\nINSERT INTO pedidos (id, cliente, total) VALUES\n  (1, 'Ana', 120),\n  (2, 'Luis', 80),\n  (3, 'Marta', 250),\n  (4, 'Ana', 210),\n  (5, 'Pedro', 120);",
+                  "expected_rows": [
+                    [
+                      5,
+                      780
+                    ]
+                  ]
+                },
+                {
+                  "name": "Tres pedidos",
+                  "setup": "CREATE TABLE pedidos (id INTEGER PRIMARY KEY, cliente TEXT, total INTEGER);\nINSERT INTO pedidos (id, cliente, total) VALUES\n  (1, 'Sofía', 90),\n  (2, 'Diego', 110),\n  (3, 'Sofía', 50);",
+                  "expected_rows": [
+                    [
+                      3,
+                      250
+                    ]
+                  ]
+                }
+              ],
+              "hints": [
+                "COUNT(*) cuenta filas; SUM(total) suma la columna total.",
+                "Los dos agregados caben en el mismo SELECT, separados por una coma."
+              ]
+            },
+            {
+              "slug": "precio-minimo-y-maximo",
+              "title": "El precio más bajo y el más alto",
+              "kind": "sql",
+              "prompt_md": "La tabla `productos` tiene las columnas `id`, `nombre`, `precio` y `stock`.\n\nEscribe una consulta que devuelva el precio mínimo y el máximo del catálogo, en las columnas `minimo` y `maximo`.",
+              "starter_code": "-- Tabla disponible: productos(id, nombre, precio, stock)\n",
+              "solution_code": "SELECT MIN(precio) AS minimo, MAX(precio) AS maximo FROM productos;",
+              "tests": [
+                {
+                  "name": "Cuatro productos",
+                  "setup": "CREATE TABLE productos (id INTEGER PRIMARY KEY, nombre TEXT, precio INTEGER, stock INTEGER);\nINSERT INTO productos (id, nombre, precio, stock) VALUES\n  (1, 'Cuaderno', 12, 40),\n  (2, 'Mochila', 89, 5),\n  (3, 'Lápiz', 3, 200),\n  (4, 'Regla', 45, 12);",
+                  "expected_rows": [
+                    [
+                      3,
+                      89
+                    ]
+                  ]
+                },
+                {
+                  "name": "Dos productos",
+                  "setup": "CREATE TABLE productos (id INTEGER PRIMARY KEY, nombre TEXT, precio INTEGER, stock INTEGER);\nINSERT INTO productos (id, nombre, precio, stock) VALUES\n  (1, 'Goma', 7, 30),\n  (2, 'Tijeras', 21, 8);",
+                  "expected_rows": [
+                    [
+                      7,
+                      21
+                    ]
+                  ]
+                }
+              ],
+              "hints": [
+                "MIN y MAX devuelven un valor cada una.",
+                "Puedes renombrar cada resultado con AS para que las columnas se llamen minimo y maximo."
+              ]
+            }
+          ],
+          "quiz": [
+            {
+              "question": "La tabla `socios` tiene 10 filas y 3 con `correo` NULL. ¿Qué devuelve `COUNT(correo)`?",
+              "options": [
+                "10",
+                "3",
+                "7",
+                "NULL"
+              ],
+              "answer_index": 2,
+              "explanation": "COUNT(columna) ignora los NULL: cuenta las 7 filas con correo."
+            },
+            {
+              "question": "¿Cuántas filas devuelve `SELECT COUNT(*) FROM pedidos`?",
+              "options": [
+                "Una fila con el número de pedidos",
+                "Tantas filas como pedidos",
+                "Ninguna, porque COUNT no devuelve filas",
+                "Una fila por cada cliente distinto"
+              ],
+              "answer_index": 0,
+              "explanation": "Un agregado sin GROUP BY colapsa la tabla en una única fila."
+            }
+          ]
+        },
+        {
+          "slug": "agrupar-con-group-by",
+          "title": "Agrupar con GROUP BY y HAVING",
+          "summary": "Calcula totales por categoría y filtra los grupos que no te interesan.",
+          "minutes": 14,
+          "objectives": [
+            "Agrupar filas con GROUP BY y aplicar agregados a cada grupo.",
+            "Distinguir el filtrado de filas de WHERE del filtrado de grupos de HAVING.",
+            "Ordenar los grupos resultantes con ORDER BY."
+          ],
+          "body_md": "## Agrupar para comparar categorías\n\n`GROUP BY` parte la tabla en grupos que comparten un valor y aplica los agregados a cada grupo. Es lo que convierte «total de ventas» en «total de ventas por vendedor».\n\n```sql\nSELECT vendedor, SUM(monto) AS total\nFROM ventas\nGROUP BY vendedor;\n```\n\nCada fila del resultado es un vendedor con su total. Las columnas del `SELECT` deben ser las del `GROUP BY` o agregados; si pides una columna que no está agrupada, el motor elige un valor arbitrario del grupo y el resultado deja de ser fiable.\n\n## Filtrar grupos con HAVING\n\n`WHERE` filtra filas antes de agrupar. `HAVING` filtra grupos después de calcular los agregados. La diferencia es el momento:\n\n```sql\nSELECT vendedor, SUM(monto) AS total\nFROM ventas\nWHERE monto > 0\nGROUP BY vendedor\nHAVING SUM(monto) > 500;\n```\n\nAquí `WHERE` descarta las devoluciones antes de sumar, y `HAVING` se queda solo con los vendedores que superan los 500. El orden de las cláusulas es siempre `SELECT`, `FROM`, `WHERE`, `GROUP BY`, `HAVING`, `ORDER BY`, `LIMIT`.\n\n## Agrupar por varias columnas\n\nPuedes agrupar por más de una columna. El grupo pasa a ser la combinación de valores:\n\n```sql\nSELECT genero, anio, COUNT(*) AS libros\nFROM libros\nGROUP BY genero, anio;\n```\n\nY ordenar el resultado como cualquier otra consulta:\n\n```sql\nSELECT genero, COUNT(*) AS libros\nFROM libros\nGROUP BY genero\nORDER BY libros DESC;\n```\n\n`ORDER BY` puede usar el alias del agregado, lo que evita repetir la expresión.\n\n## Contar valores distintos\n\nA veces no quieres contar filas sino valores diferentes. `COUNT(DISTINCT columna)` lo hace:\n\n```sql\nSELECT COUNT(DISTINCT vendedor) AS vendedores FROM ventas;\n```\n\nAsí respondes «¿cuántos clientes distintos compraron?» sin agrupar. Combinado con `GROUP BY`, cuenta los valores distintos dentro de cada grupo, por ejemplo cuántos productos diferentes vendió cada vendedor.\n\n## Un detalle sobre NULL\n\nLos `NULL` forman su propio grupo. Si dos filas no tienen género, cuentan juntas en un grupo con valor `NULL`. Si quieres excluirlas, añade `WHERE genero IS NOT NULL`. Ese grupo aparece además en una posición que decide el motor: filtra los nulos si el informe no debe mostrarlo.\n\n## Agrupar no ordena\n\nEl resultado de un `GROUP BY` sale en un orden que el motor decide. Si necesitas que los grupos aparezcan de mayor a menor, añade `ORDER BY` explícito. Mucha gente confunde ambas cosas porque a veces coincide; no es una garantía.\n\n## Errores típicos\n\n- Filtrar el agregado con `WHERE SUM(monto) > 500`: ahí va `HAVING`.\n- Seleccionar columnas que no están en el `GROUP BY`.\n- Poner `HAVING` antes que `GROUP BY`.\n- Olvidar que `WHERE` se aplica antes de agrupar y cambia las sumas.\n- Agrupar por una columna con nombres escritos de forma distinta («Drama» y «drama») y obtener dos grupos.",
+          "exercises": [
+            {
+              "slug": "total-por-vendedor",
+              "title": "Total vendido por vendedor",
+              "kind": "sql",
+              "prompt_md": "La tabla `ventas` tiene las columnas `id`, `vendedor` y `monto`.\n\nEscribe una consulta que devuelva cada vendedor y su total vendido, pero solo para los vendedores que superan 500 en total. Devuelve las columnas `vendedor` y `total`.",
+              "starter_code": "-- Tabla disponible: ventas(id, vendedor, monto)\n",
+              "solution_code": "SELECT vendedor, SUM(monto) AS total FROM ventas GROUP BY vendedor HAVING SUM(monto) > 500;",
+              "tests": [
+                {
+                  "name": "Tres vendedores",
+                  "setup": "CREATE TABLE ventas (id INTEGER PRIMARY KEY, vendedor TEXT, monto INTEGER);\nINSERT INTO ventas (id, vendedor, monto) VALUES\n  (1, 'Ana', 300),\n  (2, 'Luis', 100),\n  (3, 'Ana', 250),\n  (4, 'Marta', 400),\n  (5, 'Luis', 150),\n  (6, 'Marta', 400);",
+                  "expected_rows": [
+                    [
+                      "Ana",
+                      550
+                    ],
+                    [
+                      "Marta",
+                      800
+                    ]
+                  ]
+                },
+                {
+                  "name": "Cuatro vendedores",
+                  "setup": "CREATE TABLE ventas (id INTEGER PRIMARY KEY, vendedor TEXT, monto INTEGER);\nINSERT INTO ventas (id, vendedor, monto) VALUES\n  (1, 'Pedro', 600),\n  (2, 'Sofía', 200),\n  (3, 'Diego', 400),\n  (4, 'Sofía', 200),\n  (5, 'Diego', 100);",
+                  "expected_rows": [
+                    [
+                      "Pedro",
+                      600
+                    ]
+                  ]
+                }
+              ],
+              "hints": [
+                "Agrupa por vendedor y suma la columna monto.",
+                "El filtro sobre el total va en HAVING, no en WHERE."
+              ]
+            },
+            {
+              "slug": "generos-con-dos-libros",
+              "title": "Géneros con varios libros",
+              "kind": "sql",
+              "prompt_md": "La tabla `libros` tiene las columnas `id`, `titulo`, `genero` y `anio`.\n\nEscribe una consulta que devuelva cada género con dos o más libros y la cantidad de libros de ese género. Devuelve las columnas `genero` y `cantidad`.",
+              "starter_code": "-- Tabla disponible: libros(id, titulo, genero, anio)\n",
+              "solution_code": "SELECT genero, COUNT(*) AS cantidad FROM libros GROUP BY genero HAVING COUNT(*) >= 2;",
+              "tests": [
+                {
+                  "name": "Biblioteca mixta",
+                  "setup": "CREATE TABLE libros (id INTEGER PRIMARY KEY, titulo TEXT, genero TEXT, anio INTEGER);\nINSERT INTO libros (id, titulo, genero, anio) VALUES\n  (1, 'Rayuela', 'novela', 1963),\n  (2, 'El túnel', 'novela', 1948),\n  (3, 'Ficciones', 'cuento', 1944),\n  (4, 'Pedro Páramo', 'novela', 1955),\n  (5, 'Historia de cronopios', 'cuento', 1962),\n  (6, 'La invención de Morel', 'ciencia ficción', 1940);",
+                  "expected_rows": [
+                    [
+                      "novela",
+                      3
+                    ],
+                    [
+                      "cuento",
+                      2
+                    ]
+                  ]
+                },
+                {
+                  "name": "Sin repetidos",
+                  "setup": "CREATE TABLE libros (id INTEGER PRIMARY KEY, titulo TEXT, genero TEXT, anio INTEGER);\nINSERT INTO libros (id, titulo, genero, anio) VALUES\n  (1, 'Uno', 'ensayo', 2001),\n  (2, 'Dos', 'novela', 2002),\n  (3, 'Tres', 'ensayo', 2003),\n  (4, 'Cuatro', 'poesía', 2004);",
+                  "expected_rows": [
+                    [
+                      "ensayo",
+                      2
+                    ]
+                  ]
+                }
+              ],
+              "hints": [
+                "Agrupa por genero y cuenta las filas de cada grupo.",
+                "HAVING COUNT(*) >= 2 descarta los géneros con un solo libro."
+              ]
+            }
+          ],
+          "quiz": [
+            {
+              "question": "¿Con qué cláusula se filtra el resultado de un agregado?",
+              "options": [
+                "WHERE",
+                "HAVING",
+                "ORDER BY",
+                "LIMIT"
+              ],
+              "answer_index": 1,
+              "explanation": "WHERE actúa antes de agrupar; HAVING filtra los grupos ya calculados."
+            },
+            {
+              "question": "¿Qué hace `GROUP BY genero` en el resultado?",
+              "options": [
+                "Ordena las filas por género",
+                "Elimina las filas sin género",
+                "Reúne las filas en un grupo por cada valor de género",
+                "Cuenta las filas de toda la tabla"
+              ],
+              "answer_index": 2,
+              "explanation": "GROUP BY crea un grupo por valor distinto; el orden no está garantizado."
+            }
+          ]
+        },
+        {
+          "slug": "combinar-tablas-con-join",
+          "title": "Combinar tablas con JOIN",
+          "summary": "Une tablas relacionadas con INNER JOIN y LEFT JOIN, sin duplicar ni perder filas.",
+          "minutes": 15,
+          "objectives": [
+            "Escribir un JOIN con su condición ON y alias de tabla.",
+            "Explicar la diferencia entre INNER JOIN y LEFT JOIN.",
+            "Contar filas de la tabla derecha sin contar las que no existen."
+          ],
+          "body_md": "## Dos tablas, una consulta\n\nLos datos suelen repartirse en tablas relacionadas. Un libro guarda el identificador de su autor, no su nombre completo. Para verlos juntos se usa `JOIN`, que combina filas de dos tablas cuando se cumple una condición.\n\n```sql\nSELECT libros.titulo, autores.nombre\nFROM libros\nJOIN autores ON libros.autor_id = autores.id;\n```\n\n`JOIN` es un `INNER JOIN`: solo aparecen las filas con pareja en ambas tablas. Si un libro tiene `autor_id` nulo o apunta a un autor inexistente, no sale.\n\n## Alias para no repetirse\n\nEscribir el nombre completo de la tabla en cada columna cansa. Los alias cortos lo resuelven:\n\n```sql\nSELECT l.titulo, a.nombre\nFROM libros AS l\nJOIN autores AS a ON l.autor_id = a.id;\n```\n\nTambién sirven para desambiguar: si las dos tablas tienen una columna `id`, debes indicar de cuál hablas.\n\n## LEFT JOIN: conservar los que no tienen pareja\n\n`LEFT JOIN` mantiene todas las filas de la tabla izquierda. Cuando no hay coincidencia, las columnas de la derecha llegan como `NULL`:\n\n```sql\nSELECT a.nombre, l.titulo\nFROM autores AS a\nLEFT JOIN libros AS l ON l.autor_id = a.id;\n```\n\nEso incluye a los autores sin libros. `RIGHT JOIN` hace lo contrario. SQLite moderno soporta `LEFT` y `RIGHT`, y `FULL` desde la versión 3.39.\n\n## Contar con LEFT JOIN\n\nEste es un detalle que se cobra caro. Con `LEFT JOIN`, `COUNT(*)` cuenta la fila del autor aunque no tenga libros y devuelve 1, no 0. Para contar solo libros reales hay que contar la columna de la tabla derecha:\n\n```sql\nSELECT a.nombre, COUNT(l.id) AS libros\nFROM autores AS a\nLEFT JOIN libros AS l ON l.autor_id = a.id\nGROUP BY a.id, a.nombre;\n```\n\n## Comprobar el JOIN antes de usarlo\n\nCuando una consulta con `JOIN` no devuelve lo esperado, quita los agregados y mira las filas en crudo. Si aparecen combinaciones imposibles, el `ON` está mal. Si faltan filas que deberían estar, probablemente el `JOIN` es interno y la tabla derecha no tiene pareja.\n\n## Varias tablas\n\nPuedes encadenar más de un `JOIN`. Cada uno añade una condición `ON` y el resultado se lee como una sola tabla combinada. Si la consulta se vuelve difícil de leer, divide el problema: primero comprueba cada par de tablas por separado.\n\n## Errores típicos\n\n- Olvidar el `ON` y obtener el producto cartesiano de las dos tablas.\n- Emparejar por la columna equivocada (`l.id = a.id`) y obtener combinaciones sin sentido.\n- Usar `COUNT(*)` en un `LEFT JOIN` y contar autores vacíos como si tuvieran un libro.\n- Nombrar una columna `id` sin indicar la tabla cuando ambas la tienen.\n- Filtrar la tabla derecha en el `WHERE` y convertir sin querer el `LEFT JOIN` en `JOIN`.",
+          "exercises": [
+            {
+              "slug": "libros-con-autor",
+              "title": "Libros con el nombre de su autor",
+              "kind": "sql",
+              "prompt_md": "La tabla `libros` tiene `id`, `titulo`, `autor_id` y `anio`; la tabla `autores` tiene `id`, `nombre` y `pais`.\n\nEscribe una consulta que devuelva el título del libro y el nombre de su autor. Los libros sin autor registrado no deben aparecer. Devuelve las columnas `titulo` y `autor`.",
+              "starter_code": "-- Tablas: libros(id, titulo, autor_id, anio) y autores(id, nombre, pais)\n",
+              "solution_code": "SELECT libros.titulo, autores.nombre AS autor FROM libros JOIN autores ON libros.autor_id = autores.id;",
+              "tests": [
+                {
+                  "name": "Un libro sin autor",
+                  "setup": "CREATE TABLE autores (id INTEGER PRIMARY KEY, nombre TEXT, pais TEXT);\nCREATE TABLE libros (id INTEGER PRIMARY KEY, titulo TEXT, autor_id INTEGER, anio INTEGER);\nINSERT INTO autores (id, nombre, pais) VALUES\n  (1, 'Julio Cortázar', 'Argentina'),\n  (2, 'Juan Rulfo', 'México'),\n  (3, 'Jorge Luis Borges', 'Argentina');\nINSERT INTO libros (id, titulo, autor_id, anio) VALUES\n  (1, 'Rayuela', 1, 1963),\n  (2, 'Pedro Páramo', 2, 1955),\n  (3, 'Ficciones', 3, 1944),\n  (4, 'Anónimo', NULL, 1900);",
+                  "expected_rows": [
+                    [
+                      "Rayuela",
+                      "Julio Cortázar"
+                    ],
+                    [
+                      "Pedro Páramo",
+                      "Juan Rulfo"
+                    ],
+                    [
+                      "Ficciones",
+                      "Jorge Luis Borges"
+                    ]
+                  ]
+                }
+              ],
+              "hints": [
+                "La condición que empareja las tablas va después de ON.",
+                "Usa libros.autor_id = autores.id."
+              ]
+            },
+            {
+              "slug": "libros-por-autor",
+              "title": "Cuántos libros tiene cada autor",
+              "kind": "sql",
+              "prompt_md": "Con las mismas tablas `autores` y `libros` de la tabla anterior, escribe una consulta que devuelva el nombre de cada autor y cuántos libros tiene, incluidos los autores que no tienen ninguno. Devuelve las columnas `nombre` y `libros`.",
+              "starter_code": "-- Tablas: autores(id, nombre, pais) y libros(id, titulo, autor_id, anio)\n",
+              "solution_code": "SELECT autores.nombre, COUNT(libros.id) AS libros FROM autores LEFT JOIN libros ON libros.autor_id = autores.id GROUP BY autores.id, autores.nombre;",
+              "tests": [
+                {
+                  "name": "Autor sin libros",
+                  "setup": "CREATE TABLE autores (id INTEGER PRIMARY KEY, nombre TEXT, pais TEXT);\nCREATE TABLE libros (id INTEGER PRIMARY KEY, titulo TEXT, autor_id INTEGER, anio INTEGER);\nINSERT INTO autores (id, nombre, pais) VALUES\n  (1, 'Jorge Luis Borges', 'Argentina'),\n  (2, 'Julio Cortázar', 'Argentina'),\n  (3, 'Rosario Ferré', 'Puerto Rico');\nINSERT INTO libros (id, titulo, autor_id, anio) VALUES\n  (1, 'Ficciones', 1, 1944),\n  (2, 'El Aleph', 1, 1949),\n  (3, 'Rayuela', 2, 1963);",
+                  "expected_rows": [
+                    [
+                      "Jorge Luis Borges",
+                      2
+                    ],
+                    [
+                      "Julio Cortázar",
+                      1
+                    ],
+                    [
+                      "Rosario Ferré",
+                      0
+                    ]
+                  ]
+                }
+              ],
+              "hints": [
+                "LEFT JOIN conserva a los autores que no tienen libros.",
+                "Cuenta libros.id, no *, para que el autor sin libros dé 0."
+              ]
+            }
+          ],
+          "quiz": [
+            {
+              "question": "¿Qué filas devuelve un INNER JOIN?",
+              "options": [
+                "Todas las filas de las dos tablas, tengan pareja o no",
+                "Solo las filas con pareja en ambas tablas",
+                "Solo las filas de la tabla izquierda",
+                "Solo las filas que no tienen pareja"
+              ],
+              "answer_index": 1,
+              "explanation": "INNER JOIN descarta las filas sin coincidencia en la otra tabla."
+            },
+            {
+              "question": "En un LEFT JOIN, ¿qué recibe la tabla derecha cuando no hay coincidencia?",
+              "options": [
+                "Cero en todas las columnas",
+                "Una fila vacía que no aparece",
+                "NULL en sus columnas",
+                "El último valor de la tabla"
+              ],
+              "answer_index": 2,
+              "explanation": "Las columnas de la derecha se rellenan con NULL, y por eso COUNT(columna) da 0."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Modificar datos",
+      "summary": "Insertar, actualizar, borrar y resolver preguntas en dos pasos.",
+      "lessons": [
+        {
+          "slug": "insertar-actualizar-borrar",
+          "title": "INSERT, UPDATE y DELETE",
+          "summary": "Modifica el contenido de una tabla y comprueba el efecto con RETURNING.",
+          "minutes": 15,
+          "objectives": [
+            "Insertar filas indicando las columnas y sus valores.",
+            "Actualizar y borrar solo las filas que cumplan una condición.",
+            "Usar RETURNING para ver las filas afectadas por un cambio."
+          ],
+          "body_md": "## Cambiar los datos\n\nHasta ahora solo has leído. `INSERT`, `UPDATE` y `DELETE` modifican el contenido y se ejecutan igual: una instrucción, un efecto.\n\n```sql\nINSERT INTO libros (titulo, autor, anio)\nVALUES ('Ficciones', 'Jorge Luis Borges', 1944);\n```\n\nNombrar las columnas es opcional, pero evita errores si la tabla cambia o si el orden no es el que crees. Puedes insertar varias filas a la vez separándolas con comas:\n\n```sql\nINSERT INTO libros (titulo, autor, anio) VALUES\n  ('Rayuela', 'Julio Cortázar', 1963),\n  ('El túnel', 'Ernesto Sabato', 1948);\n```\n\n## Actualizar con cuidado\n\n`UPDATE` cambia valores de las filas que cumplan una condición:\n\n```sql\nUPDATE productos\nSET stock = stock + 5\nWHERE stock < 10;\n```\n\nSin `WHERE`, actualiza todas las filas de la tabla. No es un error de sintaxis: es un cambio masivo. Antes de ejecutar, prueba la misma condición con un `SELECT` para ver qué filas entran.\n\n`DELETE` funciona igual:\n\n```sql\nDELETE FROM prestamos WHERE devuelto = 1 AND fecha < '2024-01-01';\n```\n\n`DELETE FROM prestamos` borra todas las filas pero conserva la tabla. `DROP TABLE` elimina la tabla entera.\n\n## Ver lo que cambió con RETURNING\n\nSQLite permite que una instrucción de modificación devuelva las filas afectadas con `RETURNING`:\n\n```sql\nUPDATE productos\nSET stock = stock + 5\nWHERE stock < 10\nRETURNING nombre, stock;\n```\n\nEs útil para comprobar el resultado sin lanzar otra consulta, y es lo que usan los ejercicios de esta lección. Requiere SQLite 3.35 o superior.\n\n## Borrar y comprobar\n\n`DELETE` también acepta `RETURNING`, lo que permite saber exactamente qué se borró:\n\n```sql\nDELETE FROM prestamos\nWHERE devuelto = 1\nRETURNING id, libro_id;\n```\n\nAntes de un borrado grande, haz una copia del archivo de la base de datos. En SQLite la base es un solo archivo, así que copiarlo es tan simple como copiar cualquier documento.\n\n## Las columnas y sus tipos\n\nAl insertar, el motor comprueba el tipo declarado. SQLite es flexible y guarda lo que le des, pero esa libertad se paga: un número escrito como texto se compara como texto y puede ordenarse mal. Sé constante con los tipos desde el principio.\n\n## Transacciones\n\nSi varios cambios deben ocurrir juntos, se envuelven en una transacción: `BEGIN`, las instrucciones y `COMMIT`. Si algo falla, `ROLLBACK` deshace todo. Un retiro de dinero es el ejemplo clásico: restar del saldo y registrar el movimiento no pueden quedar a medias.\n\n## Errores típicos\n\n- Ejecutar `UPDATE` o `DELETE` sin `WHERE` y arrepentirse.\n- Olvidar las comillas en un valor de texto.\n- Insertar un número en una columna de texto y confiar en que el motor lo convierta como esperas.\n- Cambiar el `id` de una fila que otras tablas referencian.\n- Creer que `DELETE` borra la tabla: eso lo hace `DROP TABLE`.",
+          "exercises": [
+            {
+              "slug": "insertar-libro",
+              "title": "Insertar un libro y verlo",
+              "kind": "sql",
+              "prompt_md": "La tabla `libros` tiene `id` (autoincremental), `titulo`, `autor` y `anio`.\n\nEscribe una instrucción que inserte el libro «Ficciones» de «Jorge Luis Borges», publicado en 1944, y devuelva con `RETURNING` el `id` y el `titulo` de la fila creada. No escribas el `id` a mano: deja que la tabla lo asigne.",
+              "starter_code": "-- Tabla disponible: libros(id, titulo, autor, anio)\n",
+              "solution_code": "INSERT INTO libros (titulo, autor, anio) VALUES ('Ficciones', 'Jorge Luis Borges', 1944) RETURNING id, titulo;",
+              "tests": [
+                {
+                  "name": "Dos libros ya guardados",
+                  "setup": "CREATE TABLE libros (id INTEGER PRIMARY KEY, titulo TEXT, autor TEXT, anio INTEGER);\nINSERT INTO libros (id, titulo, autor, anio) VALUES\n  (1, 'Rayuela', 'Julio Cortázar', 1963),\n  (2, 'El túnel', 'Ernesto Sabato', 1948);",
+                  "expected_rows": [
+                    [
+                      3,
+                      "Ficciones"
+                    ]
+                  ]
+                },
+                {
+                  "name": "Tabla con un libro de id manual",
+                  "setup": "CREATE TABLE libros (id INTEGER PRIMARY KEY, titulo TEXT, autor TEXT, anio INTEGER);\nINSERT INTO libros (id, titulo, autor, anio) VALUES (10, 'El Aleph', 'Jorge Luis Borges', 1949);",
+                  "expected_rows": [
+                    [
+                      11,
+                      "Ficciones"
+                    ]
+                  ]
+                }
+              ],
+              "hints": [
+                "INSERT INTO tabla (columnas) VALUES (valores).",
+                "Añade RETURNING id, titulo al final de la instrucción."
+              ]
+            },
+            {
+              "slug": "reponer-stock",
+              "title": "Reponer stock",
+              "kind": "sql",
+              "prompt_md": "La tabla `productos` tiene `id`, `nombre`, `precio` y `stock`.\n\nEscribe una instrucción que sume 5 al `stock` de los productos con menos de 10 unidades y devuelva con `RETURNING` el `nombre` y el `stock` actualizado.",
+              "starter_code": "-- Tabla disponible: productos(id, nombre, precio, stock)\n",
+              "solution_code": "UPDATE productos SET stock = stock + 5 WHERE stock < 10 RETURNING nombre, stock;",
+              "tests": [
+                {
+                  "name": "Tres productos bajos",
+                  "setup": "CREATE TABLE productos (id INTEGER PRIMARY KEY, nombre TEXT, precio INTEGER, stock INTEGER);\nINSERT INTO productos (id, nombre, precio, stock) VALUES\n  (1, 'Cuaderno', 12, 40),\n  (2, 'Mochila', 89, 4),\n  (3, 'Lápiz', 3, 9),\n  (4, 'Regla', 45, 10);",
+                  "expected_rows": [
+                    [
+                      "Mochila",
+                      9
+                    ],
+                    [
+                      "Lápiz",
+                      14
+                    ]
+                  ]
+                },
+                {
+                  "name": "Ninguno bajo",
+                  "setup": "CREATE TABLE productos (id INTEGER PRIMARY KEY, nombre TEXT, precio INTEGER, stock INTEGER);\nINSERT INTO productos (id, nombre, precio, stock) VALUES\n  (1, 'Goma', 7, 30),\n  (2, 'Tijeras', 21, 15);",
+                  "expected_rows": []
+                }
+              ],
+              "hints": [
+                "UPDATE tabla SET columna = columna + 5 WHERE condición.",
+                "RETURNING devuelve las filas que la instrucción modificó, no toda la tabla."
+              ]
+            }
+          ],
+          "quiz": [
+            {
+              "question": "¿Qué ocurre si ejecutas `UPDATE productos SET precio = 100;` sin WHERE?",
+              "options": [
+                "Ninguna fila cambia",
+                "Cambia solo la primera fila",
+                "Cambian todas las filas de la tabla",
+                "El motor pide confirmación"
+              ],
+              "answer_index": 2,
+              "explanation": "Sin WHERE no hay filtro: la instrucción afecta a todas las filas."
+            },
+            {
+              "question": "¿Qué devuelve la cláusula RETURNING?",
+              "options": [
+                "La consulta que se ejecutó",
+                "Las filas afectadas por la modificación",
+                "El número total de filas de la tabla",
+                "Una copia de la tabla antes del cambio"
+              ],
+              "answer_index": 1,
+              "explanation": "RETURNING entrega las filas insertadas, actualizadas o borradas."
+            }
+          ]
+        },
+        {
+          "slug": "subconsultas",
+          "title": "Subconsultas",
+          "summary": "Resuelve preguntas en dos pasos con un SELECT dentro de otro.",
+          "minutes": 14,
+          "objectives": [
+            "Escribir subconsultas escalares y usarlas en una comparación.",
+            "Combinar subconsultas con IN y EXISTS.",
+            "Evitar la trampa de NOT IN cuando hay valores NULL."
+          ],
+          "body_md": "## Una consulta dentro de otra\n\nUna subconsulta es un `SELECT` que aparece dentro de otra instrucción. Sirve para calcular un valor intermedio sin escribirlo a mano. El caso más claro es comparar cada fila con un resumen de la tabla:\n\n```sql\nSELECT nombre, salario\nFROM empleados\nWHERE salario > (SELECT AVG(salario) FROM empleados);\n```\n\nLa subconsulta entre paréntesis devuelve un solo valor, la media, y la consulta exterior lo usa como si fuera un número. Si la subconsulta devuelve más de una fila en una comparación escalar, el motor da error.\n\n## Subconsultas con IN y EXISTS\n\nCuando la subconsulta devuelve varias filas, se combina con `IN`:\n\n```sql\nSELECT titulo\nFROM libros\nWHERE autor_id IN (SELECT id FROM autores WHERE pais = 'Argentina');\n```\n\n`EXISTS` comprueba si la subconsulta devuelve al menos una fila, sin importar los valores:\n\n```sql\nSELECT nombre\nFROM socios AS s\nWHERE EXISTS (\n    SELECT 1 FROM prestamos AS p WHERE p.socio_id = s.id\n);\n```\n\nEse patrón se llama subconsulta correlacionada: la interior usa `s.id`, una columna de la consulta exterior, y se evalúa para cada socio.\n\n## Una subconsulta en el SELECT\n\nTambién puedes devolver el resultado de una subconsulta como si fuera una columna:\n\n```sql\nSELECT nombre,\n       (SELECT COUNT(*) FROM prestamos AS p WHERE p.socio_id = s.id) AS prestamos\nFROM socios AS s;\n```\n\nCada socio recibe su propio conteo. Es legible, aunque un `LEFT JOIN` con `GROUP BY` suele rendir mejor cuando la tabla crece.\n\n## Subconsultas en el FROM\n\nTambién puedes usar una subconsulta como si fuera una tabla. Necesita un alias:\n\n```sql\nSELECT vendedor, total\nFROM (SELECT vendedor, SUM(monto) AS total FROM ventas GROUP BY vendedor)\nWHERE total > 500;\n```\n\nFunciona, aunque en este caso `HAVING` es más directo. Usa subconsultas cuando de verdad necesites el resultado intermedio.\n\n## El peligro de NOT IN con NULL\n\n`NOT IN` con una lista que contiene `NULL` no devuelve filas: la comparación con `NULL` es desconocida, no falsa. Para «los que no están» conviene `NOT EXISTS` o filtrar los nulos:\n\n```sql\nSELECT titulo\nFROM libros\nWHERE id NOT IN (SELECT libro_id FROM prestamos WHERE libro_id IS NOT NULL);\n```\n\n## Cuánto cuesta una subconsulta\n\nUna subconsulta escalar se calcula una vez; una correlacionada, una vez por fila. En tablas pequeñas no se nota, pero en tablas grandes conviene mirar el plan de ejecución o reescribir la consulta con `JOIN`. Para aprender, prioriza que el resultado sea correcto.\n\n## Errores típicos\n\n- Escribir la subconsulta sin paréntesis.\n- Usar `=` con una subconsulta que devuelve varias filas.\n- Suponer que una subconsulta correlacionada se calcula una sola vez.\n- Usar `NOT IN` sobre columnas que admiten `NULL`.\n- Repetir la misma consulta dos veces cuando una subconsulta lo resuelve.",
+          "exercises": [
+            {
+              "slug": "salario-sobre-la-media",
+              "title": "Por encima de la media",
+              "kind": "sql",
+              "prompt_md": "La tabla `empleados` tiene las columnas `id`, `nombre`, `salario` y `depto`.\n\nEscribe una consulta que devuelva el nombre de los empleados que ganan más que el salario medio de toda la empresa. Devuelve una sola columna: `nombre`.",
+              "starter_code": "-- Tabla disponible: empleados(id, nombre, salario, depto)\n",
+              "solution_code": "SELECT nombre FROM empleados WHERE salario > (SELECT AVG(salario) FROM empleados);",
+              "tests": [
+                {
+                  "name": "Tres salarios",
+                  "setup": "CREATE TABLE empleados (id INTEGER PRIMARY KEY, nombre TEXT, salario INTEGER, depto TEXT);\nINSERT INTO empleados (id, nombre, salario, depto) VALUES\n  (1, 'Ana', 1000, 'ventas'),\n  (2, 'Luis', 2000, 'soporte'),\n  (3, 'Carla', 3000, 'ventas');",
+                  "expected_rows": [
+                    [
+                      "Carla"
+                    ]
+                  ]
+                },
+                {
+                  "name": "Cuatro salarios",
+                  "setup": "CREATE TABLE empleados (id INTEGER PRIMARY KEY, nombre TEXT, salario INTEGER, depto TEXT);\nINSERT INTO empleados (id, nombre, salario, depto) VALUES\n  (1, 'Pedro', 800, 'ventas'),\n  (2, 'Sofía', 1200, 'soporte'),\n  (3, 'Diego', 1500, 'ventas'),\n  (4, 'Elena', 4000, 'dirección');",
+                  "expected_rows": [
+                    [
+                      "Elena"
+                    ]
+                  ]
+                }
+              ],
+              "hints": [
+                "La media se calcula con AVG dentro de un SELECT entre paréntesis.",
+                "Ese SELECT interior no necesita FROM empleados duplicado: usa la misma tabla."
+              ]
+            },
+            {
+              "slug": "libros-argentinos",
+              "title": "Libros de autores argentinos",
+              "kind": "sql",
+              "prompt_md": "La tabla `libros` tiene `id`, `titulo`, `autor_id` y `anio`; la tabla `autores` tiene `id`, `nombre` y `pais`.\n\nEscribe una consulta que devuelva el título de los libros escritos por autores de Argentina, usando una subconsulta con IN. Devuelve una sola columna: `titulo`.",
+              "starter_code": "-- Tablas: libros(id, titulo, autor_id, anio) y autores(id, nombre, pais)\n",
+              "solution_code": "SELECT titulo FROM libros WHERE autor_id IN (SELECT id FROM autores WHERE pais = 'Argentina');",
+              "tests": [
+                {
+                  "name": "Tres países",
+                  "setup": "CREATE TABLE autores (id INTEGER PRIMARY KEY, nombre TEXT, pais TEXT);\nCREATE TABLE libros (id INTEGER PRIMARY KEY, titulo TEXT, autor_id INTEGER, anio INTEGER);\nINSERT INTO autores (id, nombre, pais) VALUES\n  (1, 'Julio Cortázar', 'Argentina'),\n  (2, 'Juan Rulfo', 'México'),\n  (3, 'Jorge Luis Borges', 'Argentina');\nINSERT INTO libros (id, titulo, autor_id, anio) VALUES\n  (1, 'Rayuela', 1, 1963),\n  (2, 'Pedro Páramo', 2, 1955),\n  (3, 'Ficciones', 3, 1944),\n  (4, 'El Aleph', 3, 1949);",
+                  "expected_rows": [
+                    [
+                      "Rayuela"
+                    ],
+                    [
+                      "Ficciones"
+                    ],
+                    [
+                      "El Aleph"
+                    ]
+                  ]
+                }
+              ],
+              "hints": [
+                "La subconsulta devuelve los id de los autores argentinos.",
+                "Después compara autor_id con IN (subconsulta)."
+              ]
+            }
+          ],
+          "quiz": [
+            {
+              "question": "¿Qué es una subconsulta?",
+              "options": [
+                "Una copia de la tabla guardada en disco",
+                "Un SELECT dentro de otra instrucción SQL",
+                "Un índice creado automáticamente",
+                "Una consulta que se ejecuta en otra base de datos"
+              ],
+              "answer_index": 1,
+              "explanation": "Es una consulta anidada que produce un valor o un conjunto de valores."
+            },
+            {
+              "question": "¿Para qué sirve `WHERE autor_id IN (SELECT id FROM autores WHERE pais = 'Argentina')`?",
+              "options": [
+                "Para crear una tabla nueva con los autores argentinos",
+                "Para comparar cada autor_id con la lista de id que devuelve la subconsulta",
+                "Para ordenar los libros por país",
+                "Para contar los autores argentinos"
+              ],
+              "answer_index": 1,
+              "explanation": "IN compara con el conjunto de valores de la subconsulta."
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "labs": [
+    {
+      "slug": "biblioteca",
+      "title": "Base de datos de una biblioteca",
+      "summary": "Modela el catálogo de una biblioteca con libros, socios y préstamos, y responde las preguntas que haría un bibliotecario.",
+      "minutes": 50,
+      "steps": [
+        {
+          "title": "Listar el catálogo",
+          "instructions_md": "Trabajas en la biblioteca del barrio y te piden el catálogo para revisarlo.\n\nLas tablas son `libros(id, titulo, autor, genero, anio)`, `socios(id, nombre, alta)` y `prestamos(id, libro_id, socio_id, fecha, devuelto)`.\n\nEscribe una consulta que devuelva el título y el autor de todos los libros.",
+          "kind": "sql",
+          "starter_code": "-- Tabla disponible: libros(id, titulo, autor, genero, anio)\n",
+          "solution_code": "SELECT titulo, autor FROM libros;",
+          "tests": [
+            {
+              "name": "Catálogo completo",
+              "setup": "CREATE TABLE libros (\n    id INTEGER PRIMARY KEY,\n    titulo TEXT,\n    autor TEXT,\n    genero TEXT,\n    anio INTEGER\n);\nCREATE TABLE socios (\n    id INTEGER PRIMARY KEY,\n    nombre TEXT,\n    alta TEXT\n);\nCREATE TABLE prestamos (\n    id INTEGER PRIMARY KEY,\n    libro_id INTEGER,\n    socio_id INTEGER,\n    fecha TEXT,\n    devuelto INTEGER\n);\nINSERT INTO libros (id, titulo, autor, genero, anio) VALUES\n    (1, 'Cien años de soledad', 'Gabriel García Márquez', 'novela', 1967),\n    (2, 'Rayuela', 'Julio Cortázar', 'novela', 1963),\n    (3, 'El túnel', 'Ernesto Sabato', 'novela', 1948),\n    (4, 'Pedro Páramo', 'Juan Rulfo', 'novela', 1955),\n    (5, 'La invención de Morel', 'Adolfo Bioy Casares', 'ciencia ficción', 1940),\n    (6, 'Historia de cronopios', 'Julio Cortázar', 'cuentos', 1962);\nINSERT INTO socios (id, nombre, alta) VALUES\n    (1, 'Ana Ruiz', '2023-02-10'),\n    (2, 'Luis Peña', '2023-05-21'),\n    (3, 'Marta Gil', '2024-01-15');\nINSERT INTO prestamos (id, libro_id, socio_id, fecha, devuelto) VALUES\n    (1, 1, 1, '2024-03-01', 1),\n    (2, 3, 2, '2024-03-05', 0),\n    (3, 1, 3, '2024-04-02', 0),\n    (4, 6, 1, '2024-04-10', 1);",
+              "expected_rows": [
+                [
+                  "Cien años de soledad",
+                  "Gabriel García Márquez"
+                ],
+                [
+                  "Rayuela",
+                  "Julio Cortázar"
+                ],
+                [
+                  "El túnel",
+                  "Ernesto Sabato"
+                ],
+                [
+                  "Pedro Páramo",
+                  "Juan Rulfo"
+                ],
+                [
+                  "La invención de Morel",
+                  "Adolfo Bioy Casares"
+                ],
+                [
+                  "Historia de cronopios",
+                  "Julio Cortázar"
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Filtrar novelas antiguas",
+          "instructions_md": "El bibliotecario quiere separar las novelas anteriores a 1960 para una exposición.\n\nEscribe una consulta que devuelva el título de los libros de género `novela` publicados antes de 1960. Devuelve una sola columna: `titulo`.",
+          "kind": "sql",
+          "starter_code": "-- Recuerda: genero = 'novela' AND anio < 1960\n",
+          "solution_code": "SELECT titulo FROM libros WHERE genero = 'novela' AND anio < 1960;",
+          "tests": [
+            {
+              "name": "Novelas anteriores a 1960",
+              "setup": "CREATE TABLE libros (\n    id INTEGER PRIMARY KEY,\n    titulo TEXT,\n    autor TEXT,\n    genero TEXT,\n    anio INTEGER\n);\nCREATE TABLE socios (\n    id INTEGER PRIMARY KEY,\n    nombre TEXT,\n    alta TEXT\n);\nCREATE TABLE prestamos (\n    id INTEGER PRIMARY KEY,\n    libro_id INTEGER,\n    socio_id INTEGER,\n    fecha TEXT,\n    devuelto INTEGER\n);\nINSERT INTO libros (id, titulo, autor, genero, anio) VALUES\n    (1, 'Cien años de soledad', 'Gabriel García Márquez', 'novela', 1967),\n    (2, 'Rayuela', 'Julio Cortázar', 'novela', 1963),\n    (3, 'El túnel', 'Ernesto Sabato', 'novela', 1948),\n    (4, 'Pedro Páramo', 'Juan Rulfo', 'novela', 1955),\n    (5, 'La invención de Morel', 'Adolfo Bioy Casares', 'ciencia ficción', 1940),\n    (6, 'Historia de cronopios', 'Julio Cortázar', 'cuentos', 1962);\nINSERT INTO socios (id, nombre, alta) VALUES\n    (1, 'Ana Ruiz', '2023-02-10'),\n    (2, 'Luis Peña', '2023-05-21'),\n    (3, 'Marta Gil', '2024-01-15');\nINSERT INTO prestamos (id, libro_id, socio_id, fecha, devuelto) VALUES\n    (1, 1, 1, '2024-03-01', 1),\n    (2, 3, 2, '2024-03-05', 0),\n    (3, 1, 3, '2024-04-02', 0),\n    (4, 6, 1, '2024-04-10', 1);",
+              "expected_rows": [
+                [
+                  "El túnel"
+                ],
+                [
+                  "Pedro Páramo"
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Préstamos por socio",
+          "instructions_md": "Llega el informe mensual: cuántos préstamos ha pedido cada socio.\n\nEscribe una consulta que devuelva el nombre del socio y la cantidad de préstamos que registra. Devuelve las columnas `nombre` y `prestamos`.",
+          "kind": "sql",
+          "starter_code": "-- Une prestamos con socios y agrupa por socio\n",
+          "solution_code": "SELECT socios.nombre, COUNT(*) AS prestamos FROM prestamos JOIN socios ON prestamos.socio_id = socios.id GROUP BY socios.nombre;",
+          "tests": [
+            {
+              "name": "Tres socios",
+              "setup": "CREATE TABLE libros (\n    id INTEGER PRIMARY KEY,\n    titulo TEXT,\n    autor TEXT,\n    genero TEXT,\n    anio INTEGER\n);\nCREATE TABLE socios (\n    id INTEGER PRIMARY KEY,\n    nombre TEXT,\n    alta TEXT\n);\nCREATE TABLE prestamos (\n    id INTEGER PRIMARY KEY,\n    libro_id INTEGER,\n    socio_id INTEGER,\n    fecha TEXT,\n    devuelto INTEGER\n);\nINSERT INTO libros (id, titulo, autor, genero, anio) VALUES\n    (1, 'Cien años de soledad', 'Gabriel García Márquez', 'novela', 1967),\n    (2, 'Rayuela', 'Julio Cortázar', 'novela', 1963),\n    (3, 'El túnel', 'Ernesto Sabato', 'novela', 1948),\n    (4, 'Pedro Páramo', 'Juan Rulfo', 'novela', 1955),\n    (5, 'La invención de Morel', 'Adolfo Bioy Casares', 'ciencia ficción', 1940),\n    (6, 'Historia de cronopios', 'Julio Cortázar', 'cuentos', 1962);\nINSERT INTO socios (id, nombre, alta) VALUES\n    (1, 'Ana Ruiz', '2023-02-10'),\n    (2, 'Luis Peña', '2023-05-21'),\n    (3, 'Marta Gil', '2024-01-15');\nINSERT INTO prestamos (id, libro_id, socio_id, fecha, devuelto) VALUES\n    (1, 1, 1, '2024-03-01', 1),\n    (2, 3, 2, '2024-03-05', 0),\n    (3, 1, 3, '2024-04-02', 0),\n    (4, 6, 1, '2024-04-10', 1);",
+              "expected_rows": [
+                [
+                  "Ana Ruiz",
+                  2
+                ],
+                [
+                  "Luis Peña",
+                  1
+                ],
+                [
+                  "Marta Gil",
+                  1
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Quién tiene cada libro",
+          "instructions_md": "Un socio pregunta por un libro y hay que saber quién lo tiene.\n\nEscribe una consulta que devuelva el nombre del socio y el título del libro para los préstamos que aún no se han devuelto (`devuelto = 0`). Devuelve las columnas `nombre` y `titulo`.",
+          "kind": "sql",
+          "starter_code": "-- Necesitas dos JOIN: prestamos con socios y con libros\n",
+          "solution_code": "SELECT socios.nombre, libros.titulo FROM prestamos JOIN socios ON prestamos.socio_id = socios.id JOIN libros ON prestamos.libro_id = libros.id WHERE devuelto = 0;",
+          "tests": [
+            {
+              "name": "Préstamos activos",
+              "setup": "CREATE TABLE libros (\n    id INTEGER PRIMARY KEY,\n    titulo TEXT,\n    autor TEXT,\n    genero TEXT,\n    anio INTEGER\n);\nCREATE TABLE socios (\n    id INTEGER PRIMARY KEY,\n    nombre TEXT,\n    alta TEXT\n);\nCREATE TABLE prestamos (\n    id INTEGER PRIMARY KEY,\n    libro_id INTEGER,\n    socio_id INTEGER,\n    fecha TEXT,\n    devuelto INTEGER\n);\nINSERT INTO libros (id, titulo, autor, genero, anio) VALUES\n    (1, 'Cien años de soledad', 'Gabriel García Márquez', 'novela', 1967),\n    (2, 'Rayuela', 'Julio Cortázar', 'novela', 1963),\n    (3, 'El túnel', 'Ernesto Sabato', 'novela', 1948),\n    (4, 'Pedro Páramo', 'Juan Rulfo', 'novela', 1955),\n    (5, 'La invención de Morel', 'Adolfo Bioy Casares', 'ciencia ficción', 1940),\n    (6, 'Historia de cronopios', 'Julio Cortázar', 'cuentos', 1962);\nINSERT INTO socios (id, nombre, alta) VALUES\n    (1, 'Ana Ruiz', '2023-02-10'),\n    (2, 'Luis Peña', '2023-05-21'),\n    (3, 'Marta Gil', '2024-01-15');\nINSERT INTO prestamos (id, libro_id, socio_id, fecha, devuelto) VALUES\n    (1, 1, 1, '2024-03-01', 1),\n    (2, 3, 2, '2024-03-05', 0),\n    (3, 1, 3, '2024-04-02', 0),\n    (4, 6, 1, '2024-04-10', 1);",
+              "expected_rows": [
+                [
+                  "Luis Peña",
+                  "El túnel"
+                ],
+                [
+                  "Marta Gil",
+                  "Cien años de soledad"
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Los libros que nadie ha pedido",
+          "instructions_md": "Para decidir qué comprar, la biblioteca quiere saber qué libros nunca se han prestado.\n\nEscribe una consulta que devuelva el título de los libros que no aparecen en la tabla `prestamos`. Devuelve una sola columna: `titulo`.",
+          "kind": "sql",
+          "starter_code": "-- Una subconsulta con NOT IN resuelve el problema\n",
+          "solution_code": "SELECT titulo FROM libros WHERE id NOT IN (SELECT libro_id FROM prestamos);",
+          "tests": [
+            {
+              "name": "Libros sin préstamos",
+              "setup": "CREATE TABLE libros (\n    id INTEGER PRIMARY KEY,\n    titulo TEXT,\n    autor TEXT,\n    genero TEXT,\n    anio INTEGER\n);\nCREATE TABLE socios (\n    id INTEGER PRIMARY KEY,\n    nombre TEXT,\n    alta TEXT\n);\nCREATE TABLE prestamos (\n    id INTEGER PRIMARY KEY,\n    libro_id INTEGER,\n    socio_id INTEGER,\n    fecha TEXT,\n    devuelto INTEGER\n);\nINSERT INTO libros (id, titulo, autor, genero, anio) VALUES\n    (1, 'Cien años de soledad', 'Gabriel García Márquez', 'novela', 1967),\n    (2, 'Rayuela', 'Julio Cortázar', 'novela', 1963),\n    (3, 'El túnel', 'Ernesto Sabato', 'novela', 1948),\n    (4, 'Pedro Páramo', 'Juan Rulfo', 'novela', 1955),\n    (5, 'La invención de Morel', 'Adolfo Bioy Casares', 'ciencia ficción', 1940),\n    (6, 'Historia de cronopios', 'Julio Cortázar', 'cuentos', 1962);\nINSERT INTO socios (id, nombre, alta) VALUES\n    (1, 'Ana Ruiz', '2023-02-10'),\n    (2, 'Luis Peña', '2023-05-21'),\n    (3, 'Marta Gil', '2024-01-15');\nINSERT INTO prestamos (id, libro_id, socio_id, fecha, devuelto) VALUES\n    (1, 1, 1, '2024-03-01', 1),\n    (2, 3, 2, '2024-03-05', 0),\n    (3, 1, 3, '2024-04-02', 0),\n    (4, 6, 1, '2024-04-10', 1);",
+              "expected_rows": [
+                [
+                  "Rayuela"
+                ],
+                [
+                  "Pedro Páramo"
+                ],
+                [
+                  "La invención de Morel"
+                ]
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

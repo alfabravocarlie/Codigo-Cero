@@ -1,0 +1,666 @@
+{
+  "track": "cpp",
+  "title": "C++ desde cero",
+  "language": "cpp",
+  "description": "Aprende C++ con programas de consola: compilar, variables, decisiones, bucles, funciones y vectores.",
+  "level": "principiante",
+  "modules": [
+    {
+      "title": "Empezar",
+      "summary": "Compilar tu primer programa, guardar datos y tomar decisiones.",
+      "lessons": [
+        {
+          "slug": "primer-programa",
+          "title": "Tu primer programa y cómo se compila",
+          "summary": "Escribe, compila y ejecuta tu primer programa en C++, con cout, comentarios y errores de compilación.",
+          "minutes": 14,
+          "objectives": [
+            "Explicar qué hace un compilador y cómo se ejecuta un programa en C++.",
+            "Escribir un programa con #include, using namespace std y int main.",
+            "Leer un error de compilación y localizar la línea que lo provoca."
+          ],
+          "body_md": "## Un programa es una receta\n\nProgramar es escribir instrucciones que la computadora ejecuta en orden. C++ es un lenguaje compilado: el texto que escribes no se ejecuta directamente, sino que un compilador lo traduce a un programa ejecutable y después lo lanzas. Ese paso intermedio explica muchos de los errores que verás al empezar: hay fallos que detienen la compilación y otros que aparecen al ejecutar.\n\n## Del archivo al ejecutable\n\nGuardas el código en un archivo con extensión `.cpp`, por ejemplo `main.cpp`. Desde una terminal con el compilador instalado escribes:\n\n```bash\ng++ -std=c++17 main.cpp -o programa\n./programa\n```\n\nLa primera orden compila; la segunda ejecuta el resultado. Si el compilador encuentra un error, no genera el ejecutable y muestra el archivo, la línea y una descripción. Lee siempre esa primera línea del mensaje: casi siempre apunta al sitio exacto del problema.\n\n## Tu primer programa\n\n```cpp\n#include <iostream>\nusing namespace std;\n\nint main() {\n    cout << \"Hola, mundo\" << \"\\n\";\n    cout << \"Estoy aprendiendo C++\" << \"\\n\";\n    return 0;\n}\n```\n\nVamos por partes. `#include <iostream>` trae la biblioteca de entrada y salida, donde viven `cout` y `cin`. `using namespace std;` evita tener que escribir `std::cout` en cada línea. `int main()` es el punto de entrada: por ahí empieza todo programa. Las llaves delimitan su contenido y cada instrucción termina en punto y coma. `return 0;` avisa al sistema de que el programa terminó bien.\n\n## cout escribe, \"\\n\" salta\n\n`cout << valor` envía un valor a la pantalla; puedes encadenar varios con `<<`. El texto entre comillas dobles se muestra tal cual. `\"\\n\"` es un salto de línea, así que dos `cout` con `\"\\n\"` producen dos líneas. Si lo olvidas, todo aparece pegado y el resultado no coincide con lo esperado.\n\n## Comentarios y orden\n\n`//` inicia un comentario de una línea y `/* ... */` encierra un bloque. El compilador los ignora: son notas para quien lee. Un comentario útil explica el porqué de una decisión; uno que repite lo que la línea ya dice solo ocupa espacio. El orden también importa, porque las instrucciones se ejecutan de arriba abajo y una variable no existe antes de la línea que la declara.\n\n## Errores típicos\n\n- Olvidar el punto y coma al final de una instrucción. El compilador suele señalar la línea siguiente, no la que falta.\n- Escribir `cout` sin `#include <iostream>` o sin `using namespace std;`.\n- Confundir el nombre: es `cout`, no `print` ni `Console.WriteLine`.\n- Usar comillas tipográficas o acentos graves en lugar de `\"`. El compilador no los reconoce.\n- Abrir una llave y no cerrarla: el error aparece al final del archivo y desconcierta.\n\n## Practicar en esta app\n\nEl editor trae la estructura preparada: añade tus líneas dentro de `main` y comprueba. Si algo falla, lee el mensaje del compilador antes de tocar el código a ciegas. Ejecuta a menudo: es más fácil encontrar un error en cinco líneas nuevas que en treinta.",
+          "exercises": [
+            {
+              "slug": "hola-mundo",
+              "title": "Hola, mundo en C++",
+              "kind": "stdout",
+              "prompt_md": "Escribe un programa que muestre exactamente estas dos líneas, en este orden:\n\n```\nHola, mundo\nEstoy aprendiendo C++\n```\n\nCada línea se escribe con un `cout` y termina con `\"\\n\"`. No añadas líneas en blanco ni texto extra.",
+              "starter_code": "// Muestra dos líneas con cout\n#include <iostream>\nusing namespace std;\n\nint main() {\n    // Escribe aquí los dos cout\n    return 0;\n}\n",
+              "solution_code": "#include <iostream>\nusing namespace std;\n\nint main() {\n    cout << \"Hola, mundo\" << \"\\n\";\n    cout << \"Estoy aprendiendo C++\" << \"\\n\";\n    return 0;\n}\n",
+              "tests": [
+                {
+                  "name": "Dos líneas",
+                  "stdin": "",
+                  "expected_stdout": "Hola, mundo\nEstoy aprendiendo C++"
+                }
+              ],
+              "hints": [
+                "Cada cout escribe lo que le pasas con <<.",
+                "El texto va entre comillas dobles y termina con \"\\n\" para saltar de línea.",
+                "Necesitas dos instrucciones dentro de main, una por línea."
+              ]
+            },
+            {
+              "slug": "saludo-con-nombre",
+              "title": "Saludo con nombre",
+              "kind": "stdout",
+              "prompt_md": "Lee un nombre por teclado y muestra un saludo con el formato exacto `Hola, Ana!`.\n\nLa entrada tiene una sola palabra y el programa no debe mostrar nada más.",
+              "starter_code": "// Lee un nombre y muestra \"Hola, <nombre>!\"\n#include <iostream>\n#include <string>\nusing namespace std;\n\nint main() {\n    string nombre;\n    cin >> nombre;\n    // Completa la salida\n    return 0;\n}\n",
+              "solution_code": "#include <iostream>\n#include <string>\nusing namespace std;\n\nint main() {\n    string nombre;\n    cin >> nombre;\n    cout << \"Hola, \" << nombre << \"!\" << \"\\n\";\n    return 0;\n}\n",
+              "tests": [
+                {
+                  "name": "Ana",
+                  "stdin": "Ana\n",
+                  "expected_stdout": "Hola, Ana!"
+                },
+                {
+                  "name": "Luis",
+                  "stdin": "Luis\n",
+                  "expected_stdout": "Hola, Luis!"
+                }
+              ],
+              "hints": [
+                "cin >> nombre guarda la palabra en la variable.",
+                "Puedes encadenar texto y variable con varios <<.",
+                "La salida es cout << \"Hola, \" << nombre << \"!\" << \"\\n\";"
+              ]
+            }
+          ],
+          "quiz": [
+            {
+              "question": "¿Qué hace `cout << \"Hola\" << \"\\n\";`?",
+              "options": [
+                "Muestra Hola y salta a la línea siguiente",
+                "Muestra el texto entre comillas dobles",
+                "Guarda Hola en una variable",
+                "Pide un dato al usuario"
+              ],
+              "answer_index": 0,
+              "explanation": "cout envía el texto a la pantalla y \"\\n\" añade el salto de línea."
+            },
+            {
+              "question": "¿Cuál es el punto de entrada de un programa en C++?",
+              "options": [
+                "int main()",
+                "#include <iostream>",
+                "using namespace std;",
+                "cout"
+              ],
+              "answer_index": 0,
+              "explanation": "La ejecución empieza siempre en main; las demás líneas son preparación o instrucciones."
+            }
+          ]
+        },
+        {
+          "slug": "variables-y-entrada-salida",
+          "title": "Variables y entrada/salida",
+          "summary": "Guardar datos con su tipo, leerlos con cin y presentarlos con cout.",
+          "minutes": 15,
+          "objectives": [
+            "Declarar variables de tipo int, double, string y bool.",
+            "Leer datos con cin >> y explicar por qué el tipo importa.",
+            "Componer salidas con texto y variables usando cout."
+          ],
+          "body_md": "## Variables con tipo\n\nEn C++ toda variable declara su tipo antes de usarse. El tipo decide qué valores caben y qué operaciones tienen sentido:\n\n```cpp\nint edad = 30;\ndouble precio = 19.95;\nstring nombre = \"Ana\";\nbool activa = true;\n```\n\n`int` guarda enteros, `double` decimales, `string` texto y `bool` verdadero o falso. El nombre de la variable es la etiqueta con la que leerás y escribirás el valor. Usa nombres descriptivos: `edad`, `precio_total`, `nombre`.\n\n## Leer con cin\n\n`cin >> variable` lee un dato de la entrada estándar y lo guarda en la variable. El operador `>>` apunta hacia la variable, al contrario que `<<`, que apunta hacia la pantalla. `cin` salta los espacios y los saltos de línea, y convierte el texto al tipo de la variable:\n\n```cpp\nint edad;\nstring nombre;\ncin >> nombre;\ncin >> edad;\n```\n\nSi el usuario escribe una palabra y luego un número, cada `cin` toma el siguiente dato disponible. El orden de las lecturas debe coincidir con el orden en que llegan los datos; si los intercambias, las variables se llenan con lo que no toca y el resultado no tiene sentido. Cuando pides dos números, puedes leerlos en dos líneas separadas sin problema.\n\n## Leer una frase\n\n`cin >> nombre` se detiene en el primer espacio, así que solo captura una palabra. Para leer una línea completa necesitas `getline(cin, frase)` y haber incluido `<string>`. En los ejercicios de este curso bastará con una palabra.\n\n## Mostrar resultados\n\n```cpp\ncout << \"Nombre: \" << nombre << \"\\n\";\ncout << \"Edad: \" << edad << \"\\n\";\ncout << \"Edad en 10: \" << edad + 10 << \"\\n\";\n```\n\nCada `<<` añade un fragmento: texto entre comillas o el valor de una variable. Puedes mezclar ambos y calcular en el momento. El `\"\\n\"` al final evita que la siguiente salida se pegue a la anterior.\n\n## Un programa completo\n\n```cpp\n#include <iostream>\n#include <string>\nusing namespace std;\n\nint main() {\n    string nombre;\n    int edad;\n    cin >> nombre;\n    cin >> edad;\n    cout << \"Nombre: \" << nombre << \"\\n\";\n    cout << \"Edad: \" << edad << \"\\n\";\n    return 0;\n}\n```\n\n## Enteros y decimales\n\nSi divides dos `int`, el resultado es entero y se descarta la parte decimal: `7 / 2` da `3`, y `7 % 2` da `1`, el resto. Para conservar los decimales, al menos uno de los operandos debe ser `double`: `7.0 / 2` da `3.5`. Mezclar tipos sin pensarlo produce resultados que parecen incorrectos pero son la regla del lenguaje. Si necesitas el resto de una división con decimales, `%` no sirve: para esos casos se usan funciones de la biblioteca matemática.\n\n## Errores típicos\n\n- Usar una variable sin declararla antes.\n- Declarar `int` y leer texto: `cin` falla y la variable queda con un valor inservible.\n- Esperar que `cin >> nombre` lea una frase entera con espacios.\n- Olvidar el `\"\\n\"` y obtener todas las salidas en una sola línea.\n- Dividir enteros y extrañarse de que no aparezcan decimales.",
+          "exercises": [
+            {
+              "slug": "ficha-personal",
+              "title": "Ficha personal",
+              "kind": "stdout",
+              "prompt_md": "Lee un nombre y una edad, cada uno en una línea. Muestra exactamente tres líneas:\n\n```\nNombre: Ana\nEdad: 30\nEdad en 10: 40\n```\n\nLa edad se guarda como entero para poder sumarle 10.",
+              "starter_code": "// Lee un nombre y una edad, y muestra la ficha\n#include <iostream>\n#include <string>\nusing namespace std;\n\nint main() {\n    string nombre;\n    int edad;\n    cin >> nombre;\n    cin >> edad;\n    // Completa las tres líneas\n    return 0;\n}\n",
+              "solution_code": "#include <iostream>\n#include <string>\nusing namespace std;\n\nint main() {\n    string nombre;\n    int edad;\n    cin >> nombre;\n    cin >> edad;\n    cout << \"Nombre: \" << nombre << \"\\n\";\n    cout << \"Edad: \" << edad << \"\\n\";\n    cout << \"Edad en 10: \" << edad + 10 << \"\\n\";\n    return 0;\n}\n",
+              "tests": [
+                {
+                  "name": "Ana de 30",
+                  "stdin": "Ana\n30\n",
+                  "expected_stdout": "Nombre: Ana\nEdad: 30\nEdad en 10: 40"
+                },
+                {
+                  "name": "Luis de 45",
+                  "stdin": "Luis\n45\n",
+                  "expected_stdout": "Nombre: Luis\nEdad: 45\nEdad en 10: 55"
+                }
+              ],
+              "hints": [
+                "Cada cin >> variable consume el siguiente dato de la entrada.",
+                "Un int se puede sumar directamente: edad + 10.",
+                "Cada cout debe terminar con \"\\n\" para separar las líneas."
+              ]
+            },
+            {
+              "slug": "minutos-a-horas",
+              "title": "Minutos a horas y minutos",
+              "kind": "stdout",
+              "prompt_md": "Lee una cantidad de minutos (entero) y conviértela en horas y minutos. Muestra una sola línea con el formato:\n\n```\n2 h 15 min\n```\n\nCon 135 minutos deben salir 2 horas y 15 minutos. Los minutos sobrantes van siempre de 0 a 59.",
+              "starter_code": "// Convierte minutos a horas y minutos\n#include <iostream>\nusing namespace std;\n\nint main() {\n    int total;\n    cin >> total;\n    // Usa / para las horas y % para el resto\n    return 0;\n}\n",
+              "solution_code": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int total;\n    cin >> total;\n    int horas = total / 60;\n    int minutos = total % 60;\n    cout << horas << \" h \" << minutos << \" min\" << \"\\n\";\n    return 0;\n}\n",
+              "tests": [
+                {
+                  "name": "135 minutos",
+                  "stdin": "135\n",
+                  "expected_stdout": "2 h 15 min"
+                },
+                {
+                  "name": "60 minutos",
+                  "stdin": "60\n",
+                  "expected_stdout": "1 h 0 min"
+                },
+                {
+                  "name": "45 minutos",
+                  "stdin": "45\n",
+                  "expected_stdout": "0 h 45 min"
+                }
+              ],
+              "hints": [
+                "Una hora tiene 60 minutos.",
+                "La división entera total / 60 da las horas completas.",
+                "El operador % devuelve los minutos que sobran."
+              ]
+            }
+          ],
+          "quiz": [
+            {
+              "question": "¿Qué tipo usarías para guardar una edad en años?",
+              "options": [
+                "int",
+                "string",
+                "bool",
+                "double"
+              ],
+              "answer_index": 0,
+              "explanation": "La edad es un número entero, así que el tipo natural es int."
+            },
+            {
+              "question": "Si `a` y `b` son `int` y valen 7 y 2, ¿cuánto vale `a / b`?",
+              "options": [
+                "3",
+                "3.5",
+                "4",
+                "1"
+              ],
+              "answer_index": 0,
+              "explanation": "Con enteros, la división descarta la parte decimal y no redondea."
+            }
+          ]
+        },
+        {
+          "slug": "operadores-y-condicionales",
+          "title": "Operadores y condicionales",
+          "summary": "Calcular con enteros y hacer que el programa elija entre varios caminos.",
+          "minutes": 16,
+          "objectives": [
+            "Usar +, -, *, / y % con enteros y respetar la precedencia.",
+            "Escribir condiciones con if, else if y else.",
+            "Combinar comparaciones con && y || sin perder legibilidad."
+          ],
+          "body_md": "## Aritmética entera\n\nC++ usa los operadores de siempre: `+`, `-`, `*`, `/` y `%`. Con enteros, `/` devuelve la parte entera y `%` el resto:\n\n```cpp\nint a = 7;\nint b = 2;\ncout << a + b << \"\\n\";  // 9\ncout << a / b << \"\\n\";  // 3\ncout << a % b << \"\\n\";  // 1\n```\n\n`%` es muy útil: si `n % 2 == 0`, el número es par; si `total % 60` da 0, los minutos son exactos.\n\n## Precedencia y paréntesis\n\nSe calcula como en matemáticas: primero `*`, `/` y `%`; después `+` y `-`. Ante la duda, usa paréntesis, que también hacen el código más legible:\n\n```cpp\ncout << 2 + 3 * 4 << \"\\n\";    // 14\ncout << (2 + 3) * 4 << \"\\n\";  // 20\n```\n\n## Comparar valores\n\nLas comparaciones producen un valor lógico, verdadero o falso:\n\n- `==` igual, `!=` distinto.\n- `<`, `<=`, `>`, `>=` para orden.\n\nCuidado con `=`: asigna, no compara. `if (edad = 18)` compila en algunos casos y hace algo muy distinto de lo que parece; escribe siempre `==`.\n\n## if, else if y else\n\n```cpp\nint edad;\ncin >> edad;\nif (edad >= 18) {\n    cout << \"Puedes pasar\" << \"\\n\";\n} else {\n    cout << \"Aun no puedes pasar\" << \"\\n\";\n}\n```\n\nLa condición va entre paréntesis y el bloque, entre llaves. Aunque el bloque tenga una sola instrucción, las llaves evitan errores cuando añadas otra. Para varias ramas encadena `else if`; se evalúan en orden y solo se ejecuta la primera que se cumple:\n\n```cpp\nint nota;\ncin >> nota;\nif (nota >= 90) {\n    cout << \"Excelente\" << \"\\n\";\n} else if (nota >= 60) {\n    cout << \"Aprobado\" << \"\\n\";\n} else {\n    cout << \"Suspenso\" << \"\\n\";\n}\n```\n\nEl orden importa: si compruebas primero `nota >= 60`, una nota de 95 entra ahí y nunca llega a la rama de «Excelente».\n\n## Combinar condiciones\n\n`&&` exige que se cumplan ambas, `||` basta con una y `!` invierte:\n\n```cpp\nif (edad >= 18 && edad < 65) {\n    cout << \"Edad laboral\" << \"\\n\";\n}\n```\n\nLas condiciones se evalúan de izquierda a derecha y C++ se detiene en cuanto el resultado ya está decidido. Por eso `if (b != 0 && a / b > 2)` es seguro aunque `b` valga cero: la segunda parte no llega a evaluarse. Esa pausa se llama evaluación de cortocircuito y sirve para evitar divisiones imposibles. También puedes anidar un `if` dentro de otro, pero casi siempre se lee mejor con `&&`.\n\n## Errores típicos\n\n- Escribir la condición sin paréntesis: `if edad >= 18` no compila.\n- Confundir `=` con `==`.\n- Olvidar las llaves y añadir una segunda instrucción que queda fuera del `if`.\n- Ordenar las ramas de menor a mayor cuando la lógica pide lo contrario.\n- Comparar con `==` números que vienen de operaciones con decimales: casi nunca son exactos.",
+          "exercises": [
+            {
+              "slug": "mayor-de-dos",
+              "title": "El mayor de dos números",
+              "kind": "stdout",
+              "prompt_md": "Lee dos números enteros, cada uno en una línea, y muestra una sola línea con el mayor:\n\n```\nEl mayor es 9\n```\n\nLos dos números de las pruebas son distintos, así que no hace falta tratar el empate.",
+              "starter_code": "// Muestra el mayor de los dos números leídos\n#include <iostream>\nusing namespace std;\n\nint main() {\n    int a, b;\n    cin >> a;\n    cin >> b;\n    // Escribe el if y el else\n    return 0;\n}\n",
+              "solution_code": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int a, b;\n    cin >> a;\n    cin >> b;\n    if (a > b) {\n        cout << \"El mayor es \" << a << \"\\n\";\n    } else {\n        cout << \"El mayor es \" << b << \"\\n\";\n    }\n    return 0;\n}\n",
+              "tests": [
+                {
+                  "name": "Primero mayor",
+                  "stdin": "7\n3\n",
+                  "expected_stdout": "El mayor es 7"
+                },
+                {
+                  "name": "Segundo mayor",
+                  "stdin": "4\n9\n",
+                  "expected_stdout": "El mayor es 9"
+                }
+              ],
+              "hints": [
+                "Compara con el operador > y no con =.",
+                "La condición va entre paréntesis y el bloque entre llaves.",
+                "En cada rama se imprime el mismo texto y el número correspondiente."
+              ]
+            },
+            {
+              "slug": "par-o-impar",
+              "title": "Par o impar",
+              "kind": "stdout",
+              "prompt_md": "Lee un número entero y muestra `Par` si es divisible entre 2, o `Impar` en caso contrario.\n\nLa salida es una sola palabra, sin texto adicional.",
+              "starter_code": "// Decide si el número es par o impar\n#include <iostream>\nusing namespace std;\n\nint main() {\n    int numero;\n    cin >> numero;\n    // Usa el operador %\n    return 0;\n}\n",
+              "solution_code": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int numero;\n    cin >> numero;\n    if (numero % 2 == 0) {\n        cout << \"Par\" << \"\\n\";\n    } else {\n        cout << \"Impar\" << \"\\n\";\n    }\n    return 0;\n}\n",
+              "tests": [
+                {
+                  "name": "Cuatro",
+                  "stdin": "4\n",
+                  "expected_stdout": "Par"
+                },
+                {
+                  "name": "Siete",
+                  "stdin": "7\n",
+                  "expected_stdout": "Impar"
+                },
+                {
+                  "name": "Cero",
+                  "stdin": "0\n",
+                  "expected_stdout": "Par"
+                }
+              ],
+              "hints": [
+                "El resto de dividir entre 2 se obtiene con el operador %.",
+                "Si el resto es 0, el número es par.",
+                "El cero también es par: 0 % 2 vale 0."
+              ]
+            }
+          ],
+          "quiz": [
+            {
+              "question": "¿Qué operador devuelve el resto de una división entera?",
+              "options": [
+                "%",
+                "/",
+                "//",
+                "*"
+              ],
+              "answer_index": 0,
+              "explanation": "En C++ el resto se calcula con %, no con //."
+            },
+            {
+              "question": "¿Qué ocurre si escribes `if edad >= 18` sin paréntesis?",
+              "options": [
+                "El compilador da error: la condición debe ir entre paréntesis",
+                "Funciona igual que con paréntesis",
+                "Solo compara la primera variable",
+                "Se ejecuta siempre el else"
+              ],
+              "answer_index": 0,
+              "explanation": "En C++ los paréntesis de la condición son obligatorios."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Control y funciones",
+      "summary": "Repetir trabajo, encapsular cálculos y manejar varios valores a la vez.",
+      "lessons": [
+        {
+          "slug": "bucles",
+          "title": "Bucles",
+          "summary": "Repetir instrucciones con for y while, y acumular resultados sin perderlos.",
+          "minutes": 16,
+          "objectives": [
+            "Escribir bucles for y while con una condición que termine.",
+            "Elegir bien los límites para no dar una vuelta de más.",
+            "Acumular resultados dentro del bucle y mostrarlos al final."
+          ],
+          "body_md": "## Repetir sin copiar\n\nCopiar cinco veces una instrucción funciona una vez y no escala. Un bucle repite un bloque mientras se cumpla una condición. El más flexible es `while`:\n\n```cpp\nint n = 3;\nwhile (n > 0) {\n    cout << n << \"\\n\";\n    n = n - 1;\n}\ncout << \"Despegue\" << \"\\n\";\n```\n\nLa condición se evalúa antes de cada vuelta. Dentro del bucle debe ocurrir algo que acerque esa condición a su final; aquí es `n = n - 1`. Si lo olvidas, el bucle no termina nunca.\n\n## for con contador\n\nCuando sabes cuántas vueltas dar, `for` agrupa en una línea el inicio, la condición y el avance:\n\n```cpp\nfor (int i = 1; i <= 5; i++) {\n    cout << i << \"\\n\";\n}\n```\n\nSe lee así: empieza con `i` igual a 1; repite mientras `i <= 5`; después de cada vuelta suma 1. La salida son los números del 1 al 5. Cambiando esos tres valores cambias el recorrido: `i += 2` avanza de dos en dos y `i--` cuenta hacia atrás.\n\n## El error de los límites\n\nDecidir entre `<` y `<=` es la fuente más común de errores. `for (int i = 0; i < 5; i++)` da cinco vueltas, con los valores 0 a 4, y `for (int i = 1; i <= 5; i++)` también da cinco, con los valores 1 a 5. Antes de escribir, di en voz alta qué valor toma la variable en la primera y en la última vuelta.\n\n## Acumular dentro del bucle\n\nUn acumulador guarda un resultado parcial. Se inicializa antes y se actualiza dentro:\n\n```cpp\nint total = 0;\nfor (int i = 1; i <= 10; i++) {\n    total = total + i;\n}\ncout << total << \"\\n\";\n```\n\nEl total vale 55. Si declaras e inicializas `total` dentro del bucle, cada vuelta empieza de cero y el resultado final es solo el último valor. Es un fallo silencioso: no hay error, solo una cifra equivocada.\n\n## Leer n datos\n\nUn patrón que usarás constantemente: leer cuántos datos vienen y repetir esa cantidad de veces.\n\n```cpp\nint n;\ncin >> n;\nint suma = 0;\nfor (int i = 0; i < n; i++) {\n    int valor;\n    cin >> valor;\n    suma = suma + valor;\n}\ncout << suma << \"\\n\";\n```\n\nCon `n` igual a 3 y los valores 4, 5 y 6, muestra 15.\n\n## while o for\n\nUsa `for` cuando la cantidad de vueltas se conoce o cuando recorres una colección. Usa `while` cuando la repetición depende de una condición que cambia de forma imprevisible, como leer hasta encontrar un cero.\n\n## Errores típicos\n\n- No modificar la variable de control dentro del `while`: bucle infinito.\n- Equivocarse con `<` y `<=` y dar una vuelta de más o de menos.\n- Inicializar el acumulador dentro del bucle.\n- Olvidar las llaves y dejar fuera del bucle la instrucción que debía repetirse.\n- Reutilizar la variable `i` después del bucle esperando otro valor.",
+          "exercises": [
+            {
+              "slug": "tabla-multiplicar",
+              "title": "Tabla de multiplicar",
+              "kind": "stdout",
+              "prompt_md": "Lee un número entero y muestra su tabla de multiplicar del 1 al 5, una línea por producto:\n\n```\n3 x 1 = 3\n3 x 2 = 6\n3 x 3 = 9\n3 x 4 = 12\n3 x 5 = 15\n```\n\nRespeta los espacios del formato.",
+              "starter_code": "// Muestra la tabla del número leído, del 1 al 5\n#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    for (int i = 1; i <= 5; i++) {\n        // Completa el cout\n    }\n    return 0;\n}\n",
+              "solution_code": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    for (int i = 1; i <= 5; i++) {\n        cout << n << \" x \" << i << \" = \" << n * i << \"\\n\";\n    }\n    return 0;\n}\n",
+              "tests": [
+                {
+                  "name": "Tabla del 3",
+                  "stdin": "3\n",
+                  "expected_stdout": "3 x 1 = 3\n3 x 2 = 6\n3 x 3 = 9\n3 x 4 = 12\n3 x 5 = 15"
+                },
+                {
+                  "name": "Tabla del 7",
+                  "stdin": "7\n",
+                  "expected_stdout": "7 x 1 = 7\n7 x 2 = 14\n7 x 3 = 21\n7 x 4 = 28\n7 x 5 = 35"
+                }
+              ],
+              "hints": [
+                "El bucle va de 1 a 5 con i <= 5.",
+                "Cada fragmento del formato se une con <<.",
+                "El producto es n * i."
+              ]
+            },
+            {
+              "slug": "cuenta-atras",
+              "title": "Cuenta atrás",
+              "kind": "stdout",
+              "prompt_md": "Lee un número entero mayor que cero y muestra una cuenta atrás desde ese número hasta 1, un número por línea. Al final, muestra `Despegue`.\n\nEjemplo con 3:\n\n```\n3\n2\n1\nDespegue\n```",
+              "starter_code": "// Cuenta atrás y termina con Despegue\n#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    // Escribe el bucle\n    return 0;\n}\n",
+              "solution_code": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    while (n >= 1) {\n        cout << n << \"\\n\";\n        n = n - 1;\n    }\n    cout << \"Despegue\" << \"\\n\";\n    return 0;\n}\n",
+              "tests": [
+                {
+                  "name": "Desde 3",
+                  "stdin": "3\n",
+                  "expected_stdout": "3\n2\n1\nDespegue"
+                },
+                {
+                  "name": "Desde 1",
+                  "stdin": "1\n",
+                  "expected_stdout": "1\nDespegue"
+                },
+                {
+                  "name": "Desde 5",
+                  "stdin": "5\n",
+                  "expected_stdout": "5\n4\n3\n2\n1\nDespegue"
+                }
+              ],
+              "hints": [
+                "La condición puede ser n >= 1.",
+                "Dentro del bucle imprime n y réstale 1, o el bucle no termina.",
+                "El cout de Despegue va después del bucle."
+              ]
+            }
+          ],
+          "quiz": [
+            {
+              "question": "¿Cuántas veces se ejecuta el cuerpo de `for (int i = 0; i < 3; i++)`?",
+              "options": [
+                "3",
+                "4",
+                "2",
+                "Infinitas"
+              ],
+              "answer_index": 0,
+              "explanation": "Se ejecuta con i igual a 0, 1 y 2; al llegar a 3 la condición es falsa."
+            },
+            {
+              "question": "¿Qué provoca que un bucle `while` no termine nunca?",
+              "options": [
+                "Que la condición no cambie a falsa",
+                "Que el bucle tenga un cout",
+                "Usar números enteros",
+                "Que la condición use >="
+              ],
+              "answer_index": 0,
+              "explanation": "Si nada modifica la condición, se repite sin fin."
+            }
+          ]
+        },
+        {
+          "slug": "funciones",
+          "title": "Funciones",
+          "summary": "Dar nombre a un cálculo, recibir parámetros y devolver un resultado.",
+          "minutes": 17,
+          "objectives": [
+            "Declarar funciones con parámetros y tipo de retorno.",
+            "Llamar a una función varias veces y reutilizar su lógica.",
+            "Distinguir entre devolver un valor y solo imprimir."
+          ],
+          "body_md": "## Por qué funciones\n\nCuando un cálculo se repite, conviene darle un nombre. Una función agrupa instrucciones, recibe datos y devuelve un resultado. Así el programa principal se lee como una lista de pasos y cada paso se puede probar por separado.\n\n## Anatomía de una función\n\n```cpp\nint doble(int x) {\n    return x * 2;\n}\n```\n\nSe lee de izquierda a derecha: `int` es el tipo del valor que devuelve, `doble` es el nombre, `(int x)` es la lista de parámetros con su tipo y `return` entrega el resultado. El cuerpo va entre llaves. Una función que no devuelve nada se declara con `void` y no lleva `return` con valor.\n\n## Llamar a la función\n\n```cpp\nint main() {\n    int numero;\n    cin >> numero;\n    cout << \"El doble es \" << doble(numero) << \"\\n\";\n    return 0;\n}\n```\n\nLa llamada `doble(numero)` copia el valor del argumento en el parámetro `x`, ejecuta el cuerpo y sustituye la llamada por el resultado. Puedes llamarla tantas veces como quieras con argumentos distintos; el cuerpo se escribe una sola vez.\n\n## Dónde se define\n\nEl compilador necesita conocer la función antes de usarla. Lo más simple es definirla encima de `main`. Si prefieres escribir `main` primero, declara el prototipo arriba y define la función después:\n\n```cpp\nint doble(int x);\n\nint main() {\n    cout << doble(5) << \"\\n\";\n}\n\nint doble(int x) {\n    return x * 2;\n}\n```\n\n## void y efectos\n\nUna función `void` no devuelve un valor, pero puede hacer algo, como imprimir:\n\n```cpp\nvoid saludar(string nombre) {\n    cout << \"Hola, \" << nombre << \"\\n\";\n}\n```\n\nSeparar el cálculo de la impresión suele ser mejor: la función calcula y devuelve, y quien la llama decide qué hacer con el resultado. Así puedes reutilizarla para mostrar, comparar o guardar.\n\n## Ámbito y parámetros\n\nLas variables declaradas dentro de una función son locales: existen solo mientras la función se ejecuta. Los parámetros también son locales y se pasan por copia, de modo que modificar `x` dentro no cambia la variable original. Esa independencia hace que las funciones sean predecibles.\n\n## Un ejemplo completo\n\n```cpp\n#include <iostream>\nusing namespace std;\n\nint suma(int a, int b) {\n    return a + b;\n}\n\nint mayor(int a, int b) {\n    if (a > b) {\n        return a;\n    }\n    return b;\n}\n\nint main() {\n    int x, y;\n    cin >> x;\n    cin >> y;\n    cout << \"Suma: \" << suma(x, y) << \"\\n\";\n    cout << \"Mayor: \" << mayor(x, y) << \"\\n\";\n    return 0;\n}\n```\n\n`mayor` usa dos `return`: el primero termina la función en cuanto se cumple la condición; el segundo atiende el resto de los casos. Un `return` corta la ejecución de la función en ese punto.\n\n## Errores típicos\n\n- Olvidar el tipo de retorno o escribirlo mal, por ejemplo `void` donde querías un número.\n- No devolver nada en una función que promete un valor: el resultado es impredecible.\n- Llamar a la función antes de definirla o declararla.\n- Confundir el nombre del parámetro con el de la variable de quien llama.\n- Escribir `return` con un valor dentro de una función `void`.",
+          "exercises": [
+            {
+              "slug": "doble-de-un-numero",
+              "title": "El doble de un número",
+              "kind": "stdout",
+              "prompt_md": "Escribe una función `int doble(int x)` que devuelva el doble de su parámetro. Después lee un número entero y muestra:\n\n```\nEl doble es 14\n```\n\nLa función debe hacer el cálculo; `main` solo lee e imprime.",
+              "starter_code": "// Define doble(x) y úsala en main\n#include <iostream>\nusing namespace std;\n\n// Escribe aquí la función doble\n\nint main() {\n    int numero;\n    cin >> numero;\n    // Completa la salida\n    return 0;\n}\n",
+              "solution_code": "#include <iostream>\nusing namespace std;\n\nint doble(int x) {\n    return x * 2;\n}\n\nint main() {\n    int numero;\n    cin >> numero;\n    cout << \"El doble es \" << doble(numero) << \"\\n\";\n    return 0;\n}\n",
+              "tests": [
+                {
+                  "name": "Siete",
+                  "stdin": "7\n",
+                  "expected_stdout": "El doble es 14"
+                },
+                {
+                  "name": "Negativo",
+                  "stdin": "-4\n",
+                  "expected_stdout": "El doble es -8"
+                },
+                {
+                  "name": "Cero",
+                  "stdin": "0\n",
+                  "expected_stdout": "El doble es 0"
+                }
+              ],
+              "hints": [
+                "La función se declara `int doble(int x)` y devuelve con `return`.",
+                "Defínela antes de `main` para que el compilador la conozca.",
+                "En `main` basta con `cout << doble(numero)`."
+              ]
+            },
+            {
+              "slug": "suma-hasta-n",
+              "title": "Suma hasta n",
+              "kind": "stdout",
+              "prompt_md": "Escribe una función `int sumaHasta(int n)` que devuelva la suma de 1 a `n`. Lee un entero y muestra:\n\n```\nSuma: 15\n```\n\nPara 5, la suma es 1 + 2 + 3 + 4 + 5.",
+              "starter_code": "// Suma de 1 a n con una función\n#include <iostream>\nusing namespace std;\n\n// Escribe aquí sumaHasta\n\nint main() {\n    int n;\n    cin >> n;\n    // Muestra el resultado\n    return 0;\n}\n",
+              "solution_code": "#include <iostream>\nusing namespace std;\n\nint sumaHasta(int n) {\n    int total = 0;\n    for (int i = 1; i <= n; i++) {\n        total = total + i;\n    }\n    return total;\n}\n\nint main() {\n    int n;\n    cin >> n;\n    cout << \"Suma: \" << sumaHasta(n) << \"\\n\";\n    return 0;\n}\n",
+              "tests": [
+                {
+                  "name": "Hasta 5",
+                  "stdin": "5\n",
+                  "expected_stdout": "Suma: 15"
+                },
+                {
+                  "name": "Hasta 1",
+                  "stdin": "1\n",
+                  "expected_stdout": "Suma: 1"
+                },
+                {
+                  "name": "Hasta 10",
+                  "stdin": "10\n",
+                  "expected_stdout": "Suma: 55"
+                }
+              ],
+              "hints": [
+                "Inicializa un acumulador en 0 dentro de la función.",
+                "Recorre de 1 a n con un for y suma cada valor.",
+                "Devuelve el acumulador con return y muéstralo en `main`."
+              ]
+            }
+          ],
+          "quiz": [
+            {
+              "question": "¿Qué palabra devuelve un valor desde una función?",
+              "options": [
+                "return",
+                "cout",
+                "void",
+                "break"
+              ],
+              "answer_index": 0,
+              "explanation": "return entrega el resultado y termina la ejecución de la función."
+            },
+            {
+              "question": "¿Qué tipo de retorno usarías en una función que solo imprime un saludo?",
+              "options": [
+                "void",
+                "int",
+                "string",
+                "bool"
+              ],
+              "answer_index": 0,
+              "explanation": "void indica que la función no devuelve ningún valor."
+            }
+          ]
+        },
+        {
+          "slug": "vectores-y-cadenas",
+          "title": "Vectores y cadenas",
+          "summary": "Guardar varios valores, recorrerlos y contar dentro de un texto.",
+          "minutes": 18,
+          "objectives": [
+            "Crear vectores, añadir elementos y recorrerlos en orden.",
+            "Calcular sumas y máximos sobre un vector.",
+            "Recorrer los caracteres de una cadena y contar coincidencias."
+          ],
+          "body_md": "## Muchos valores con un nombre\n\nUn vector guarda varios valores del mismo tipo en orden. Se declara indicando el tipo entre ángulos y se rellena con llaves o añadiendo elementos:\n\n```cpp\n#include <iostream>\n#include <vector>\n\nvector<int> numeros = {4, 1, 7};\ncout << numeros[0] << \"\\n\";       // 4\ncout << numeros.size() << \"\\n\";   // 3\n```\n\nLos índices empiezan en 0, así que en un vector de tres elementos los índices válidos son 0, 1 y 2. `size()` devuelve cuántos hay; el último índice es `size() - 1`. Acceder fuera de ese rango no da un error claro: el programa puede devolver basura o cerrarse.\n\n## Añadir y recorrer\n\n```cpp\nvector<int> numeros;\nnumeros.push_back(5);\nnumeros.push_back(2);\n```\n\n`push_back` añade al final y el vector crece solo. Para recorrerlo tienes dos formas:\n\n```cpp\nfor (int valor : numeros) {\n    cout << valor << \"\\n\";\n}\n\nfor (int i = 0; i < (int)numeros.size(); i++) {\n    cout << numeros[i] << \"\\n\";\n}\n```\n\nLa primera recorre los valores sin preocuparse por el índice; la segunda lo necesita cuando quieres la posición. El `(int)` evita el aviso de comparar un entero con un tamaño sin signo.\n\n## Calcular con un vector\n\n```cpp\nint suma = 0;\nint mayor = numeros[0];\nfor (int valor : numeros) {\n    suma = suma + valor;\n    if (valor > mayor) {\n        mayor = valor;\n    }\n}\ncout << \"Suma: \" << suma << \"\\n\";\ncout << \"Mayor: \" << mayor << \"\\n\";\n```\n\nEl máximo se inicializa con el primer elemento, no con cero: si todos los valores fueran negativos, el cero ganaría y el resultado sería falso. Antes de leer `numeros[0]`, comprueba que el vector no esté vacío.\n\n## Cadenas\n\nUna `string` es una secuencia de caracteres con operaciones parecidas a las de un vector:\n\n```cpp\n#include <iostream>\n#include <string>\n\nstring palabra = \"casa\";\ncout << palabra.size() << \"\\n\";   // 4\ncout << palabra[0] << \"\\n\";       // c\nfor (char c : palabra) {\n    cout << c << \"\\n\";\n}\n```\n\nPuedes unir cadenas con `+` y compararlas con `==`. La comparación distingue mayúsculas y tildes: `\"Casa\"` y `\"casa\"` no son iguales.\n\n## Contar dentro de una cadena\n\nContar vocales combina un recorrido con una condición:\n\n```cpp\nint vocales = 0;\nfor (char c : palabra) {\n    if (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u') {\n        vocales = vocales + 1;\n    }\n}\ncout << vocales << \"\\n\";\n```\n\nLas comillas simples delimitan un carácter; las dobles, una cadena. `'a'` es un carácter y `\"a\"` es una cadena: no son intercambiables.\n\n## Errores típicos\n\n- Usar el índice `size()` en lugar de `size() - 1`.\n- Leer `numeros[0]` cuando el vector está vacío.\n- Olvidar `#include <vector>` o `#include <string>`.\n- Usar comillas dobles donde esperabas un `char`.\n- Reiniciar el contador dentro del bucle y obtener siempre 0 o 1.",
+          "exercises": [
+            {
+              "slug": "mayor-menor-suma",
+              "title": "Mayor, menor y suma",
+              "kind": "stdout",
+              "prompt_md": "Lee un número `n` y después `n` enteros, uno por línea. Guárdalos en un vector y muestra tres líneas:\n\n```\nMayor: 9\nMenor: 2\nSuma: 20\n```\n\nAsume que `n` es al menos 1.",
+              "starter_code": "// Lee n números en un vector y muestra mayor, menor y suma\n#include <iostream>\n#include <vector>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    vector<int> numeros;\n    for (int i = 0; i < n; i++) {\n        // Lee cada número y añádelo con push_back\n    }\n    return 0;\n}\n",
+              "solution_code": "#include <iostream>\n#include <vector>\nusing namespace std;\n\nint main() {\n    int n;\n    cin >> n;\n    vector<int> numeros;\n    for (int i = 0; i < n; i++) {\n        int valor;\n        cin >> valor;\n        numeros.push_back(valor);\n    }\n    int mayor = numeros[0];\n    int menor = numeros[0];\n    int suma = 0;\n    for (int valor : numeros) {\n        if (valor > mayor) {\n            mayor = valor;\n        }\n        if (valor < menor) {\n            menor = valor;\n        }\n        suma = suma + valor;\n    }\n    cout << \"Mayor: \" << mayor << \"\\n\";\n    cout << \"Menor: \" << menor << \"\\n\";\n    cout << \"Suma: \" << suma << \"\\n\";\n    return 0;\n}\n",
+              "tests": [
+                {
+                  "name": "Cuatro números",
+                  "stdin": "4\n5\n2\n9\n4\n",
+                  "expected_stdout": "Mayor: 9\nMenor: 2\nSuma: 20"
+                },
+                {
+                  "name": "Un solo número",
+                  "stdin": "1\n7\n",
+                  "expected_stdout": "Mayor: 7\nMenor: 7\nSuma: 7"
+                }
+              ],
+              "hints": [
+                "Crea el vector vacío y usa push_back dentro del bucle.",
+                "Inicializa mayor y menor con el primer elemento, no con cero.",
+                "Recorre el vector con for (int valor : numeros)."
+              ]
+            },
+            {
+              "slug": "contar-vocales",
+              "title": "Contar vocales",
+              "kind": "stdout",
+              "prompt_md": "Lee una palabra en minúsculas y sin acentos, y cuenta cuántas vocales tiene. Muestra:\n\n```\nVocales: 3\n```\n\nSolo cuentan las vocales `a`, `e`, `i`, `o` y `u`. La palabra llega en una sola línea.",
+              "starter_code": "// Cuenta las vocales de una palabra\n#include <iostream>\n#include <string>\nusing namespace std;\n\nint main() {\n    string palabra;\n    cin >> palabra;\n    int vocales = 0;\n    // Recorre la palabra con for (char c : palabra)\n    return 0;\n}\n",
+              "solution_code": "#include <iostream>\n#include <string>\nusing namespace std;\n\nint main() {\n    string palabra;\n    cin >> palabra;\n    int vocales = 0;\n    for (char c : palabra) {\n        if (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u') {\n            vocales = vocales + 1;\n        }\n    }\n    cout << \"Vocales: \" << vocales << \"\\n\";\n    return 0;\n}\n",
+              "tests": [
+                {
+                  "name": "Programar",
+                  "stdin": "programar\n",
+                  "expected_stdout": "Vocales: 3"
+                },
+                {
+                  "name": "Murcielago",
+                  "stdin": "murcielago\n",
+                  "expected_stdout": "Vocales: 5"
+                },
+                {
+                  "name": "Sin vocales",
+                  "stdin": "xyz\n",
+                  "expected_stdout": "Vocales: 0"
+                }
+              ],
+              "hints": [
+                "Recorre la palabra con for (char c : palabra).",
+                "Compara cada carácter con 'a', 'e', 'i', 'o' y 'u' usando comillas simples.",
+                "Combina las comparaciones con || y aumenta el contador cuando alguna se cumpla."
+              ]
+            }
+          ],
+          "quiz": [
+            {
+              "question": "En un vector con `size()` igual a 3, ¿cuál es el último índice válido?",
+              "options": [
+                "2",
+                "3",
+                "1",
+                "-1"
+              ],
+              "answer_index": 0,
+              "explanation": "Los índices van de 0 a size() - 1, así que el último es 2."
+            },
+            {
+              "question": "¿Cómo se añade un elemento al final de un `vector`?",
+              "options": [
+                "con push_back",
+                "con append",
+                "con add",
+                "con insert_last"
+              ],
+              "answer_index": 0,
+              "explanation": "push_back añade al final y aumenta el tamaño del vector."
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "labs": [
+    {
+      "slug": "calculadora-consola",
+      "title": "Calculadora de consola",
+      "summary": "Construye una calculadora por pasos: sumar, operar, elegir con if y ordenar todo con funciones.",
+      "minutes": 45,
+      "steps": [
+        {
+          "title": "Sumar dos números",
+          "instructions_md": "Lee dos números enteros, cada uno en una línea, y muestra su suma con el formato:\n\n```\nSuma: 12\n```\n\nEscribe la estructura completa: `#include <iostream>`, `using namespace std;` e `int main()`. Guarda los dos valores en variables `int` y muestra el resultado con un solo `cout`.",
+          "kind": "stdout",
+          "starter_code": "// Lee dos enteros y muestra su suma\n#include <iostream>\nusing namespace std;\n\nint main() {\n    int a, b;\n    cin >> a;\n    cin >> b;\n    // Muestra Suma: <resultado>\n    return 0;\n}\n",
+          "tests": [
+            {
+              "name": "Siete y cinco",
+              "stdin": "7\n5\n",
+              "expected_stdout": "Suma: 12"
+            },
+            {
+              "name": "Diez y menos tres",
+              "stdin": "10\n-3\n",
+              "expected_stdout": "Suma: 7"
+            }
+          ]
+        },
+        {
+          "title": "Las cuatro operaciones",
+          "instructions_md": "Amplía el programa para calcular suma, resta, producto y división entera de los mismos dos números. Muestra una línea por operación, en este orden:\n\n```\nSuma: 12\nResta: 8\nProducto: 20\nDivision: 5\n```\n\nLos divisores de las pruebas nunca son cero. Recuerda que `/` entre enteros descarta los decimales.",
+          "kind": "stdout",
+          "starter_code": "// Calcula las cuatro operaciones básicas\n#include <iostream>\nusing namespace std;\n\nint main() {\n    int a, b;\n    cin >> a;\n    cin >> b;\n    // Muestra las cuatro líneas\n    return 0;\n}\n",
+          "tests": [
+            {
+              "name": "Diez y dos",
+              "stdin": "10\n2\n",
+              "expected_stdout": "Suma: 12\nResta: 8\nProducto: 20\nDivision: 5"
+            },
+            {
+              "name": "Nueve y cuatro",
+              "stdin": "9\n4\n",
+              "expected_stdout": "Suma: 13\nResta: 5\nProducto: 36\nDivision: 2"
+            }
+          ]
+        },
+        {
+          "title": "Elegir la operación",
+          "instructions_md": "Ahora la calculadora debe leer también un operador: `+`, `-`, `*` o `/`. La entrada trae dos enteros y después el símbolo, cada cosa en su línea. Usa una variable `char` y decide con `if`, `else if` y `else`.\n\n```\nResultado: 12\n```\n\nSi el operador no es ninguno de los cuatro, muestra `Operador no valido`. En las pruebas solo se usan operadores válidos.",
+          "kind": "stdout",
+          "starter_code": "// Lee dos números y un operador, y calcula\n#include <iostream>\nusing namespace std;\n\nint main() {\n    int a, b;\n    char op;\n    cin >> a;\n    cin >> b;\n    cin >> op;\n    // Decide con if / else if / else y muestra Resultado: <valor>\n    return 0;\n}\n",
+          "tests": [
+            {
+              "name": "Suma",
+              "stdin": "8\n3\n+\n",
+              "expected_stdout": "Resultado: 11"
+            },
+            {
+              "name": "Producto",
+              "stdin": "8\n3\n*\n",
+              "expected_stdout": "Resultado: 24"
+            },
+            {
+              "name": "División",
+              "stdin": "8\n3\n/\n",
+              "expected_stdout": "Resultado: 2"
+            }
+          ]
+        },
+        {
+          "title": "Una función que calcula",
+          "instructions_md": "Cierra el laboratorio moviendo la lógica a una función:\n\n```cpp\nint calcular(int a, int b, char op)\n```\n\nLa función devuelve el resultado y `main` solo lee, llama e imprime con el formato `Resultado: 12`. Defínela antes de `main` para que el compilador la conozca. El comportamiento visible debe ser el mismo que en el paso anterior.",
+          "kind": "stdout",
+          "starter_code": "// Mueve el cálculo a una función\n#include <iostream>\nusing namespace std;\n\n// Define aquí int calcular(int a, int b, char op)\n\nint main() {\n    int a, b;\n    char op;\n    cin >> a;\n    cin >> b;\n    cin >> op;\n    // Llama a calcular y muestra el resultado\n    return 0;\n}\n",
+          "tests": [
+            {
+              "name": "Resta",
+              "stdin": "9\n4\n-\n",
+              "expected_stdout": "Resultado: 5"
+            },
+            {
+              "name": "Producto",
+              "stdin": "6\n7\n*\n",
+              "expected_stdout": "Resultado: 42"
+            },
+            {
+              "name": "División entera",
+              "stdin": "10\n4\n/\n",
+              "expected_stdout": "Resultado: 2"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

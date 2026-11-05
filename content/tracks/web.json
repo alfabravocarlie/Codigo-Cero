@@ -1,0 +1,617 @@
+{
+  "track": "web",
+  "title": "Web desde cero",
+  "language": "web",
+  "description": "Crea páginas reales con HTML y CSS: estructura, semántica, formularios y diseño adaptable.",
+  "level": "principiante",
+  "modules": [
+    {
+      "title": "Estructura y contenido",
+      "summary": "El documento HTML, el texto con significado y los enlaces.",
+      "lessons": [
+        {
+          "slug": "estructura-html",
+          "title": "La estructura de una página HTML",
+          "summary": "El esqueleto que comparte toda página: doctype, head y body.",
+          "minutes": 14,
+          "objectives": [
+            "Escribir el esqueleto mínimo de un documento HTML válido.",
+            "Distinguir qué va en <head> y qué va en <body>.",
+            "Anidar etiquetas correctamente y detectar errores con las herramientas del navegador."
+          ],
+          "body_md": "## Un documento, no un dibujo\n\nCada página que abres en el navegador empezó como un archivo de texto. HTML no es un lenguaje de programación: es un lenguaje de marcado que describe el contenido y deja que el navegador decida cómo mostrarlo. Esa distinción importa, porque al principio uno intenta «dibujar» con etiquetas y se frustra; lo que corresponde es describir la estructura, y el diseño llega después con CSS.\n\n### El esqueleto mínimo\n\nGuarda esto como `index.html` y ábrelo con doble clic:\n\n```html\n<!DOCTYPE html>\n<html lang=\"es\">\n  <head>\n    <meta charset=\"utf-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n    <title>Mi primera página</title>\n  </head>\n  <body>\n    <h1>Hola, mundo</h1>\n    <p>Esta es mi primera página web.</p>\n  </body>\n</html>\n```\n\n`<!DOCTYPE html>` activa el modo estándar del navegador. `<html lang=\"es\">` envuelve todo el documento y declara el idioma, algo que agradecen los lectores de pantalla y los buscadores. `<head>` contiene lo que no se ve: el juego de caracteres UTF-8, el título de la pestaña y los enlaces a hojas de estilo. `<body>` contiene lo que sí se ve.\n\n### Etiquetas, atributos y anidación\n\nUna etiqueta se escribe entre ángulos y suele tener apertura y cierre: `<p>` y `</p>`. Los atributos añaden información dentro de la etiqueta de apertura: `<html lang=\"es\">`, `<img src=\"foto.jpg\" alt=\"Una playa al amanecer\">`. Hay etiquetas vacías que no cierran porque no envuelven contenido: `<meta>`, `<link>`, `<img>`, `<br>` y `<hr>`.\n\nLa anidación tiene reglas. Una etiqueta abierta dentro de otra debe cerrarse antes que ella. `<p><strong>Hola</strong></p>` es correcto; `<p><strong>Hola</p></strong>` no lo es, y el navegador intentará arreglarlo a su manera, casi siempre peor que la tuya. Indentar dos espacios por nivel no es obligatorio, pero hace visible si te has equivocado.\n\n### Qué pasa cuando hay un error\n\nEl navegador es indulgente. Una etiqueta sin cerrar no rompe la página: el navegador la cierra donde cree que toca. Esa tolerancia es cómoda al principio y peligrosa después, porque el resultado puede parecerse a lo que querías y no serlo. El atajo F12 abre las herramientas del desarrollador; la pestaña Elementos muestra el árbol real que el navegador construyó, que a veces no coincide con tu archivo.\n\n### Errores típicos\n\n- Olvidar `<!DOCTYPE html>`: la página entra en modo quirks y los tamaños se comportan de forma extraña.\n- Poner contenido visible dentro de `<head>`: no se muestra y confunde al depurar.\n- Usar `<br>` para separar párrafos: para eso existe `<p>`; `<br>` es un salto de línea dentro de un mismo bloque.\n- Escribir texto suelto dentro de `<html>` fuera de `<body>`.\n- Confundir `<title>` con un `<h1>`: el primero nombra la pestaña, el segundo encabeza la página.\n\n### Para fijarlo\n\nAbre una página cualquiera, pulsa F12 y recorre el árbol desde `<html>`. Verás el mismo esqueleto, con más contenido. Ese es el modelo mental que necesitas: un documento con una cabecera invisible y un cuerpo visible, donde cada etiqueta declara qué es su contenido y no cómo se ve. Cuando tengas dudas, escribe primero el texto y después envuélvelo con la etiqueta que describa su papel.",
+          "exercises": [
+            {
+              "slug": "esqueleto-basico",
+              "title": "Completar el esqueleto",
+              "kind": "checklist",
+              "prompt_md": "Completa el archivo para que sea un documento HTML válido: declara el tipo, el idioma, el juego de caracteres, un título de pestaña y un contenido visible.",
+              "starter_code": "<html>\n  <body>\n    <h1>Mi página</h1>\n  </body>\n</html>\n",
+              "items": [
+                "El archivo empieza con la declaración <!DOCTYPE html>.",
+                "La etiqueta <html> declara el idioma con lang=\"es\" y encierra todo el documento.",
+                "Dentro de <head> hay <meta charset=\"utf-8\"> y un <title> con texto.",
+                "<body> contiene un <h1> y al menos un <p>."
+              ],
+              "hints": [
+                "La primera línea no es una etiqueta que se cierre: es una declaración.",
+                "El idioma se declara en el atributo lang de la etiqueta <html>.",
+                "El <title> va dentro de <head>, no dentro de <body>."
+              ]
+            },
+            {
+              "slug": "jerarquia-encabezados",
+              "title": "Encabezados en orden",
+              "kind": "checklist",
+              "prompt_md": "Crea una página con un único <h1>, dos secciones con <h2> y un párrafo dentro de cada sección. No saltes niveles de encabezado.",
+              "starter_code": "<!DOCTYPE html>\n<html lang=\"es\">\n  <head>\n    <meta charset=\"utf-8\">\n    <title>Guía de viaje</title>\n  </head>\n  <body>\n    <!-- escribe aquí los encabezados y los párrafos -->\n  </body>\n</html>\n",
+              "items": [
+                "Hay exactamente un <h1> en el documento.",
+                "Hay dos <h2> y los dos van después del <h1>.",
+                "Cada <h2> va seguido de al menos un <p>.",
+                "No aparece ningún <h3> sin un <h2> antes."
+              ],
+              "hints": [
+                "El <h1> es el título de la página, fuera de las secciones.",
+                "Cada sección puede ser un <section> con su <h2> y su <p>.",
+                "Los niveles se eligen por jerarquía, no por tamaño."
+              ]
+            }
+          ],
+          "quiz": [
+            {
+              "question": "¿Dónde debe ir el <title> de la página?",
+              "options": [
+                "Dentro de <head>",
+                "Dentro de <body>, al principio",
+                "Dentro del primer <h1>",
+                "Dentro de <html>, pero fuera de <head> y <body>"
+              ],
+              "answer_index": 0,
+              "explanation": "El título de la pestaña pertenece a la cabecera del documento, que es <head>."
+            },
+            {
+              "question": "¿Qué ocurre si escribes <p><strong>Hola</p></strong>?",
+              "options": [
+                "El navegador corrige el anidamiento a su manera y el resultado no es el esperado.",
+                "La página no se abre de ninguna forma.",
+                "El navegador muestra un error en pantalla.",
+                "El texto se muestra tachado."
+              ],
+              "answer_index": 0,
+              "explanation": "HTML tolera errores de anidación: el navegador reconstruye el árbol, pero puede no coincidir con la intención."
+            }
+          ]
+        },
+        {
+          "slug": "texto-y-semantica",
+          "title": "Texto y semántica",
+          "summary": "Encabezados, énfasis y etiquetas que describen el papel del contenido.",
+          "minutes": 14,
+          "objectives": [
+            "Usar encabezados de h1 a h6 respetando la jerarquía.",
+            "Aplicar <strong> y <em> con criterio semántico.",
+            "Estructurar una página con header, main, article, section y footer."
+          ],
+          "body_md": "## Cada etiqueta dice qué es su contenido\n\nEn HTML casi todo el texto va dentro de párrafos, pero no todo el texto es igual. Un titular, una cita, un aviso y una palabra destacada cumplen funciones distintas, y HTML tiene etiquetas para cada una. Elegir la correcta se llama escribir con semántica.\n\n### Encabezados en orden\n\nLos encabezados van de `<h1>` a `<h6>` y forman un índice. Una página debería tener un solo `<h1>` —el tema principal— y bajar de nivel sin saltarse ninguno: después de un `<h2>`, un `<h3>`. No los elijas por su tamaño; el tamaño se cambia con CSS. Los eliges por jerarquía. Un lector de pantalla puede saltar de encabezado en encabezado, y esa navegación solo funciona si el orden tiene sentido.\n\n### Énfasis con significado\n\n```html\n<p>El curso es <strong>gratuito</strong> y empieza <em>mañana</em>.</p>\n<p>La fórmula del agua es H<sub>2</sub>O y la energía se mide en m<sup>2</sup>.</p>\n```\n\n`<strong>` marca importancia y `<em>` marca énfasis; ambos se leen con otra entonación en un lector de pantalla. `<b>` e `<i>` existen, pero solo cambian la apariencia y no aportan significado: úsalas cuando el cambio sea puramente visual. Para código en línea, `<code>`; para citas cortas, `<q>`; para citas largas, `<blockquote>` con un `<p>` dentro.\n\n### Las etiquetas de página\n\nEstas etiquetas no se ven, pero ordenan el documento:\n\n```html\n<body>\n  <header>\n    <h1>Cuaderno de campo</h1>\n    <nav><a href=\"#notas\">Notas</a></nav>\n  </header>\n  <main>\n    <article>\n      <h2>Primera salida</h2>\n      <p>Salimos antes del amanecer.</p>\n    </article>\n  </main>\n  <footer>© 2026 Cuaderno de campo</footer>\n</body>\n```\n\n`<header>` es la cabecera de la página o de una sección; `<nav>` agrupa enlaces de navegación; `<main>` contiene el contenido principal y solo debe aparecer una vez; `<article>` es una pieza que tendría sentido por sí sola; `<section>` agrupa contenido de un mismo tema; `<aside>` es información lateral. Un `<div>` sigue existiendo, pero para envolver cosas sin significado propio: si hay una etiqueta con nombre, úsala.\n\n### Texto que no se toca\n\nLos espacios múltiples y los saltos de línea del archivo se colapsan en un solo espacio al mostrarse. Si necesitas un salto dentro de un párrafo, `<br>`; si necesitas conservar el formato, `<pre>`. No uses `<br>` para separar bloques: eso es trabajo de `<p>` y de CSS.\n\n### Errores típicos\n\n- Elegir el nivel de encabezado por el tamaño que se ve.\n- Poner varios `<h1>` en la misma página.\n- Usar `<div>` para todo y perder la estructura.\n- Abusar de `<br>` como separador de párrafos.\n- Marcar texto con `<b>` cuando lo importante es el significado: usa `<strong>`.\n\n### Para fijarlo\n\nCopia el ejemplo en un archivo, ábrelo y pulsa F12. En la pestaña Elementos verás el árbol. La semántica no cambia el aspecto, pero cambia quién puede usar tu página: una estructura clara permite navegar con el teclado y entender el contenido sin verlo.",
+          "exercises": [
+            {
+              "slug": "articulo-semantico",
+              "title": "Un artículo bien estructurado",
+              "kind": "checklist",
+              "prompt_md": "Convierte el contenido en un artículo: una cabecera con el título, un cuerpo con dos párrafos y un pie con el autor. Usa etiquetas semánticas, no <div>.",
+              "starter_code": "<!DOCTYPE html>\n<html lang=\"es\">\n  <head>\n    <meta charset=\"utf-8\">\n    <title>Artículo</title>\n  </head>\n  <body>\n    <article>\n      <p>Contenido por reemplazar.</p>\n    </article>\n  </body>\n</html>\n",
+              "items": [
+                "El <article> contiene un <header> con un <h1>.",
+                "Hay al menos dos <p> de contenido dentro del <article>.",
+                "El <article> termina con un <footer> que menciona al autor.",
+                "Se usa <main> o <body> como contenedor y no todo está dentro de <div>."
+              ],
+              "hints": [
+                "El <header> puede ir dentro del <article>, no solo al principio de la página.",
+                "El <footer> del artículo no es el pie de la página: describe ese contenido.",
+                "Si dudas entre <div> y una etiqueta con nombre, usa la etiqueta con nombre."
+              ]
+            }
+          ],
+          "quiz": [
+            {
+              "question": "¿Cuál es la diferencia entre <strong> y <b>?",
+              "options": [
+                "<strong> aporta significado de importancia; <b> solo cambia la apariencia.",
+                "<b> es más moderno y sustituye a <strong>.",
+                "<strong> hace el texto más grande y <b> lo pone en negrita.",
+                "No hay ninguna diferencia: son sinónimos."
+              ],
+              "answer_index": 0,
+              "explanation": "La semántica importa: los lectores de pantalla pueden anunciar <strong> con énfasis, mientras que <b> es puramente visual."
+            },
+            {
+              "question": "¿Cuántos <h1> conviene tener en una página?",
+              "options": [
+                "Uno, como tema principal del documento.",
+                "Uno por cada sección.",
+                "Tantos como párrafos haya.",
+                "Ninguno: se usa <div> con clase título."
+              ],
+              "answer_index": 0,
+              "explanation": "Un <h1> único da un tema claro al documento; los niveles siguientes organizan las secciones."
+            }
+          ]
+        },
+        {
+          "slug": "enlaces-e-imagenes",
+          "title": "Enlaces e imágenes",
+          "summary": "Conectar páginas y describir imágenes para que todos puedan usarlas.",
+          "minutes": 15,
+          "objectives": [
+            "Escribir enlaces con href y texto descriptivo.",
+            "Diferenciar rutas relativas y absolutas y usar anclas internas.",
+            "Añadir imágenes con alt útil y dimensiones para evitar saltos."
+          ],
+          "body_md": "## Enlaces e imágenes: las dos etiquetas que conectan\n\nUna página sin enlaces es un folleto; con enlaces, es parte de la web. Y una página sin imágenes puede ser correcta, pero una imagen mal descrita excluye a quien no puede verla.\n\n### Enlaces que se entienden\n\n```html\n<a href=\"contacto.html\">Escríbenos</a>\n<a href=\"https://developer.mozilla.org/es/\" target=\"_blank\" rel=\"noopener\">Documentación</a>\n<a href=\"#precios\">Ver precios</a>\n<a href=\"mailto:hola@ejemplo.com\">Correo</a>\n```\n\nEl atributo `href` guarda el destino. Puede ser una ruta relativa al archivo actual (`contacto.html`), una URL completa, una ancla interna (`#precios`, que salta al elemento con `id=\"precios\"`) o un enlace de correo. `target=\"_blank\"` abre en otra pestaña; acompáñalo de `rel=\"noopener\"` para que la página nueva no pueda manipular la tuya.\n\nEl texto del enlace debe describir el destino. «Descargar la guía en PDF» se entiende; «clic aquí» obliga a leer el contexto. Si el enlace lleva a un archivo, dilo; si abre en otra pestaña, también puedes decirlo.\n\n### Imágenes con texto alternativo\n\n```html\n<figure>\n  <img src=\"img/plaza.jpg\" alt=\"Plaza mayor con soportales al atardecer\" width=\"640\" height=\"420\" loading=\"lazy\">\n  <figcaption>La plaza al atardecer, en junio.</figcaption>\n</figure>\n```\n\n`src` apunta al archivo y `alt` describe la imagen. El texto alternativo no es un adorno: se lee en voz alta, se muestra si la imagen no carga y lo usan los buscadores. Si la imagen es decorativa, `alt=\"\"`; si transmite información, descríbela en una frase. `width` y `height` reservan el espacio y evitan que el contenido salte mientras carga; `loading=\"lazy\"` retrasa la descarga de las imágenes que están fuera de pantalla.\n\n`<figure>` agrupa una imagen con su pie y `<figcaption>` es ese pie. Sirve para fotos, diagramas y también para bloques de código.\n\n### Rutas que no se rompen\n\nUna ruta relativa se resuelve desde el archivo que la contiene. Si `index.html` está en la raíz y la imagen en `img/plaza.jpg`, escribe `img/plaza.jpg`. Si el HTML está en una carpeta `pages/`, necesitarás `../img/plaza.jpg`. Los nombres con mayúsculas, tildes y espacios funcionan en Windows pero fallan en muchos servidores: usa minúsculas, guiones y sin tildes.\n\n### Enlaces que son botones\n\nUn enlace navega; un botón ejecuta una acción. Si el elemento cambia de página o de sección, es un `<a>`; si envía un formulario o abre un diálogo, es un `<button>`. Cuando un enlace parece un botón, el CSS puede darle el aspecto, pero la etiqueta debe seguir siendo la que corresponde. Esa distinción permite abrir en una pestaña nueva con el menú contextual y navegar con el teclado como se espera.\n\n### Errores típicos\n\n- Escribir `src=\"imagen.jpg\"` cuando el archivo está en otra carpeta y ver el icono de imagen rota.\n- Dejar `alt` vacío en una foto informativa.\n- Usar una imagen como botón sin texto alternativo ni etiqueta accesible.\n- Poner `target=\"_blank\"` sin `rel=\"noopener\"`.\n- Enlazar a `#seccion` sin que exista ningún `id=\"seccion\"`.\n\n### Para fijarlo\n\nCrea dos archivos, `index.html` y `sobre-mi.html`, y enlázalos entre sí. Añade una imagen con `alt` y comprueba qué pasa cuando renombras el archivo de la imagen: el texto alternativo aparece en su lugar. Ese es el mejor recordatorio de para qué sirve.",
+          "exercises": [
+            {
+              "slug": "navegacion-con-enlaces",
+              "title": "Navegación con enlaces",
+              "kind": "checklist",
+              "prompt_md": "Crea una navegación con tres enlaces: uno a otra página del proyecto, uno externo que abra en pestaña nueva y uno que salte a una sección de esta misma página.",
+              "starter_code": "<!DOCTYPE html>\n<html lang=\"es\">\n  <head>\n    <meta charset=\"utf-8\">\n    <title>Navegación</title>\n  </head>\n  <body>\n    <nav>\n      <!-- tres enlaces aquí -->\n    </nav>\n    <section id=\"contacto\">\n      <h2>Contacto</h2>\n    </section>\n  </body>\n</html>\n",
+              "items": [
+                "Hay tres enlaces <a> con un href que no está vacío.",
+                "El enlace externo usa target=\"_blank\" y rel=\"noopener\".",
+                "Uno de los enlaces apunta a #contacto y existe un elemento con id=\"contacto\".",
+                "Ningún texto de enlace dice solo «clic aquí» o «más»."
+              ],
+              "hints": [
+                "El ancla interna se escribe con almohadilla: href=\"#contacto\".",
+                "target=\"_blank\" abre en otra pestaña; añade rel=\"noopener\" por seguridad.",
+                "El texto del enlace debe describir el destino por sí solo."
+              ]
+            },
+            {
+              "slug": "galeria-con-alt",
+              "title": "Galería con texto alternativo",
+              "kind": "checklist",
+              "prompt_md": "Monta una galería con dos imágenes dentro de <figure>, cada una con su pie de foto. Ninguna imagen puede quedarse sin alt.",
+              "starter_code": "<!DOCTYPE html>\n<html lang=\"es\">\n  <head>\n    <meta charset=\"utf-8\">\n    <title>Galería</title>\n  </head>\n  <body>\n    <h1>Galería</h1>\n    <!-- dos figure con img y figcaption -->\n  </body>\n</html>\n",
+              "items": [
+                "Hay dos <figure> y cada uno contiene un <img> y un <figcaption>.",
+                "Las dos imágenes tienen alt con una descripción real, no vacío ni «imagen».",
+                "Al menos una imagen tiene width o height declarados.",
+                "Ninguna imagen usa el texto alt para repetir el pie de foto."
+              ],
+              "hints": [
+                "El alt describe lo que se ve y por qué importa, en una frase.",
+                "width y height reservan el espacio y evitan que el contenido salte al cargar.",
+                "El pie de foto añade contexto; el alt describe la imagen."
+              ]
+            }
+          ],
+          "quiz": [
+            {
+              "question": "¿Qué debe contener el atributo alt de una foto informativa?",
+              "options": [
+                "Una descripción breve de lo que muestra la imagen.",
+                "El nombre del archivo.",
+                "La palabra «imagen» para que se sepa qué es.",
+                "Nada: el alt solo se usa para decoración."
+              ],
+              "answer_index": 0,
+              "explanation": "El alt sustituye a la imagen cuando no se ve y se lee en voz alta; debe describir su contenido."
+            },
+            {
+              "question": "¿Para qué sirve rel=\"noopener\" junto a target=\"_blank\"?",
+              "options": [
+                "Para que la página nueva no pueda acceder ni manipular la original.",
+                "Para que el enlace no se pueda abrir.",
+                "Para que la página se abra en la misma pestaña.",
+                "Para cargar la página más rápido."
+              ],
+              "answer_index": 0,
+              "explanation": "Sin noopener, la página abierta puede acceder a window.opener; con él queda aislada."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Datos y formularios",
+      "summary": "Listas, tablas y formularios que piden datos con claridad.",
+      "lessons": [
+        {
+          "slug": "listas-y-tablas",
+          "title": "Listas y tablas",
+          "summary": "Agrupar elementos y cruzar datos con la estructura adecuada.",
+          "minutes": 13,
+          "objectives": [
+            "Elegir entre <ul>, <ol> y <dl> según el tipo de lista.",
+            "Construir una tabla con caption, thead, tbody y encabezados con scope.",
+            "Reconocer cuándo una tabla no debe usarse para maquetar."
+          ],
+          "body_md": "## Listas y tablas: ordenar información\n\nUna lista agrupa elementos; una tabla cruza datos en filas y columnas. Son estructuras distintas y conviene no confundirlas: una tabla no es una herramienta de maquetación.\n\n### Listas\n\n```html\n<ul>\n  <li>HTML</li>\n  <li>CSS</li>\n  <li>JavaScript</li>\n</ul>\n\n<ol>\n  <li>Instalar el editor</li>\n  <li>Crear la carpeta del proyecto</li>\n  <li>Abrir el archivo en el navegador</li>\n</ol>\n```\n\n`<ul>` es una lista sin orden y `<ol>` una lista numerada, donde el orden importa. En ambos casos los hijos directos son `<li>`. Se pueden anidar: dentro de un `<li>` cabe otra lista completa, y así se construyen los menús.\n\nPara pares de término y definición existe `<dl>`, con `<dt>` para el término y `<dd>` para la definición. Es útil en glosarios y fichas de datos.\n\n### Tablas\n\n```html\n<table>\n  <caption>Horario del trimestre</caption>\n  <thead>\n    <tr><th scope=\"col\">Día</th><th scope=\"col\">Materia</th><th scope=\"col\">Aula</th></tr>\n  </thead>\n  <tbody>\n    <tr><td>Lunes</td><td>Programación</td><td>2A</td></tr>\n    <tr><td>Martes</td><td>Bases de datos</td><td>3B</td></tr>\n  </tbody>\n</table>\n```\n\n`<caption>` titula la tabla y debe ser lo primero. `<thead>` agrupa la fila de encabezados; `<tbody>`, las filas de datos. `<th>` es una celda de encabezado y `<td>` una celda normal. El atributo `scope=\"col\"` indica que ese encabezado describe una columna; `scope=\"row\"`, una fila. Los lectores de pantalla lo usan para anunciar cada celda con su cabecera.\n\n`<table>` admite también `<tfoot>` y atributos como `colspan` y `rowspan` para combinar celdas. Úsalos con moderación: una tabla con muchas celdas combinadas es difícil de leer y de mantener.\n\n### Tablas que se leen enteras\n\nUna tabla ancha en un móvil se desborda. La solución no es reducir la letra: envuelve la tabla en un contenedor con `overflow-x: auto` para que se pueda desplazar en horizontal sin romper la página.\n\n```css\n.tabla-scroll {\n  overflow-x: auto;\n}\n\n.tabla-scroll table {\n  width: 100%;\n  border-collapse: collapse;\n}\n```\n\n`border-collapse: collapse` une los bordes de las celdas en una sola línea, lo que se lee mucho mejor que el doble borde por defecto. Aun así, una tabla con más de cinco columnas suele pedir otro formato en pantallas pequeñas: quizá una lista de fichas.\n\n### Cuándo no usar una tabla\n\nNunca para colocar la página: para eso están CSS Grid y Flexbox. Una tabla debe contener datos tabulares, es decir, información que se entiende mejor en filas y columnas. Si la usas para maquetar, el lector de pantalla anunciará «tabla» al entrar en un bloque que no lo es.\n\n### Errores típicos\n\n- Poner `<div>` dentro de `<ul>` en lugar de `<li>`.\n- Usar `<td>` para la fila de encabezados en vez de `<th>`.\n- Olvidar `<caption>` y dejar la tabla sin contexto.\n- Anidar listas fuera del `<li>` correspondiente.\n- Maquetar con tablas y luego pelear con los tamaños.\n\n### Para fijarlo\n\nConvierte una lista de compras en una tabla con tres columnas: producto, cantidad y precio. Añade `<caption>`, `<thead>` y `<tbody>`, y comprueba con las herramientas del navegador que la estructura aparece bien anidada. Después intenta leerla en voz alta: si necesitas decir «columna dos», la tabla necesita encabezados más claros.",
+          "exercises": [
+            {
+              "slug": "tabla-de-horario",
+              "title": "Tabla de horario",
+              "kind": "checklist",
+              "prompt_md": "Crea una tabla con el horario de tres días. Debe tener título, fila de encabezados y tres filas de datos con dos columnas además del día.",
+              "starter_code": "<!DOCTYPE html>\n<html lang=\"es\">\n  <head>\n    <meta charset=\"utf-8\">\n    <title>Horario</title>\n  </head>\n  <body>\n    <table>\n      <!-- caption, thead y tbody -->\n    </table>\n  </body>\n</html>\n",
+              "items": [
+                "La tabla empieza con un <caption> con texto.",
+                "Hay un <thead> con una fila de <th> que usan scope=\"col\".",
+                "El <tbody> tiene tres filas con <td>.",
+                "Ninguna celda de datos usa <th> ni la tabla se usa para colocar la página."
+              ],
+              "hints": [
+                "El <caption> va justo después de abrir <table>.",
+                "scope=\"col\" asocia cada encabezado con su columna.",
+                "Los datos van en <td> y los encabezados en <th>."
+              ]
+            }
+          ],
+          "quiz": [
+            {
+              "question": "¿Qué etiqueta agrupa las filas de encabezados de una tabla?",
+              "options": [
+                "<thead>",
+                "<tbody>",
+                "<caption>",
+                "<tr>"
+              ],
+              "answer_index": 0,
+              "explanation": "<thead> agrupa la fila o filas de encabezados; <tbody> agrupa los datos."
+            },
+            {
+              "question": "¿Cuándo es correcto usar una tabla?",
+              "options": [
+                "Cuando la información se entiende mejor en filas y columnas.",
+                "Cuando quieres colocar dos bloques uno al lado del otro.",
+                "Siempre que necesites bordes.",
+                "Cuando no quieres usar CSS."
+              ],
+              "answer_index": 0,
+              "explanation": "Las tablas son para datos tabulares; para maquetar se usan Grid y Flexbox."
+            }
+          ]
+        },
+        {
+          "slug": "formularios",
+          "title": "Formularios",
+          "summary": "Pedir datos con etiquetas asociadas, tipos de campo y validación nativa.",
+          "minutes": 16,
+          "objectives": [
+            "Asociar cada campo con su <label> mediante for e id.",
+            "Elegir el type adecuado y usar required, min y max.",
+            "Agrupar campos con fieldset y legend y enviar con un botón submit."
+          ],
+          "body_md": "## Formularios: pedir datos sin adivinar\n\nUn formulario recoge información. La diferencia entre uno que funciona y uno que frustra está en tres cosas: que cada campo diga qué espera, que el navegador valide lo evidente y que el usuario sepa qué pasó.\n\n### La base\n\n```html\n<form action=\"/suscribir\" method=\"post\">\n  <label for=\"correo\">Correo electrónico</label>\n  <input id=\"correo\" name=\"correo\" type=\"email\" required>\n  <button type=\"submit\">Suscribirme</button>\n</form>\n```\n\n`<form>` envuelve los campos. `action` es la dirección que recibe los datos y `method` indica cómo se envían: `post` para datos que cambian algo, `get` para búsquedas. Cada campo necesita un `name`: sin él, el valor no viaja.\n\n`<label for=\"correo\">` se asocia al campo con `id=\"correo\"`. Al pulsar la etiqueta, el campo recibe el foco; los lectores de pantalla lo anuncian juntos. Ese `for` es obligatorio en la práctica: un `placeholder` no lo sustituye, porque desaparece al escribir y no siempre se lee.\n\n### Tipos de campo\n\n`type` cambia el comportamiento y el teclado del móvil. Los más útiles: `text`, `email`, `password`, `number`, `tel`, `url`, `date`, `search` y `file`. `required` impide enviar el formulario vacío; `minlength`, `maxlength`, `min`, `max` y `pattern` limitan el contenido. Esta validación es cómoda y gratuita, pero no sustituye la del servidor.\n\n```html\n<label for=\"nombre\">Nombre</label>\n<input id=\"nombre\" name=\"nombre\" type=\"text\" required minlength=\"2\">\n\n<label for=\"edad\">Edad</label>\n<input id=\"edad\" name=\"edad\" type=\"number\" min=\"14\" max=\"99\">\n\n<label for=\"mensaje\">Mensaje</label>\n<textarea id=\"mensaje\" name=\"mensaje\" rows=\"4\"></textarea>\n```\n\n### Selecciones y grupos\n\n```html\n<fieldset>\n  <legend>Nivel</legend>\n  <label><input type=\"radio\" name=\"nivel\" value=\"basico\"> Básico</label>\n  <label><input type=\"radio\" name=\"nivel\" value=\"medio\"> Medio</label>\n</fieldset>\n<label for=\"pais\">País</label>\n<select id=\"pais\" name=\"pais\">\n  <option value=\"es\">España</option>\n  <option value=\"mx\">México</option>\n</select>\n```\n\n`<fieldset>` agrupa campos relacionados y `<legend>` lo titula. Los botones de opción (`radio`) comparten el mismo `name` y solo uno puede quedar marcado; las casillas (`checkbox`) son independientes. Un `<select>` es una lista desplegable.\n\n### Mensajes de error que ayudan\n\nLa validación nativa muestra un aviso genérico. Puedes escribir el tuyo con un pequeño cambio en el texto del campo:\n\n```html\n<input id=\"usuario\" name=\"usuario\" type=\"text\" required minlength=\"3\"\n       title=\"Al menos tres caracteres\">\n```\n\nEl atributo `title` aparece en el aviso cuando el campo incumple `minlength`. No es una solución completa, pero evita el «rellena este campo» sin más contexto. Si el formulario es largo, agrupa y ordena los campos en el mismo orden en que se rellenan; el orden visual debe coincidir con el orden del código para que el recorrido con Tab tenga sentido.\n\n### Errores típicos\n\n- Asociar la etiqueta con `for` a un `id` que no existe o está repetido.\n- Confundir `name` con `id`: el primero envía el dato, el segundo lo asocia a la etiqueta.\n- Usar solo `placeholder` como etiqueta.\n- Olvidar `type=\"submit\"` en el botón y comprobar que no pasa nada.\n- Poner dos campos con el mismo `id`, lo que rompe la asociación con la etiqueta.\n\n### Para fijarlo\n\nConstruye un formulario de contacto con nombre, correo, asunto y mensaje. Marca como obligatorios los tres primeros, prueba a enviarlo vacío y observa los avisos del navegador. Después desactiva el `required` de un campo y compara.",
+          "exercises": [
+            {
+              "slug": "formulario-de-contacto",
+              "title": "Formulario de contacto",
+              "kind": "checklist",
+              "prompt_md": "Construye un formulario de contacto con nombre, correo y mensaje. Cada campo necesita su etiqueta y el correo debe validarse como dirección.",
+              "starter_code": "<!DOCTYPE html>\n<html lang=\"es\">\n  <head>\n    <meta charset=\"utf-8\">\n    <title>Contacto</title>\n  </head>\n  <body>\n    <form action=\"/mensaje\" method=\"post\">\n      <!-- campos y botón -->\n    </form>\n  </body>\n</html>\n",
+              "items": [
+                "Los tres campos tienen un <label for> que coincide con el id del campo.",
+                "El campo de correo usa type=\"email\" y el de nombre type=\"text\".",
+                "El mensaje usa <textarea> con rows o cols.",
+                "Los tres campos son required y hay un <button type=\"submit\">."
+              ],
+              "hints": [
+                "El valor de for y el de id deben ser idénticos.",
+                "type=\"email\" activa la validación del navegador.",
+                "Sin type=\"submit\" el botón no envía el formulario."
+              ]
+            },
+            {
+              "slug": "formulario-de-registro",
+              "title": "Registro por pasos",
+              "kind": "checklist",
+              "prompt_md": "Crea un formulario de registro con dos grupos de campos: datos personales y preferencias. Usa fieldset, legend y un select con tres opciones.",
+              "starter_code": "<!DOCTYPE html>\n<html lang=\"es\">\n  <head>\n    <meta charset=\"utf-8\">\n    <title>Registro</title>\n  </head>\n  <body>\n    <form action=\"/registro\" method=\"post\">\n      <!-- dos fieldset y un select -->\n    </form>\n  </body>\n</html>\n",
+              "items": [
+                "Hay dos <fieldset>, cada uno con su <legend>.",
+                "El primer grupo contiene un campo de texto con su etiqueta.",
+                "Hay un <select> con al menos tres <option> y una etiqueta asociada.",
+                "El formulario termina con un <button type=\"submit\">."
+              ],
+              "hints": [
+                "El <legend> va inmediatamente después de abrir el <fieldset>.",
+                "Cada <option> necesita un value además del texto visible.",
+                "Los grupos no cambian el envío: solo la estructura y la accesibilidad."
+              ]
+            }
+          ],
+          "quiz": [
+            {
+              "question": "¿Cuál es la función del atributo name en un campo?",
+              "options": [
+                "Es la clave con la que el valor viaja al servidor.",
+                "Es el texto que se muestra como etiqueta.",
+                "Asocia el campo con su <label>.",
+                "Define el ancho del campo."
+              ],
+              "answer_index": 0,
+              "explanation": "El id asocia la etiqueta; el name identifica el dato cuando se envía el formulario."
+            },
+            {
+              "question": "¿Por qué no conviene usar solo placeholder como etiqueta?",
+              "options": [
+                "Porque desaparece al escribir y no se lee siempre en voz alta.",
+                "Porque el navegador lo ignora.",
+                "Porque no admite tildes.",
+                "Porque impide enviar el formulario."
+              ],
+              "answer_index": 0,
+              "explanation": "La etiqueta persistente sigue visible y accesible; el placeholder es solo una ayuda temporal."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Diseño con CSS",
+      "summary": "Selectores, cajas, Flexbox, Grid y pantallas de todos los tamaños.",
+      "lessons": [
+        {
+          "slug": "css-selectores-y-box-model",
+          "title": "CSS: selectores y modelo de caja",
+          "summary": "Enlazar una hoja de estilo y controlar el tamaño real de cada caja.",
+          "minutes": 18,
+          "objectives": [
+            "Enlazar CSS y escribir reglas con selectores de clase.",
+            "Distinguir padding, border y margin en el modelo de caja.",
+            "Usar box-sizing: border-box para predecir el tamaño final."
+          ],
+          "body_md": "## CSS: selectores y la caja de cada elemento\n\nHTML describe; CSS decide cómo se ve. Una hoja de estilo es una lista de reglas, y cada regla tiene un selector y un bloque de declaraciones:\n\n```css\np {\n  color: #1f2937;\n  font-size: 1rem;\n  line-height: 1.6;\n}\n```\n\nEl selector elige a quién se aplica; las declaraciones, qué cambia. Se enlaza desde el HTML con `<link rel=\"stylesheet\" href=\"estilos.css\">` dentro de `<head>`.\n\n### Selectores que conviene dominar\n\n```css\nh1 { }                    /* todas las etiquetas h1 */\n.tarjeta { }              /* clase: class=\"tarjeta\" */\n#inicio { }               /* id: id=\"inicio\", único */\n.tarjeta p { }            /* párrafos dentro de una tarjeta */\n.tarjeta > p { }          /* solo hijos directos */\na:hover { }               /* pseudo-clase de estado */\n```\n\nLas clases empiezan con punto y se repiten; los identificadores con almohadilla y deben ser únicos. Para dar estilo, usa clases: son reutilizables y fáciles de cambiar. La especificidad decide qué regla gana cuando dos apuntan al mismo elemento: un id pesa más que una clase, y una clase más que una etiqueta. Si necesitas `!important` para que algo se aplique, normalmente el problema es la estructura del CSS, no la regla.\n\n### El modelo de caja\n\nCada elemento es una caja rectangular con cuatro zonas, de dentro afuera: contenido, relleno (`padding`), borde (`border`) y margen (`margin`).\n\n```css\n.tarjeta {\n  width: 300px;\n  padding: 16px;\n  border: 1px solid #d1d5db;\n  margin: 24px auto;\n  box-sizing: border-box;\n}\n```\n\nPor defecto, `width` mide solo el contenido, así que una caja de 300 px con 16 px de relleno y borde ocupa 334 px. `box-sizing: border-box` hace que `width` incluya relleno y borde: es lo primero que suele escribirse en una hoja de estilo.\n\n```css\n*, *::before, *::after { box-sizing: border-box; }\n```\n\n`margin: 24px auto` centra horizontalmente un bloque con ancho fijo. Los márgenes verticales de dos bloques consecutivos se colapsan: se queda el mayor, no la suma. No es un error, es parte del modelo.\n\n### Unidades\n\n`px` es fijo; `rem` se basa en el tamaño de la raíz y respeta la configuración del usuario; `%` depende del contenedor; `em` depende del tamaño del propio elemento. Para texto y espaciados, `rem` suele ser la mejor elección; para anchos flexibles, `%`.\n\n### Errores típicos\n\n- Poner `width: 100%` a algo que ya ocupa el ancho y añadirle `padding`: se desborda si no usas `border-box`.\n- Usar ids para estilos y repetirlos en la página.\n- Confundir `padding` (dentro del borde) con `margin` (fuera).\n- Olvidar el punto en un selector de clase: `tarjeta` busca una etiqueta, no una clase.\n- Enlazar la hoja con la ruta mal y creer que el CSS no funciona.\n\n### Para fijarlo\n\nCrea una tarjeta con un título, un párrafo y un botón. Dale 24 px de relleno, un borde de 1 px y un ancho máximo de 320 px, y céntrala con `margin: auto`. Cambia `box-sizing` y observa cómo cambia el tamaño total.",
+          "exercises": [
+            {
+              "slug": "tarjeta-con-aire",
+              "title": "Una tarjeta con aire",
+              "kind": "checklist",
+              "prompt_md": "Da estilo a la tarjeta: usa una clase, añade relleno, un borde visible, un margen y limita su ancho. El texto debe quedar cómodo de leer.",
+              "starter_code": "<!DOCTYPE html>\n<html lang=\"es\">\n  <head>\n    <meta charset=\"utf-8\">\n    <title>Tarjeta</title>\n    <style>\n      /* escribe aquí tus reglas */\n    </style>\n  </head>\n  <body>\n    <div class=\"tarjeta\">\n      <h1>Nota rápida</h1>\n      <p>El modelo de caja decide el tamaño final.</p>\n    </div>\n  </body>\n</html>\n",
+              "items": [
+                "El estilo se aplica con un selector de clase .tarjeta.",
+                "La tarjeta tiene padding de al menos 16px.",
+                "El borde es visible y el margen separa la tarjeta del borde de la ventana.",
+                "Hay un ancho máximo de 600px o menos y box-sizing: border-box."
+              ],
+              "hints": [
+                "Un selector de clase empieza con punto: .tarjeta.",
+                "padding: 16px; border: 1px solid #ccc; margin: 24px auto;",
+                "box-sizing: border-box incluye relleno y borde dentro del ancho."
+              ]
+            }
+          ],
+          "quiz": [
+            {
+              "question": "Con box-sizing: content-box, ¿qué mide width?",
+              "options": [
+                "Solo el contenido, sin relleno ni borde.",
+                "El contenido más el relleno.",
+                "El contenido, el relleno y el borde.",
+                "El margen exterior."
+              ],
+              "answer_index": 0,
+              "explanation": "En content-box el ancho es el del contenido; padding y border se suman por fuera."
+            },
+            {
+              "question": "¿Qué selector apunta a los párrafos dentro de una tarjeta?",
+              "options": [
+                ".tarjeta p",
+                "p .tarjeta",
+                "#tarjeta p",
+                "tarjeta > p"
+              ],
+              "answer_index": 0,
+              "explanation": ".tarjeta p selecciona los p descendientes de cualquier elemento con esa clase."
+            }
+          ]
+        },
+        {
+          "slug": "flexbox-y-grid",
+          "title": "Flexbox y Grid",
+          "summary": "Colocar elementos en una dirección con Flexbox y en dos con Grid.",
+          "minutes": 18,
+          "objectives": [
+            "Repartir elementos en una fila con Flexbox y alinear en ambos ejes.",
+            "Crear una cuadrícula de columnas con Grid y repeat.",
+            "Elegir entre Flexbox y Grid según la dirección del layout."
+          ],
+          "body_md": "## Flexbox y Grid: colocar sin pelearse\n\nDurante años se maquetó con `float` y trucos. Hoy hay dos sistemas pensados para eso, y elegir bien ahorra horas: Flexbox ordena elementos en una dirección; Grid los coloca en una cuadrícula.\n\n### Flexbox: una fila o una columna\n\n```css\n.barra {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  gap: 16px;\n}\n```\n\n`display: flex` convierte al contenedor en flexible y a sus hijos directos en elementos flexibles. `justify-content` reparte el espacio en el eje principal —horizontal por defecto— y `align-items` alinea en el eje cruzado. Valores útiles de `justify-content`: `flex-start`, `center`, `space-between` y `space-around`. `gap` separa los hijos sin márgenes.\n\nPara cambiar de fila a columna, `flex-direction: column`. Para permitir que los elementos bajen de línea cuando no caben, `flex-wrap: wrap`. Y en los hijos, `flex: 1` hace que repartan el espacio disponible a partes iguales.\n\nFlexbox brilla en barras de navegación, filas de tarjetas, centrar algo y alinear formularios.\n\n### Grid: dos dimensiones\n\n```css\n.galeria {\n  display: grid;\n  grid-template-columns: repeat(3, 1fr);\n  gap: 20px;\n}\n```\n\n`grid-template-columns` define las columnas; `1fr` significa una fracción del espacio libre, así que tres columnas `1fr` se reparten el ancho a partes iguales. `gap` separa filas y columnas. Las filas se crean solas según el contenido, aunque puedes declararlas con `grid-template-rows`.\n\n```css\n.destacado {\n  grid-column: span 2;\n}\n```\n\nCon `grid-column` un elemento ocupa dos columnas. Grid también admite áreas con nombre, pero para empezar basta con columnas y `span`.\n\n### Cuál usar\n\nSi colocas cosas en una sola dirección, Flexbox. Si necesitas filas y columnas a la vez, Grid. Nada impide combinarlos: una página con Grid para la estructura general y Flexbox dentro de cada tarjeta es lo habitual.\n\n### Detalles que evitan sorpresas\n\n`flex: 1` es un atajo de tres propiedades: `flex-grow`, `flex-shrink` y `flex-basis`. Si quieres que una tarjeta no se encoja aunque falte sitio, usa `flex-shrink: 0`. Si quieres que ocupe un ancho mínimo antes de repartir el resto, `flex: 1 1 240px`.\n\nEn Grid, `auto-fit` y `auto-fill` se parecen pero no son iguales: `auto-fit` colapsa las columnas vacías y estira las tarjetas, mientras que `auto-fill` mantiene los huecos. Para una galería que debe llenar el ancho, `auto-fit` suele dar mejor resultado.\n\n```css\n.rejilla {\n  display: grid;\n  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));\n  gap: 16px;\n}\n```\n\n### Errores típicos\n\n- Poner `display: flex` al hijo en lugar del contenedor y no entender por qué no cambia nada.\n- Esperar que `justify-content` centre en vertical: en una fila, ese eje es el horizontal.\n- Usar `height: 100%` en un contenedor sin altura definida.\n- Mezclar `gap` con márgenes en los hijos y obtener separaciones dobles.\n- Olvidar `flex-wrap: wrap` y ver cómo los elementos se aplastan.\n\n### Para fijarlo\n\nMaqueta una barra con el nombre a la izquierda y tres enlaces a la derecha usando Flexbox. Después crea una galería de seis tarjetas con Grid en tres columnas y un `gap` de 20 px. Cambia `repeat(3, 1fr)` por `repeat(2, 1fr)` y observa el reflujo.",
+          "exercises": [
+            {
+              "slug": "barra-con-flex",
+              "title": "Barra de navegación",
+              "kind": "checklist",
+              "prompt_md": "Maqueta la barra: el nombre a la izquierda y los tres enlaces a la derecha, alineados en vertical al centro y con separación entre ellos.",
+              "starter_code": "<!DOCTYPE html>\n<html lang=\"es\">\n  <head>\n    <meta charset=\"utf-8\">\n    <title>Barra</title>\n    <style>\n      .barra {\n        /* flex aquí */\n      }\n    </style>\n  </head>\n  <body>\n    <header class=\"barra\">\n      <span class=\"marca\">Código Cero</span>\n      <nav class=\"enlaces\">\n        <a href=\"#\">Inicio</a>\n        <a href=\"#\">Cursos</a>\n        <a href=\"#\">Contacto</a>\n      </nav>\n    </header>\n  </body>\n</html>\n",
+              "items": [
+                "La clase .barra usa display: flex.",
+                "justify-content separa la marca de los enlaces, por ejemplo con space-between.",
+                "align-items: center alinea la marca y los enlaces en el eje vertical.",
+                "Los enlaces se separan entre sí con gap o con margen, sin pegarlos."
+              ],
+              "hints": [
+                "display: flex se pone en el contenedor, no en los hijos.",
+                "justify-content actúa sobre el eje horizontal de la fila.",
+                "gap: 16px separa los hijos sin márgenes."
+              ]
+            },
+            {
+              "slug": "galeria-con-grid",
+              "title": "Galería en cuadrícula",
+              "kind": "checklist",
+              "prompt_md": "Coloca seis tarjetas en tres columnas iguales con Grid y una separación de 20px entre ellas.",
+              "starter_code": "<!DOCTYPE html>\n<html lang=\"es\">\n  <head>\n    <meta charset=\"utf-8\">\n    <title>Galería</title>\n    <style>\n      .galeria {\n        /* grid aquí */\n      }\n    </style>\n  </head>\n  <body>\n    <section class=\"galeria\">\n      <article>Uno</article>\n      <article>Dos</article>\n      <article>Tres</article>\n      <article>Cuatro</article>\n      <article>Cinco</article>\n      <article>Seis</article>\n    </section>\n  </body>\n</html>\n",
+              "items": [
+                "La clase .galeria usa display: grid.",
+                "Las columnas se definen con repeat(3, 1fr) o tres valores 1fr.",
+                "Hay un gap de 20px entre filas y columnas.",
+                "Las seis tarjetas quedan en dos filas de tres."
+              ],
+              "hints": [
+                "grid-template-columns: repeat(3, 1fr);",
+                "gap: 20px; separa filas y columnas a la vez.",
+                "1fr reparte el ancho disponible a partes iguales."
+              ]
+            }
+          ],
+          "quiz": [
+            {
+              "question": "En una fila flex, ¿qué controla justify-content?",
+              "options": [
+                "El reparto del espacio en el eje principal.",
+                "La alineación en el eje vertical.",
+                "El tamaño de los hijos.",
+                "El número de columnas."
+              ],
+              "answer_index": 0,
+              "explanation": "En una fila, el eje principal es el horizontal; align-items se ocupa del cruzado."
+            },
+            {
+              "question": "¿Cuándo conviene Grid frente a Flexbox?",
+              "options": [
+                "Cuando el layout necesita filas y columnas a la vez.",
+                "Cuando solo hay que centrar un texto.",
+                "Cuando se quiere una sola fila.",
+                "Cuando no hay CSS disponible."
+              ],
+              "answer_index": 0,
+              "explanation": "Grid trabaja en dos dimensiones; Flexbox distribuye elementos en una dirección."
+            }
+          ]
+        },
+        {
+          "slug": "diseno-responsive",
+          "title": "Diseño responsive",
+          "summary": "Media queries, unidades flexibles y una página que se adapta a cualquier pantalla.",
+          "minutes": 16,
+          "objectives": [
+            "Activar el viewport y diseñar primero para móvil.",
+            "Escribir media queries con min-width y puntos de ruptura útiles.",
+            "Evitar el desbordamiento con imágenes y anchos flexibles."
+          ],
+          "body_md": "## Diseño responsive: una página, muchas pantallas\n\nUna página se ve en un móvil de 360 px, en una tablet y en un monitor de 1920 px. El diseño responsive no consiste en hacer tres versiones, sino en escribir reglas que se adapten.\n\n### La etiqueta que lo activa\n\n```html\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n```\n\nSin esta línea, el móvil simula una pantalla de escritorio y reduce todo: el texto se ve diminuto y hay que ampliar con los dedos. Con ella, el ancho del layout es el ancho real del dispositivo.\n\n### Primero el móvil\n\nEl enfoque más sólido es diseñar para la pantalla pequeña y ampliar después con `@media`:\n\n```css\n.contenedor {\n  width: min(100% - 32px, 960px);\n  margin-inline: auto;\n}\n\n.rejilla {\n  display: grid;\n  grid-template-columns: 1fr;\n  gap: 16px;\n}\n\n@media (min-width: 640px) {\n  .rejilla {\n    grid-template-columns: repeat(2, 1fr);\n  }\n}\n\n@media (min-width: 960px) {\n  .rejilla {\n    grid-template-columns: repeat(3, 1fr);\n  }\n}\n```\n\nLas media queries con `min-width` se aplican de menor a mayor. Si escribes primero la versión de escritorio y luego reduces, acabarás sobrescribiendo reglas y multiplicando excepciones.\n\n### Reglas que evitan problemas\n\n- Imágenes: `img { max-width: 100%; height: auto; }` para que nunca desborden.\n- Texto: tamaño base de al menos 16 px y líneas de 60 a 75 caracteres.\n- Anchos: `width: min(100% - 32px, 960px)` deja margen lateral sin desbordar.\n- Toques: botones y enlaces de al menos 44 px de alto.\n- Rejillas: `repeat(auto-fit, minmax(240px, 1fr))` crea tantas columnas como quepan sin media queries.\n- Tablas anchas: envuélvelas en un contenedor con `overflow-x: auto`.\n\n```css\n.rejilla-auto {\n  display: grid;\n  gap: 16px;\n  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));\n}\n```\n\n### Tipografía que se adapta\n\nEl tamaño del texto también puede ser flexible sin media queries:\n\n```css\nh1 {\n  font-size: clamp(1.75rem, 4vw + 1rem, 3rem);\n}\n```\n\n`clamp` recibe un mínimo, un valor preferido y un máximo. El resultado nunca baja del mínimo ni supera el máximo, y entre ambos crece con el ancho. Es una forma compacta de evitar titulares gigantes en el móvil y diminutos en el monitor. Aun así, los puntos de ruptura siguen siendo necesarios cuando cambia la estructura y no solo el tamaño.\n\n### Comprobar sin adivinar\n\nLas herramientas del navegador tienen un modo responsive: F12 y el icono de dispositivo. Ahí puedes elegir un móvil, girarlo y ver los puntos de ruptura. Si aparece una barra de desplazamiento horizontal, algo está más ancho que la pantalla: suele ser una imagen sin `max-width`, un `width` fijo o un `padding` sin `box-sizing`.\n\n### Errores típicos\n\n- Olvidar la etiqueta `viewport`.\n- Usar anchos fijos en píxeles para todo el layout.\n- Ocultar contenido en móvil en vez de reorganizarlo.\n- Poner `font-size` en píxeles pequeños y no permitir zoom.\n- Elegir puntos de ruptura por moda y no por el contenido.\n\n### Para fijarlo\n\nToma la galería de la lección anterior y añade las dos media queries. Abre el modo responsive, prueba a 360, 640 y 1024 px y comprueba que no hay scroll horizontal en ninguno. Después cambia `minmax(240px, 1fr)` y observa cómo cambia el número de columnas.",
+          "exercises": [
+            {
+              "slug": "adaptar-a-movil",
+              "title": "Adaptar la galería",
+              "kind": "checklist",
+              "prompt_md": "Haz que la galería pase de una columna en móvil a dos y tres en pantallas mayores, sin scroll horizontal en ningún tamaño.",
+              "starter_code": "<!DOCTYPE html>\n<html lang=\"es\">\n  <head>\n    <meta charset=\"utf-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n    <title>Galería adaptable</title>\n    <style>\n      .galeria {\n        display: grid;\n        gap: 16px;\n        grid-template-columns: 1fr;\n      }\n    </style>\n  </head>\n  <body>\n    <section class=\"galeria\">\n      <article>Uno</article>\n      <article>Dos</article>\n      <article>Tres</article>\n      <article>Cuatro</article>\n    </section>\n  </body>\n</html>\n",
+              "items": [
+                "El documento incluye la etiqueta meta viewport.",
+                "Hay al menos una media query con min-width que cambia grid-template-columns.",
+                "La versión base es de una columna y las imágenes o tarjetas usan max-width: 100%.",
+                "Al reducir la ventana no aparece barra de desplazamiento horizontal."
+              ],
+              "hints": [
+                "Empieza con una columna y añade @media (min-width: 640px).",
+                "Para tres columnas: grid-template-columns: repeat(3, 1fr);",
+                "img { max-width: 100%; height: auto; } evita desbordes."
+              ]
+            }
+          ],
+          "quiz": [
+            {
+              "question": "¿Para qué sirve la etiqueta meta viewport?",
+              "options": [
+                "Para que el móvil use su ancho real y no simule un escritorio.",
+                "Para bloquear el zoom del usuario.",
+                "Para cargar CSS más rápido.",
+                "Para fijar el ancho en 960px."
+              ],
+              "answer_index": 0,
+              "explanation": "Sin viewport, el móvil escala una página de escritorio y el texto queda diminuto."
+            },
+            {
+              "question": "¿Qué media query aplica estilos solo en pantallas de 640px o más?",
+              "options": [
+                "@media (min-width: 640px)",
+                "@media (max-width: 640px)",
+                "@media (width: 640px)",
+                "@media screen and 640px"
+              ],
+              "answer_index": 0,
+              "explanation": "min-width se cumple a partir de ese ancho, lo que encaja con el diseño mobile first."
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "labs": [
+    {
+      "slug": "landing-personal",
+      "title": "Landing personal",
+      "summary": "Construye por pasos una página de presentación con proyectos y diseño adaptable.",
+      "minutes": 90,
+      "steps": [
+        {
+          "title": "Cabecera y presentación",
+          "instructions_md": "Crea la cabecera de tu landing: un <header> con tu nombre en un <h1> y una frase de presentación en un <p>. Añade una sección de presentación con un párrafo que explique a qué te dedicas.",
+          "kind": "checklist",
+          "starter_code": "<!DOCTYPE html>\n<html lang=\"es\">\n  <head>\n    <meta charset=\"utf-8\">\n    <title>Mi landing</title>\n  </head>\n  <body>\n    <header>\n      <!-- tu nombre y tu frase -->\n    </header>\n    <main>\n      <!-- presentación -->\n    </main>\n  </body>\n</html>\n",
+          "items": [
+            "El <header> contiene un <h1> con un nombre.",
+            "Debajo del <h1> hay un <p> con una frase de presentación.",
+            "Existe un <main> con al menos un párrafo sobre ti.",
+            "El documento declara lang=\"es\" y un <title>."
+          ]
+        },
+        {
+          "title": "Sección de proyectos",
+          "instructions_md": "Añade dentro de <main> una sección con tres proyectos. Cada proyecto debe ser un <article> con un <h2>, un párrafo y un enlace. Usa una lista si prefieres agruparlos, pero mantén la estructura semántica.",
+          "kind": "checklist",
+          "starter_code": "    <section id=\"proyectos\">\n      <h2>Proyectos</h2>\n      <!-- tres article con h3, p y a -->\n    </section>\n",
+          "items": [
+            "Hay tres <article> dentro de una <section> con su <h2>.",
+            "Cada artículo tiene un <h3> con el nombre del proyecto.",
+            "Cada artículo incluye un párrafo y un enlace con href.",
+            "Los encabezados siguen el orden h1, h2 y h3 sin saltos."
+          ]
+        },
+        {
+          "title": "Estilos base y tarjetas",
+          "instructions_md": "Crea una hoja de estilos y dale forma a la página: tipografía legible, ancho máximo centrado y tarjetas con relleno, borde y separación. Aplica box-sizing: border-box a todo.",
+          "kind": "checklist",
+          "starter_code": "/* estilos.css */\n* { box-sizing: border-box; }\n\nbody {\n  /* tipografía y márgenes */\n}\n\n.tarjeta {\n  /* relleno, borde y margen */\n}\n",
+          "items": [
+            "La hoja de estilos está enlazada desde el HTML y aplica box-sizing: border-box a todos los elementos.",
+            "El contenido está limitado con un ancho máximo y centrado con margin.",
+            "Las tarjetas de proyecto usan una clase con padding y borde.",
+            "El texto base tiene un tamaño de al menos 16px y una altura de línea cómoda."
+          ]
+        },
+        {
+          "title": "Rejilla adaptable",
+          "instructions_md": "Coloca los proyectos en una rejilla: una columna en móvil, dos a partir de 640px y tres a partir de 960px. Comprueba con el modo responsive que no hay scroll horizontal.",
+          "kind": "checklist",
+          "starter_code": ".proyectos {\n  display: grid;\n  gap: 20px;\n  grid-template-columns: 1fr;\n}\n\n/* añade aquí las media queries */\n",
+          "items": [
+            "La rejilla usa display: grid con gap entre tarjetas.",
+            "Hay una media query de 640px con dos columnas.",
+            "Hay una media query de 960px con tres columnas.",
+            "No aparece desplazamiento horizontal a 360, 640 ni 1024px."
+          ]
+        },
+        {
+          "title": "Revisión final",
+          "instructions_md": "Revisa la página completa antes de darla por terminada: enlaces que funcionan, imágenes con alt, contraste suficiente y navegación con teclado. Corrige lo que encuentres.",
+          "kind": "checklist",
+          "starter_code": "<!-- revisa el documento completo antes de marcar -->\n",
+          "items": [
+            "Todos los enlaces apuntan a algo existente o a # y se entiende su texto.",
+            "Todas las imágenes tienen alt descriptivo y max-width: 100%.",
+            "Se puede recorrer la página con Tab y el foco se ve en cada enlace.",
+            "El contraste entre texto y fondo permite leer sin esfuerzo."
+          ]
+        }
+      ]
+    }
+  ]
+}

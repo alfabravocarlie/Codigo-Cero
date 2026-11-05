@@ -1,0 +1,1380 @@
+{
+  "track": "python",
+  "title": "Python desde cero",
+  "language": "python",
+  "description": "Aprende Python desde cero con lecciones breves, ejercicios corregidos y dos proyectos guiados.",
+  "level": "principiante",
+  "modules": [
+    {
+      "title": "Primeros pasos",
+      "summary": "Escribir, guardar y transformar datos: la base de cualquier programa.",
+      "lessons": [
+        {
+          "slug": "primer-programa",
+          "title": "Qué es programar y tu primer programa",
+          "summary": "Tu primer programa en Python, con print, comentarios y orden de ejecución.",
+          "minutes": 12,
+          "objectives": [
+            "Explicar qué es un programa y cómo lo ejecuta Python.",
+            "Escribir un programa con print, input y comentarios.",
+            "Leer un error de sintaxis y corregirlo."
+          ],
+          "body_md": "## Un programa es una receta\n\nProgramar es escribir instrucciones que la computadora ejecuta en orden. No hay magia: Python lee el archivo de arriba abajo, ejecuta cada línea y termina. Si cambias el orden, cambia el resultado.\n\n## Tu primer programa\n\n```python\nprint(\"Hola, mundo\")\nprint(\"Estoy aprendiendo Python\")\n```\n\n`print` muestra en pantalla lo que recibe entre paréntesis. Los textos van entre comillas; si las olvidas, Python intentará interpretar la palabra como el nombre de una variable y fallará.\n\n## Comentarios\n\nUn comentario empieza con `#` y Python lo ignora. Sirve para explicar el porqué de una línea, no para repetir lo que ya se ve.\n\n```python\n# Saludo inicial del programa\nprint(\"Hola\")  # también vale al final de la línea\n```\n\n## El orden importa\n\n```python\nprint(\"Primero\")\nprint(\"Segundo\")\n```\n\nLa salida es `Primero` y luego `Segundo`. Si intercambias las líneas, intercambias la salida. Parece obvio, pero muchos errores de lógica nacen de un orden equivocado.\n\n## Leer lo que escribe el usuario\n\n`print` saca información y `input` la recoge:\n\n```python\nnombre = input()\nprint(\"Hola,\", nombre)\n```\n\n`input()` espera una línea y la devuelve como texto. Aunque el usuario escriba 25, recibes la cadena \"25\", no el número 25. Esa diferencia será clave en la próxima lección.\n\n## Un programa completo\n\n```python\nnombre = input()\nedad = int(input())\nprint(\"Hola,\", nombre)\nprint(\"Pronto tendras\", edad + 1)\n```\n\n`int()` convierte el texto en un número entero. Sin esa conversión, sumar 1 a \"25\" daría un error de tipo. El programa lee dos líneas, saluda y calcula la edad del próximo año.\n\n## Cómo se ejecuta\n\nCuando lanzas el archivo, Python revisa primero la sintaxis completa. Si encuentra un paréntesis sin cerrar, no ejecuta nada: muestra un `SyntaxError` con el número de línea. Si la sintaxis está bien, empieza por la primera instrucción y no vuelve atrás. Por eso un `print` colocado antes de calcular un dato no puede mostrar ese dato.\n\n## Probar no es adivinar\n\nEjecuta el programa después de cada cambio pequeño. Si modificas tres cosas a la vez y falla, no sabrás cuál lo rompió. Cambia una línea, ejecuta y observa. Esa costumbre parece lenta y ahorra horas de confusión.\n\nLos mensajes de error también se leen: la última línea dice qué falló y la anterior, dónde. Copiar el mensaje en un buscador es válido; entenderlo es mejor.\n\n## Errores típicos\n\n- `print(Hola)` sin comillas: Python busca una variable llamada Hola y lanza `NameError`.\n- `Print(\"Hola\")` con mayúscula: los nombres distinguen mayúsculas de minúsculas.\n- Paréntesis o comillas sin cerrar: aparece un `SyntaxError` que señala la línea.\n- Creer que `input()` devuelve un número: siempre devuelve texto.\n\n## Practica\n\nEscribe un programa de tres líneas que muestre tu nombre, tu ciudad y una frase sobre por qué quieres aprender. Después cambia el orden y observa la salida. Ese ejercicio contiene lo esencial de todo lo que viene: instrucciones, datos y orden.",
+          "exercises": [
+            {
+              "slug": "saludo-personalizado",
+              "title": "Saludo personalizado",
+              "kind": "stdout",
+              "prompt_md": "Lee un nombre por teclado y muestra un saludo con el formato exacto `Hola, Ana!`.\n\nEl programa recibe una sola línea con el nombre y no debe mostrar nada más.",
+              "starter_code": "# Lee un nombre y muestra \"Hola, <nombre>!\"\nnombre = input()\n# Escribe aquí el print\n",
+              "solution_code": "nombre = input()\nprint(\"Hola, \" + nombre + \"!\")\n",
+              "tests": [
+                {
+                  "name": "Nombre corto",
+                  "stdin": "Ana\n",
+                  "expected_stdout": "Hola, Ana!"
+                },
+                {
+                  "name": "Otro nombre",
+                  "stdin": "Luis\n",
+                  "expected_stdout": "Hola, Luis!"
+                }
+              ],
+              "hints": [
+                "input() guarda en la variable lo que escribe la persona.",
+                "Puedes unir texto con el operador +.",
+                "El print final es print(\"Hola, \" + nombre + \"!\")."
+              ]
+            },
+            {
+              "slug": "presentacion-dos-lineas",
+              "title": "Presentación en dos líneas",
+              "kind": "stdout",
+              "prompt_md": "Lee un nombre y una ciudad, cada uno en una línea, y muestra:\n\n```\nMe llamo Ana\nVivo en Madrid\n```\n\nNo añadas líneas en blanco ni texto extra.",
+              "starter_code": "# Lee nombre y ciudad, y muestra las dos líneas pedidas\nnombre = input()\nciudad = input()\n# Completa la salida\n",
+              "solution_code": "nombre = input()\nciudad = input()\nprint(\"Me llamo \" + nombre)\nprint(\"Vivo en \" + ciudad)\n",
+              "tests": [
+                {
+                  "name": "Ana de Madrid",
+                  "stdin": "Ana\nMadrid\n",
+                  "expected_stdout": "Me llamo Ana\nVivo en Madrid"
+                },
+                {
+                  "name": "Luis de Lima",
+                  "stdin": "Luis\nLima\n",
+                  "expected_stdout": "Me llamo Luis\nVivo en Lima"
+                }
+              ],
+              "hints": [
+                "Cada input() consume una línea distinta.",
+                "Necesitas dos print, uno por línea.",
+                "Une el texto fijo con la variable usando +."
+              ]
+            }
+          ],
+          "quiz": [
+            {
+              "question": "¿Qué muestra `print(\"Hola\")`?",
+              "options": [
+                "Hola",
+                "\"Hola\"",
+                "print",
+                "Nada"
+              ],
+              "answer_index": 0,
+              "explanation": "print muestra el contenido del texto, sin las comillas."
+            },
+            {
+              "question": "¿Para qué sirve un comentario que empieza con #?",
+              "options": [
+                "Para explicar el código sin que se ejecute",
+                "Para imprimir texto",
+                "Para declarar variables",
+                "Para cerrar el programa"
+              ],
+              "answer_index": 0,
+              "explanation": "Python ignora los comentarios: son notas para quien lee el código."
+            }
+          ]
+        },
+        {
+          "slug": "variables-y-tipos",
+          "title": "Variables y tipos",
+          "summary": "Guardar datos con nombre, distinguir str, int, float y bool, y convertirlos.",
+          "minutes": 14,
+          "objectives": [
+            "Guardar valores en variables con nombres claros.",
+            "Distinguir los tipos básicos y consultarlos con type().",
+            "Convertir texto en número y viceversa sin errores."
+          ],
+          "body_md": "## Una caja con etiqueta\n\nUna variable es un nombre que apunta a un valor. Al escribir `edad = 30` guardas el número 30 bajo la etiqueta `edad`. No hace falta declarar el tipo: Python lo deduce del valor.\n\n```python\nnombre = \"Ana\"\nedad = 30\naltura = 1.72\nactiva = True\nprint(nombre, edad)\n```\n\nEl signo `=` no significa \"es igual a\", sino \"guarda esto en esta variable\". La comparación se escribe con `==` y la verás en la lección de condicionales.\n\n## Los tipos que usarás\n\n- `str`: texto, siempre entre comillas. `\"Ana\"`, `\"25\"`.\n- `int`: número entero. `30`, `-7`.\n- `float`: número con decimales. `1.72`, `0.5`.\n- `bool`: verdadero o falso. `True`, `False`.\n\nPuedes preguntar el tipo con `type()`:\n\n```python\nprint(type(30))\nprint(type(\"30\"))\n```\n\nEl primero imprime `int` y el segundo `str`. Son valores distintos aunque se vean parecidos.\n\n## Conversión entre tipos\n\n`input()` siempre devuelve texto. Para operar con números hay que convertir:\n\n```python\ntexto = input()\nnumero = int(texto)\nprint(numero + 1)\n```\n\n`int(\"25\")` produce 25. `str(25)` produce \"25\". `float(\"1.5\")` produce 1.5. La conversión falla si el texto no encaja: `int(\"2.5\")` lanza `ValueError` porque 2.5 no es un entero.\n\n## Nombres que se entienden\n\nUsa minúsculas y guiones bajos: `saldo_total`, `nombre_completo`. Evita `x`, `dato1`, `cosa`. El nombre debe decir qué contiene. También evita las palabras reservadas (`if`, `for`, `while`) y no empieces con un dígito.\n\n## Reasignar es normal\n\n```python\npuntos = 10\npuntos = puntos + 5\nprint(puntos)\n```\n\nLa segunda línea lee el valor anterior, suma 5 y guarda el resultado. Python permite incluso cambiar de tipo (`puntos = \"diez\"`), pero hacerlo suele confundir: mantén un tipo estable para cada variable.\n\n## Leer varios datos\n\nCuando el programa pide varios valores, lee cada uno y conviértelo en la línea siguiente:\n\n```python\nnombre = input()\nedad = int(input())\n```\n\nNo dejes todas las conversiones para el final: si algo falla, sabrás exactamente qué línea lo provocó.\n\n## Un error silencioso\n\nSumar dos textos no lanza ninguna excepción: los pega. `\"2\" + \"3\"` produce `\"23\"`, no 5. Python no adivina qué querías hacer, así que convierte antes de operar y revisa el tipo cuando el resultado te sorprenda.\n\n## Constantes\n\nSi un valor no cambia, escríbelo en mayúsculas: `IVA = 21`. Es una convención que avisa a quien lee de que ese número no debería modificarse. Python no impide cambiarlo, pero el nombre deja clara la intención.\n\n## Errores típicos\n\n- Sumar texto y número: `\"25\" + 1` lanza `TypeError`.\n- Convertir un decimal con `int(\"2.5\")`: usa `float` primero.\n- Usar una variable antes de asignarla: `NameError`.\n- Confundir `=` (asignar) con `==` (comparar).\n\n## Practica\n\nCrea tres variables con tu nombre, tu edad y tu altura. Muestra una frase con ellas y después cambia la edad por otro número. Observa que el programa no recuerda nada entre ejecuciones: las variables viven solo mientras corre.",
+          "exercises": [
+            {
+              "slug": "ficha-personal",
+              "title": "Ficha personal",
+              "kind": "stdout",
+              "prompt_md": "Lee un nombre y una edad, cada uno en una línea. Muestra exactamente tres líneas:\n\n```\nNombre: Ana\nEdad: 30\nEdad en 10: 40\n```\n\nLa edad debe tratarse como número entero para poder sumarle 10.",
+              "starter_code": "# Lee nombre y edad, y muestra la ficha\nnombre = input()\nedad = int(input())\n# Completa las tres líneas\n",
+              "solution_code": "nombre = input()\nedad = int(input())\nprint(\"Nombre: \" + nombre)\nprint(\"Edad:\", edad)\nprint(\"Edad en 10:\", edad + 10)\n",
+              "tests": [
+                {
+                  "name": "Ana de 30",
+                  "stdin": "Ana\n30\n",
+                  "expected_stdout": "Nombre: Ana\nEdad: 30\nEdad en 10: 40"
+                },
+                {
+                  "name": "Luis de 45",
+                  "stdin": "Luis\n45\n",
+                  "expected_stdout": "Nombre: Luis\nEdad: 45\nEdad en 10: 55"
+                }
+              ],
+              "hints": [
+                "input() devuelve texto; conviértelo con int() para sumar.",
+                "Puedes usar print con varios argumentos separados por coma.",
+                "La tercera línea imprime la expresión edad + 10."
+              ]
+            },
+            {
+              "slug": "minutos-a-horas",
+              "title": "Minutos a horas y minutos",
+              "kind": "stdout",
+              "prompt_md": "Lee una cantidad de minutos (entero) y conviértela a horas y minutos. Muestra una sola línea con el formato:\n\n```\n2 h 15 min\n```\n\nPara 135 minutos deben ser 2 horas y 15 minutos. Los minutos sobrantes siempre van de 0 a 59.",
+              "starter_code": "# Convierte minutos a horas y minutos\ntotal = int(input())\n# Usa // para las horas y % para el resto\n",
+              "solution_code": "total = int(input())\nhoras = total // 60\nminutos = total % 60\nprint(horas, \"h\", minutos, \"min\")\n",
+              "tests": [
+                {
+                  "name": "135 minutos",
+                  "stdin": "135\n",
+                  "expected_stdout": "2 h 15 min"
+                },
+                {
+                  "name": "60 minutos",
+                  "stdin": "60\n",
+                  "expected_stdout": "1 h 0 min"
+                },
+                {
+                  "name": "45 minutos",
+                  "stdin": "45\n",
+                  "expected_stdout": "0 h 45 min"
+                }
+              ],
+              "hints": [
+                "Una hora tiene 60 minutos.",
+                "La división entera // da las horas completas.",
+                "El operador % da los minutos que sobran."
+              ]
+            }
+          ],
+          "quiz": [
+            {
+              "question": "¿Qué tipo devuelve siempre `input()`?",
+              "options": [
+                "str",
+                "int",
+                "float",
+                "bool"
+              ],
+              "answer_index": 0,
+              "explanation": "input() devuelve texto; hay que convertirlo para operar con números."
+            },
+            {
+              "question": "¿Qué expresión convierte el texto `\"25\"` en el entero 25?",
+              "options": [
+                "int(\"25\")",
+                "str(\"25\")",
+                "float(25)",
+                "print(\"25\")"
+              ],
+              "answer_index": 0,
+              "explanation": "int() interpreta el texto como número entero."
+            }
+          ]
+        },
+        {
+          "slug": "operadores-entrada-salida",
+          "title": "Operadores y entrada/salida",
+          "summary": "Calcular con enteros, leer datos y presentar resultados legibles.",
+          "minutes": 15,
+          "objectives": [
+            "Usar los operadores aritméticos y su precedencia.",
+            "Leer números por teclado y convertir su tipo.",
+            "Componer salidas claras con f-strings."
+          ],
+          "body_md": "## Las operaciones de siempre\n\nPython usa los operadores habituales, con dos añadidos muy útiles:\n\n```python\na = 7\nb = 2\nprint(a + b, a - b, a * b)\nprint(a / b)\nprint(a // b)\nprint(a % b)\nprint(a ** b)\n```\n\n`/` siempre devuelve un decimal, aunque el resultado sea exacto: `8 / 2` es `4.0`. `//` hace la división entera y descarta la parte decimal. `%` devuelve el resto, ideal para saber si un número es par o para convertir minutos en horas. `**` es la potencia.\n\n## El orden de las operaciones\n\nSe calcula como en matemáticas: primero potencias, luego multiplicación y división, y al final suma y resta. Ante la duda, usa paréntesis.\n\n```python\nprint(2 + 3 * 4)\nprint((2 + 3) * 4)\n```\n\nEl primero da 14 y el segundo 20. Los paréntesis no son decorativos: cambian el resultado.\n\n## Entrada y salida\n\n`input()` devuelve texto. Si necesitas un número, convierte en la misma línea:\n\n```python\nprecio = int(input())\ncantidad = int(input())\nprint(precio * cantidad)\n```\n\nSi el usuario escribe 2.5, `int()` falla. Para decimales usa `float(input())`, pero ten en cuenta que los decimales binarios no siempre son exactos: 0.1 + 0.2 no da exactamente 0.3. En este curso evitaremos comparar decimales largos.\n\n## f-strings: mezclar texto y datos\n\n```python\nnombre = \"Ana\"\ntotal = 3\nprint(f\"{nombre} compro {total} panes\")\n```\n\nLa `f` delante de las comillas permite insertar variables entre llaves. Es más legible que concatenar con `+`, sobre todo cuando hay varios datos.\n\n## Un cálculo completo\n\n```python\nprecio = int(input())\ncantidad = int(input())\nsubtotal = precio * cantidad\niva = subtotal * 21 // 100\nprint(\"Subtotal:\", subtotal)\nprint(\"IVA:\", iva)\nprint(\"Total:\", subtotal + iva)\n```\n\nEl IVA se calcula con enteros para que el resultado sea predecible. `//` trunca los céntimos, así que el total puede variar un peso respecto al cálculo con decimales. En un programa real elegirías una regla y la documentarías.\n\n## Atajos que ahorran ruido\n\n`total += 5` equivale a `total = total + 5`, y `total -= 2` resta. También existen `*=`, `//=` y `%=`. No cambian el resultado: hacen que la intención se lea antes.\n\n## Un detalle con los negativos\n\nCon números negativos, `//` redondea hacia abajo, no hacia cero: `-7 // 2` da `-4`. Si necesitas truncar hacia cero, usa `int(-7 / 2)`. En este curso trabajaremos con positivos, pero conviene saberlo antes de que te sorprenda.\n\n## Errores típicos\n\n- Dividir por cero: `7 / 0` lanza `ZeroDivisionError`.\n- Escribir `int(input())` y recibir un decimal o una palabra: `ValueError`.\n- Concatenar texto y número con `+`: `\"Total: \" + 10` falla; usa f-string o `str()`.\n- Olvidar que `/` devuelve decimal y esperar un entero.\n\n## Practica\n\nPide dos números y muestra su suma, resta, producto, división entera y resto, cada uno en una línea. Después prueba con el segundo número igual a cero y lee el error: conocerlo te ahorrará tiempo más adelante.",
+          "exercises": [
+            {
+              "slug": "factura-con-iva",
+              "title": "Factura con IVA",
+              "kind": "stdout",
+              "prompt_md": "Lee un precio unitario y una cantidad, ambos enteros, cada uno en una línea. Calcula el subtotal, un IVA del 21 % y el total. Muestra tres líneas:\n\n```\nSubtotal: 400\nIVA: 84\nTotal: 484\n```\n\nCalcula el IVA con aritmética entera: `subtotal * 21 // 100`.",
+              "starter_code": "# Calcula una factura con IVA del 21 %\nprecio = int(input())\ncantidad = int(input())\nsubtotal = precio * cantidad\n# Calcula el IVA y muestra las tres líneas\n",
+              "solution_code": "precio = int(input())\ncantidad = int(input())\nsubtotal = precio * cantidad\niva = subtotal * 21 // 100\nprint(\"Subtotal:\", subtotal)\nprint(\"IVA:\", iva)\nprint(\"Total:\", subtotal + iva)\n",
+              "tests": [
+                {
+                  "name": "Dos unidades",
+                  "stdin": "200\n2\n",
+                  "expected_stdout": "Subtotal: 400\nIVA: 84\nTotal: 484"
+                },
+                {
+                  "name": "Tres unidades",
+                  "stdin": "50\n3\n",
+                  "expected_stdout": "Subtotal: 150\nIVA: 31\nTotal: 181"
+                }
+              ],
+              "hints": [
+                "El subtotal es precio por cantidad.",
+                "El IVA del 21 % se calcula multiplicando por 21 y dividiendo entre 100 con //.",
+                "El total es la suma de subtotal e IVA."
+              ]
+            },
+            {
+              "slug": "segundos-a-tiempo",
+              "title": "Segundos a horas, minutos y segundos",
+              "kind": "stdout",
+              "prompt_md": "Lee una cantidad de segundos (entero) y muéstrala en horas, minutos y segundos, en una línea:\n\n```\n1 h 1 min 1 s\n```\n\nPara 3661 segundos el resultado es 1 hora, 1 minuto y 1 segundo. Usa división entera y resto.",
+              "starter_code": "# Convierte segundos a horas, minutos y segundos\ntotal = int(input())\n# 1 hora = 3600 s, 1 minuto = 60 s\n",
+              "solution_code": "total = int(input())\nhoras = total // 3600\nresto = total % 3600\nminutos = resto // 60\nsegundos = resto % 60\nprint(horas, \"h\", minutos, \"min\", segundos, \"s\")\n",
+              "tests": [
+                {
+                  "name": "Una hora y un segundo",
+                  "stdin": "3661\n",
+                  "expected_stdout": "1 h 1 min 1 s"
+                },
+                {
+                  "name": "Solo segundos",
+                  "stdin": "59\n",
+                  "expected_stdout": "0 h 0 min 59 s"
+                },
+                {
+                  "name": "Hora exacta",
+                  "stdin": "3600\n",
+                  "expected_stdout": "1 h 0 min 0 s"
+                }
+              ],
+              "hints": [
+                "Primero obtén las horas dividiendo entre 3600.",
+                "El resto de esa división contiene minutos y segundos.",
+                "Divide el resto entre 60 para los minutos y usa % 60 para los segundos."
+              ]
+            }
+          ],
+          "quiz": [
+            {
+              "question": "¿Cuánto vale `7 // 2` en Python?",
+              "options": [
+                "3",
+                "3.5",
+                "4",
+                "1"
+              ],
+              "answer_index": 0,
+              "explanation": "// es la división entera: descarta la parte decimal."
+            },
+            {
+              "question": "¿Qué operador devuelve el resto de una división?",
+              "options": [
+                "%",
+                "/",
+                "//",
+                "**"
+              ],
+              "answer_index": 0,
+              "explanation": "% devuelve el resto; por eso sirve para saber si un número es par."
+            }
+          ]
+        },
+        {
+          "slug": "condicionales",
+          "title": "Condicionales",
+          "summary": "Hacer que el programa elija entre varios caminos con if, elif y else.",
+          "minutes": 15,
+          "objectives": [
+            "Escribir condiciones con if, elif y else.",
+            "Combinar comparaciones con and, or y not.",
+            "Ordenar las ramas para que ningún caso quede inalcanzable."
+          ],
+          "body_md": "## Tomar decisiones\n\nUn programa deja de ser una lista fija cuando puede elegir. El `if` ejecuta un bloque solo si una condición es verdadera:\n\n```python\nedad = int(input())\nif edad >= 18:\n    print(\"Puedes pasar\")\nelse:\n    print(\"Aun no puedes pasar\")\n```\n\nFíjate en tres detalles: la condición no lleva paréntesis obligatorios, la línea termina en dos puntos y el bloque interior va indentado con cuatro espacios. La indentación no es estética: define qué líneas pertenecen al `if`.\n\n## Comparar valores\n\n- `==` igual, `!=` distinto.\n- `<`, `<=`, `>`, `>=` para orden.\n\nUna comparación produce `True` o `False`. Cuidado con `=`: asigna, no compara. `if edad = 18` es un `SyntaxError`.\n\n## Varias ramas\n\n`elif` permite encadenar condiciones. Python las evalúa en orden y ejecuta la primera que se cumpla:\n\n```python\nnota = int(input())\nif nota >= 90:\n    print(\"Excelente\")\nelif nota >= 75:\n    print(\"Notable\")\nelif nota >= 60:\n    print(\"Aprobado\")\nelse:\n    print(\"Suspenso\")\n```\n\nEl orden importa. Si compruebas primero `nota >= 60`, una nota de 95 también entra ahí y nunca llega a \"Excelente\". Empieza por el caso más exigente.\n\n## Combinar condiciones\n\n`and` exige que se cumplan ambas, `or` basta con una, `not` invierte:\n\n```python\nedad = int(input())\nif edad >= 18 and edad < 65:\n    print(\"Edad laboral\")\n```\n\nTambién puedes anidar un `if` dentro de otro, pero casi siempre se lee mejor con `and`.\n\n## Valores que cuentan como falsos\n\nEn una condición, `0`, `\"\"`, `[]` y `None` se consideran falsos; el resto, verdaderos. Esto permite escribir `if nombre:` en lugar de `if nombre != \"\":`. Úsalo cuando el significado sea claro.\n\n## Comparar texto\n\nLas condiciones también funcionan con cadenas:\n\n```python\ncolor = input()\nif color == \"rojo\":\n    print(\"Alto\")\n```\n\nLa comparación es exacta: mayúsculas, espacios y tildes cuentan. Si el dato viene del usuario, normaliza con `strip()` y `lower()` antes de comparar.\n\n## Anidar con criterio\n\nPuedes poner un `if` dentro de otro:\n\n```python\nif edad >= 18:\n    if tiene_entrada:\n        print(\"Puedes entrar\")\n```\n\nFunciona, pero muchas veces se lee mejor con `and`. Anida solo cuando la segunda condición dependa de la primera y quieras dejar clara esa dependencia. Si una condición se vuelve larga, divídela en variables con nombre: `es_adulto = edad >= 18`.\n\n## Errores típicos\n\n- Olvidar los dos puntos al final de `if`, `elif` o `else`.\n- Indentar mal: Python lanza `IndentationError` o asocia el bloque a otra rama.\n- Usar `=` en la condición.\n- Ordenar mal las ramas de `elif` y dejar casos inalcanzables.\n\n## Practica\n\nPide la edad y el nombre, y saluda de forma distinta según si la persona es menor, adulta o mayor de 65. Prueba los tres caminos. Cada prueba debe recorrer una rama distinta; si alguna nunca se ejecuta, revisa el orden de las condiciones.",
+          "exercises": [
+            {
+              "slug": "mayor-de-edad",
+              "title": "Mayor de edad",
+              "kind": "stdout",
+              "prompt_md": "Lee un nombre y una edad, cada uno en una línea. Muestra una sola frase:\n\n- `Ana es mayor de edad` si la edad es 18 o más.\n- `Ana es menor de edad` si es menor de 18.\n\nSustituye Ana por el nombre leído.",
+              "starter_code": "# Decide si la persona es mayor de edad\nnombre = input()\nedad = int(input())\n# Escribe el if y el else\n",
+              "solution_code": "nombre = input()\nedad = int(input())\nif edad >= 18:\n    print(nombre + \" es mayor de edad\")\nelse:\n    print(nombre + \" es menor de edad\")\n",
+              "tests": [
+                {
+                  "name": "Justo 18",
+                  "stdin": "Ana\n18\n",
+                  "expected_stdout": "Ana es mayor de edad"
+                },
+                {
+                  "name": "Menor",
+                  "stdin": "Luis\n17\n",
+                  "expected_stdout": "Luis es menor de edad"
+                }
+              ],
+              "hints": [
+                "La condición es edad >= 18.",
+                "No olvides los dos puntos y la indentación de cuatro espacios.",
+                "Concatena el nombre con el resto de la frase."
+              ]
+            },
+            {
+              "slug": "nota-cualitativa",
+              "title": "Nota cualitativa",
+              "kind": "stdout",
+              "prompt_md": "Lee una nota entera entre 0 y 100 y muestra una sola palabra según este criterio:\n\n- 90 o más: `Excelente`\n- 75 a 89: `Notable`\n- 60 a 74: `Aprobado`\n- menos de 60: `Suspenso`\n\nComprueba las condiciones de mayor a menor.",
+              "starter_code": "# Clasifica una nota\nnota = int(input())\n# Usa if, elif y else\n",
+              "solution_code": "nota = int(input())\nif nota >= 90:\n    print(\"Excelente\")\nelif nota >= 75:\n    print(\"Notable\")\nelif nota >= 60:\n    print(\"Aprobado\")\nelse:\n    print(\"Suspenso\")\n",
+              "tests": [
+                {
+                  "name": "Excelente",
+                  "stdin": "95\n",
+                  "expected_stdout": "Excelente"
+                },
+                {
+                  "name": "Notable",
+                  "stdin": "75\n",
+                  "expected_stdout": "Notable"
+                },
+                {
+                  "name": "Aprobado",
+                  "stdin": "60\n",
+                  "expected_stdout": "Aprobado"
+                },
+                {
+                  "name": "Suspenso",
+                  "stdin": "59\n",
+                  "expected_stdout": "Suspenso"
+                }
+              ],
+              "hints": [
+                "Empieza por la condición más alta: nota >= 90.",
+                "Cada elif solo se evalúa si las anteriores fallaron.",
+                "El else final recoge todo lo que no cumplió ninguna condición."
+              ]
+            }
+          ],
+          "quiz": [
+            {
+              "question": "¿Qué falta en la línea `if edad >= 18`?",
+              "options": [
+                "Los dos puntos al final",
+                "Los paréntesis obligatorios",
+                "La palabra then",
+                "Un else"
+              ],
+              "answer_index": 0,
+              "explanation": "La cabecera del if termina en dos puntos; después va el bloque indentado."
+            },
+            {
+              "question": "Si `edad` vale 17, ¿qué rama se ejecuta en `if edad >= 18: ... else: ...`?",
+              "options": [
+                "La del else",
+                "La del if",
+                "Ninguna",
+                "Las dos"
+              ],
+              "answer_index": 0,
+              "explanation": "La condición es falsa, así que se ejecuta el bloque del else."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Repetir y decidir",
+      "summary": "Bucles para repetir trabajo y variables que acumulan o avisan.",
+      "lessons": [
+        {
+          "slug": "bucle-while",
+          "title": "El bucle while",
+          "summary": "Repetir instrucciones mientras se cumpla una condición, sin bucles infinitos.",
+          "minutes": 14,
+          "objectives": [
+            "Escribir un bucle while con una condición que termine.",
+            "Actualizar la variable de control dentro del bucle.",
+            "Leer datos repetidamente hasta una palabra clave."
+          ],
+          "body_md": "## Repetir sin copiar\n\nSi quieres mostrar los números del 5 al 1, copiar cinco `print` funciona una vez, pero no escala. Un bucle `while` repite un bloque mientras una condición sea verdadera:\n\n```python\nnumero = 5\nwhile numero > 0:\n    print(numero)\n    numero = numero - 1\nprint(\"Despegue\")\n```\n\nLa condición se evalúa antes de cada vuelta. Cuando `numero` llega a 0, la condición es falsa y el bucle termina. La última línea queda fuera del bucle porque no está indentada.\n\n## La condición manda\n\nDentro del bucle debe pasar algo que acerque la condición a su final. En el ejemplo anterior, `numero = numero - 1` es lo que evita que el programa se quede para siempre. Si lo olvidas, la condición nunca cambia y el bucle no termina.\n\nUn patrón habitual es leer hasta recibir una palabra clave:\n\n```python\ntexto = input()\nwhile texto != \"fin\":\n    print(\"Escribiste:\", texto)\n    texto = input()\n```\n\nCada vuelta pide una línea nueva. La lectura repetida es parte del bucle; si solo lees una vez, el programa imprime lo mismo sin parar.\n\n## Contar y sumar con while\n\n```python\ntotal = 0\nnumero = int(input())\nwhile numero != 0:\n    total = total + numero\n    numero = int(input())\nprint(total)\n```\n\nAntes del bucle se prepara `total`; dentro se actualiza; al salir se muestra. Ese esquema se repite en casi todos los programas: preparar, repetir, mostrar.\n\n## break y continue\n\n`break` sale del bucle de inmediato y `continue` salta a la siguiente vuelta:\n\n```python\nwhile True:\n    linea = input()\n    if linea == \"fin\":\n        break\n    if linea == \"\":\n        continue\n    print(linea)\n```\n\n`while True` con un `break` es aceptable cuando la salida depende de los datos. No abuses: un bucle con condición explícita suele leerse mejor.\n\n## Cómo comprobar que termina\n\nAntes de ejecutar, pregúntate: ¿qué variable cambia en cada vuelta y en qué dirección? Si la respuesta es \"ninguna\", tienes un bucle infinito. Si cambia pero se aleja de la condición, también. Para salir de uno en la consola, pulsa Ctrl+C.\n\n## Un centinela\n\nEl valor que termina el bucle se llama centinela. Puede ser 0, \"fin\" o una línea vacía. Elige uno que no pueda confundirse con un dato válido: al sumar números, 0 funciona; al leer temperaturas, no, porque 0 es una temperatura posible.\n\n## No todo se resuelve con while\n\nSi conoces la cantidad de vueltas, `for` con `range` suele ser más claro. `while` brilla cuando la repetición depende de los datos o de una condición que cambia sin un patrón fijo.\n\n## Errores típicos\n\n- Olvidar actualizar la variable de control.\n- Actualizarla fuera del bucle o solo en una rama del `if`.\n- Leer la entrada una sola vez y repetir siempre el mismo valor.\n- Confundir `=` con `==` en la condición.\n- Indentar el `print` final dentro del bucle y repetirlo en cada vuelta.\n\n## Practica\n\nPide un número y muestra una cuenta atrás hasta 1, con \"Despegue\" al final. Después pide números hasta que se escriba 0 y muestra la suma. Son los dos patrones que usarás en los laboratorios.",
+          "exercises": [
+            {
+              "slug": "cuenta-atras",
+              "title": "Cuenta atrás",
+              "kind": "stdout",
+              "prompt_md": "Lee un número entero mayor que cero y muestra una cuenta atrás desde ese número hasta 1, un número por línea. Al final, muestra `Despegue`.\n\nEjemplo para 3:\n\n```\n3\n2\n1\nDespegue\n```",
+              "starter_code": "# Cuenta atrás desde n hasta 1 y termina con \"Despegue\"\nn = int(input())\n# Escribe el while\n",
+              "solution_code": "n = int(input())\nwhile n >= 1:\n    print(n)\n    n = n - 1\nprint(\"Despegue\")\n",
+              "tests": [
+                {
+                  "name": "Desde 3",
+                  "stdin": "3\n",
+                  "expected_stdout": "3\n2\n1\nDespegue"
+                },
+                {
+                  "name": "Desde 1",
+                  "stdin": "1\n",
+                  "expected_stdout": "1\nDespegue"
+                }
+              ],
+              "hints": [
+                "La condición puede ser n >= 1.",
+                "Dentro del bucle imprime n y réstale 1.",
+                "El print de Despegue va fuera del bucle, sin indentar."
+              ]
+            },
+            {
+              "slug": "suma-hasta-cero",
+              "title": "Suma hasta cero",
+              "kind": "stdout",
+              "prompt_md": "Lee números enteros, uno por línea, hasta encontrar un 0. Muestra la suma de todos los números leídos antes del 0. El 0 no se suma.\n\nEjemplo:\n\n```\n3\n4\n0\n```\n\nMuestra `7`.",
+              "starter_code": "# Suma números hasta leer un 0\ntotal = 0\nnumero = int(input())\n# Completa el while\n",
+              "solution_code": "total = 0\nnumero = int(input())\nwhile numero != 0:\n    total = total + numero\n    numero = int(input())\nprint(total)\n",
+              "tests": [
+                {
+                  "name": "Dos positivos",
+                  "stdin": "3\n4\n0\n",
+                  "expected_stdout": "7"
+                },
+                {
+                  "name": "Con negativo",
+                  "stdin": "10\n-2\n5\n0\n",
+                  "expected_stdout": "13"
+                },
+                {
+                  "name": "Cero directo",
+                  "stdin": "0\n",
+                  "expected_stdout": "0"
+                }
+              ],
+              "hints": [
+                "El bucle continúa mientras el número sea distinto de 0.",
+                "Suma el número antes de leer el siguiente.",
+                "Después de leer otro número, la condición se vuelve a comprobar."
+              ]
+            }
+          ],
+          "quiz": [
+            {
+              "question": "¿Qué provoca un bucle while infinito?",
+              "options": [
+                "Que la condición nunca deje de ser verdadera",
+                "Que el bucle tenga un print",
+                "Usar números enteros",
+                "Que la condición use >="
+              ],
+              "answer_index": 0,
+              "explanation": "Si nada cambia la condición hacia falsa, el bucle se repite sin fin."
+            },
+            {
+              "question": "Si `n` empieza en 0 y el bucle es `while n < 3`, ¿cuántas vueltas da si sumas 1 a `n` dentro?",
+              "options": [
+                "3",
+                "2",
+                "4",
+                "Ninguna"
+              ],
+              "answer_index": 0,
+              "explanation": "Se ejecuta con n = 0, 1 y 2; en la cuarta comprobación n vale 3 y termina."
+            }
+          ]
+        },
+        {
+          "slug": "for-y-range",
+          "title": "El bucle for y range",
+          "summary": "Repetir una cantidad conocida de veces y recorrer colecciones.",
+          "minutes": 14,
+          "objectives": [
+            "Recorrer secuencias con for y range.",
+            "Elegir el inicio, el final y el paso correctos.",
+            "Acumular resultados dentro de un for."
+          ],
+          "body_md": "## Recorrer con for\n\nCuando sabes cuántas veces repetir o tienes una colección, `for` es más directo que `while`:\n\n```python\nfor numero in range(1, 6):\n    print(numero)\n```\n\nEsto imprime del 1 al 5. `range(1, 6)` genera los números desde el inicio hasta uno antes del final: el 6 no se incluye. Esa es la fuente número uno de errores al empezar.\n\n## Las formas de range\n\n```python\nrange(5)          # 0, 1, 2, 3, 4\nrange(2, 6)       # 2, 3, 4, 5\nrange(0, 10, 2)   # 0, 2, 4, 6, 8\nrange(5, 0, -1)   # 5, 4, 3, 2, 1\n```\n\nEl tercer argumento es el paso. Si es negativo, cuenta hacia atrás. `range` no crea una lista enorme: genera los valores a medida que se necesitan.\n\n## Recorrer texto y listas\n\n`for` también recorre los elementos de un texto o de una lista, sin índices:\n\n```python\nfor letra in \"Python\":\n    print(letra)\n```\n\nSi necesitas el índice, puedes usar `enumerate`, pero muchas veces no hace falta: recorre directamente los valores.\n\n## Acumular dentro del for\n\n```python\ntotal = 0\nfor numero in range(1, 101):\n    total += numero\nprint(total)\n```\n\n`+=` es una abreviatura de `total = total + numero`. El acumulador se inicializa antes del bucle; si lo reinicias dentro, cada vuelta borra el trabajo anterior.\n\n## for o while\n\nUsa `for` cuando conozcas la cantidad de vueltas o estés recorriendo una colección. Usa `while` cuando la repetición dependa de una condición que puede cambiar de forma impredecible, como leer hasta \"fin\".\n\n## La variable del for\n\nLa variable del `for` toma un valor en cada vuelta y, al salir, conserva el último. Después del bucle puedes imprimirla para comprobar dónde terminó:\n\n```python\nfor numero in range(3):\n    pass\nprint(numero)\n```\n\nLa salida es 2. No es magia: el bucle terminó cuando `range` se quedó sin valores, y la variable guarda el último que recibió.\n\n## Filtrar dentro del bucle\n\nNo todo lo que se recorre se acumula. Un `if` dentro del `for` selecciona qué suma:\n\n```python\ntotal = 0\nfor numero in range(1, 11):\n    if numero % 2 == 0:\n        total += numero\nprint(total)\n```\n\nAsí se suman solo los pares. El patrón \"recorrer, decidir, acumular\" aparece en casi todos los ejercicios de datos.\n\n## Errores típicos\n\n- Esperar que `range(1, 5)` incluya el 5.\n- Pasar decimales a `range`: solo acepta enteros.\n- Modificar una lista mientras la recorres: el recorrido se salta elementos.\n- Reiniciar el acumulador dentro del bucle.\n- Usar el mismo nombre para el contador y para el total.\n\n## Practica\n\nMuestra la tabla de multiplicar de un número del 1 al 5 y después todos los pares hasta un límite. En el segundo, decide si necesitas el paso 2 de `range` o un `if` dentro del bucle.",
+          "exercises": [
+            {
+              "slug": "tabla-multiplicar",
+              "title": "Tabla de multiplicar",
+              "kind": "stdout",
+              "prompt_md": "Lee un número entero y muestra su tabla de multiplicar del 1 al 5, una línea por producto:\n\n```\n3 x 1 = 3\n3 x 2 = 6\n3 x 3 = 9\n3 x 4 = 12\n3 x 5 = 15\n```\n\nRespeta los espacios del formato.",
+              "starter_code": "# Muestra la tabla del número leído, del 1 al 5\nn = int(input())\nfor i in range(1, 6):\n    # Completa el print\n",
+              "solution_code": "n = int(input())\nfor i in range(1, 6):\n    print(n, \"x\", i, \"=\", n * i)\n",
+              "tests": [
+                {
+                  "name": "Tabla del 3",
+                  "stdin": "3\n",
+                  "expected_stdout": "3 x 1 = 3\n3 x 2 = 6\n3 x 3 = 9\n3 x 4 = 12\n3 x 5 = 15"
+                },
+                {
+                  "name": "Tabla del 7",
+                  "stdin": "7\n",
+                  "expected_stdout": "7 x 1 = 7\n7 x 2 = 14\n7 x 3 = 21\n7 x 4 = 28\n7 x 5 = 35"
+                }
+              ],
+              "hints": [
+                "range(1, 6) produce 1, 2, 3, 4 y 5.",
+                "print con varios argumentos separados por coma inserta un espacio.",
+                "El producto es n * i."
+              ]
+            },
+            {
+              "slug": "numeros-pares",
+              "title": "Números pares",
+              "kind": "stdout",
+              "prompt_md": "Lee un número entero `n` y muestra todos los pares desde 2 hasta `n`, separados por un espacio, en una sola línea.\n\nPara 6: `2 4 6`. Para 10: `2 4 6 8 10`.\n\nAsume que `n` es mayor o igual que 2.",
+              "starter_code": "# Muestra los pares hasta n separados por espacios\nn = int(input())\n# Recorre con range y une con join\n",
+              "solution_code": "n = int(input())\npares = []\nfor numero in range(2, n + 1, 2):\n    pares.append(str(numero))\nprint(\" \".join(pares))\n",
+              "tests": [
+                {
+                  "name": "Hasta 6",
+                  "stdin": "6\n",
+                  "expected_stdout": "2 4 6"
+                },
+                {
+                  "name": "Hasta 10",
+                  "stdin": "10\n",
+                  "expected_stdout": "2 4 6 8 10"
+                }
+              ],
+              "hints": [
+                "range(2, n + 1, 2) empieza en 2 y avanza de dos en dos.",
+                "join necesita una lista de textos, no de números.",
+                "Convierte cada número con str antes de guardarlo."
+              ]
+            }
+          ],
+          "quiz": [
+            {
+              "question": "¿Qué números produce `range(1, 4)`?",
+              "options": [
+                "1, 2, 3",
+                "1, 2, 3, 4",
+                "0, 1, 2, 3",
+                "1, 3"
+              ],
+              "answer_index": 0,
+              "explanation": "range incluye el inicio y excluye el final."
+            },
+            {
+              "question": "¿Cuándo conviene un for en lugar de un while?",
+              "options": [
+                "Cuando sabes cuántas vueltas dar o recorres una colección",
+                "Cuando la condición puede ser infinita",
+                "Cuando necesitas leer hasta una palabra clave",
+                "Cuando el bucle tiene un break"
+              ],
+              "answer_index": 0,
+              "explanation": "for brilla con cantidades conocidas y colecciones; while, con condiciones abiertas."
+            }
+          ]
+        },
+        {
+          "slug": "acumuladores-y-banderas",
+          "title": "Acumuladores y banderas",
+          "summary": "Sumar, contar y recordar hechos mientras el bucle recorre los datos.",
+          "minutes": 16,
+          "objectives": [
+            "Inicializar y actualizar acumuladores y contadores.",
+            "Usar banderas booleanas para recordar si algo ocurrió.",
+            "Calcular un máximo sin depender de un valor inicial arbitrario."
+          ],
+          "body_md": "## Acumular es recordar\n\nUn acumulador es una variable que guarda un resultado parcial mientras el bucle avanza. Se inicializa antes y se actualiza dentro:\n\n```python\ntotal = 0\nfor numero in range(1, 6):\n    total += numero\nprint(total)\n```\n\nEl valor inicial depende de la operación: 0 para sumar, 1 para multiplicar, una lista vacía para reunir elementos. Elegirlo mal produce resultados silenciosamente incorrectos, sin ningún error visible.\n\n## Contar casos\n\nUn contador es un acumulador que suma 1 cuando ocurre algo:\n\n```python\naprobados = 0\nfor _ in range(5):\n    nota = int(input())\n    if nota >= 60:\n        aprobados += 1\nprint(aprobados)\n```\n\nEl guion bajo en `for _ in range(5)` indica que el número de vuelta no se usa. Es una convención, no una obligación.\n\n## Banderas\n\nUna bandera es una variable booleana que recuerda si algo ocurrió. Se enciende una vez y se queda encendida:\n\n```python\nhay_negativo = False\nfor _ in range(5):\n    if int(input()) < 0:\n        hay_negativo = True\nprint(hay_negativo)\n```\n\nSi necesitas saber cuántos negativos hay, usa un contador. Si solo necesitas saber si existe al menos uno, la bandera es más clara. También puedes salir antes con `break` cuando ya encontraste lo que buscabas.\n\n## El máximo sin max\n\n```python\nmayor = int(input())\nfor _ in range(4):\n    numero = int(input())\n    if numero > mayor:\n        mayor = numero\nprint(mayor)\n```\n\nEl primer valor se toma como referencia; los demás compiten contra él. Este patrón explica por qué no puedes inicializar el máximo en 0 si los números pueden ser negativos: el 0 sería mayor que todos y nunca se actualizaría.\n\n## Combinar acumulador y bandera\n\nMuchos ejercicios piden varias cosas a la vez: sumar los positivos, contar los negativos y avisar si hay ceros. Prepara todas las variables antes del bucle, actualízalas en la misma vuelta y muestra el resultado al final. Mantén los nombres descriptivos para no confundir contadores con acumuladores.\n\n## Contador y acumulador no son lo mismo\n\nEl contador suma siempre 1 porque cuenta casos. El acumulador suma el valor que corresponda porque reúne una cantidad. Confundirlos produce totales que parecen plausibles y están mal: contar tres compras no es lo mismo que sumar sus precios.\n\n## Nombra según el papel\n\n`total`, `cantidad`, `suma`, `contador`, `hay_negativo`. Un nombre que describe el papel evita tener que recordar qué guarda cada variable. Si dudas, escribe el nombre completo: ahorrarás tiempo al volver al código.\n\n## Errores típicos\n\n- Inicializar el acumulador dentro del bucle y perder lo acumulado.\n- Encender la bandera pero no consultarla después.\n- Usar `mayor = 0` con datos que pueden ser negativos.\n- Contar de más al actualizar fuera del `if`.\n- Reiniciar el contador en cada vuelta.\n\n## Practica\n\nLee cinco números y muestra cuántos son positivos, cuántos negativos y cuántos ceros. Después cambia el programa para que además indique si todos eran positivos. Necesitarás un contador y una bandera trabajando juntos.",
+          "exercises": [
+            {
+              "slug": "contar-signos",
+              "title": "Contar signos",
+              "kind": "stdout",
+              "prompt_md": "Lee un número `n` y después `n` números enteros, uno por línea. Muestra tres líneas:\n\n```\nPositivos: 2\nNegativos: 1\nCeros: 1\n```\n\nLos ceros no cuentan como positivos ni como negativos.",
+              "starter_code": "# Cuenta positivos, negativos y ceros\nn = int(input())\npositivos = 0\nnegativos = 0\nceros = 0\nfor _ in range(n):\n    # Lee un número y actualiza el contador correspondiente\n",
+              "solution_code": "n = int(input())\npositivos = 0\nnegativos = 0\nceros = 0\nfor _ in range(n):\n    numero = int(input())\n    if numero > 0:\n        positivos += 1\n    elif numero < 0:\n        negativos += 1\n    else:\n        ceros += 1\nprint(\"Positivos:\", positivos)\nprint(\"Negativos:\", negativos)\nprint(\"Ceros:\", ceros)\n",
+              "tests": [
+                {
+                  "name": "Mezcla",
+                  "stdin": "4\n3\n-1\n0\n7\n",
+                  "expected_stdout": "Positivos: 2\nNegativos: 1\nCeros: 1"
+                },
+                {
+                  "name": "Todo positivo",
+                  "stdin": "3\n1\n2\n3\n",
+                  "expected_stdout": "Positivos: 3\nNegativos: 0\nCeros: 0"
+                }
+              ],
+              "hints": [
+                "Inicializa los tres contadores antes del bucle.",
+                "Usa if, elif y else para decidir qué contador aumentar.",
+                "Cada contador se incrementa con += 1."
+              ]
+            },
+            {
+              "slug": "detectar-negativos",
+              "title": "Detectar negativos",
+              "kind": "stdout",
+              "prompt_md": "Lee un número `n` y después `n` enteros. Si al menos uno es negativo, muestra `Hay negativos`. Si todos son mayores o iguales que cero, muestra `Todo positivo`.\n\nEjemplo con `-1`, `5` y `2`: `Hay negativos`.",
+              "starter_code": "# Comprueba si hay algún número negativo\nn = int(input())\nhay_negativo = False\nfor _ in range(n):\n    # Lee y actualiza la bandera\n",
+              "solution_code": "n = int(input())\nhay_negativo = False\nfor _ in range(n):\n    numero = int(input())\n    if numero < 0:\n        hay_negativo = True\nif hay_negativo:\n    print(\"Hay negativos\")\nelse:\n    print(\"Todo positivo\")\n",
+              "tests": [
+                {
+                  "name": "Con negativo",
+                  "stdin": "3\n-1\n5\n2\n",
+                  "expected_stdout": "Hay negativos"
+                },
+                {
+                  "name": "Todo positivo",
+                  "stdin": "4\n4\n5\n2\n9\n",
+                  "expected_stdout": "Todo positivo"
+                },
+                {
+                  "name": "Solo ceros",
+                  "stdin": "2\n0\n0\n",
+                  "expected_stdout": "Todo positivo"
+                }
+              ],
+              "hints": [
+                "La bandera empieza en False.",
+                "En cuanto encuentres un negativo, ponla en True.",
+                "Al final, decide el mensaje según la bandera."
+              ]
+            }
+          ],
+          "quiz": [
+            {
+              "question": "¿Dónde se inicializa un acumulador?",
+              "options": [
+                "Antes del bucle",
+                "Dentro del bucle",
+                "Después del print",
+                "En la condición"
+              ],
+              "answer_index": 0,
+              "explanation": "Si lo inicializas dentro, cada vuelta borra el resultado anterior."
+            },
+            {
+              "question": "¿Para qué sirve una bandera booleana?",
+              "options": [
+                "Para recordar si ocurrió algo durante el recorrido",
+                "Para contar elementos",
+                "Para ordenar una lista",
+                "Para convertir tipos"
+              ],
+              "answer_index": 0,
+              "explanation": "La bandera resume un hecho en True o False."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Datos",
+      "summary": "Listas, diccionarios y cadenas: las tres estructuras que usarás todo el tiempo.",
+      "lessons": [
+        {
+          "slug": "listas",
+          "title": "Listas",
+          "summary": "Guardar varios valores, recorrerlos y modificarlos sin perder el control.",
+          "minutes": 15,
+          "objectives": [
+            "Crear listas y acceder a sus elementos por índice.",
+            "Añadir, quitar y ordenar elementos.",
+            "Recorrer una lista y calcular totales, máximos y mínimos."
+          ],
+          "body_md": "## Una colección ordenada\n\nUna lista guarda varios valores en un orden. Se escribe entre corchetes y sus elementos se separan con comas:\n\n```python\nfrutas = [\"manzana\", \"pera\", \"uva\"]\nprint(frutas[0])\nprint(frutas[-1])\nprint(len(frutas))\n```\n\nLos índices empiezan en 0: el primer elemento es `frutas[0]`. Los índices negativos cuentan desde el final, así que `-1` es el último. `len` devuelve cuántos elementos hay.\n\n## Añadir y quitar\n\n```python\nfrutas.append(\"kiwi\")\nfrutas.insert(0, \"melon\")\nfrutas.remove(\"pera\")\nultima = frutas.pop()\n```\n\n`append` añade al final e `insert` en una posición. `remove` borra por valor y falla si no existe. `pop` quita el último elemento y lo devuelve, lo que permite usarlo después.\n\n## Recorrer una lista\n\n```python\nfor fruta in frutas:\n    print(fruta)\n```\n\nEl bucle visita cada elemento en orden. Si necesitas la posición, `enumerate` la proporciona sin llevar un contador a mano:\n\n```python\nfor posicion, fruta in enumerate(frutas):\n    print(posicion, fruta)\n```\n\n## Operaciones que ahorran código\n\n```python\nnumeros = [4, 1, 7]\nprint(len(numeros), sum(numeros))\nprint(max(numeros), min(numeros))\nprint(sorted(numeros))\nnumeros.sort()\nprint(numeros)\n```\n\n`sorted` devuelve una lista nueva ordenada. `sort` ordena la original en el sitio y devuelve `None`; por eso `print(numeros.sort())` imprime `None` y desconcierta.\n\n## Rebanadas\n\nUna rebanada toma una parte de la lista sin modificarla:\n\n```python\nprint(numeros[0:2])\nprint(numeros[::-1])\n```\n\n`[0:2]` incluye el índice 0 y excluye el 2. `[::-1]` recorre al revés y devuelve una copia invertida.\n\n## Cuidado con los alias\n\n```python\na = [1, 2]\nb = a\nb.append(3)\nprint(a)\n```\n\nLa salida es `[1, 2, 3]`: `b = a` no copia la lista, solo crea otro nombre para la misma. Para una copia independiente usa `b = a[:]` o `b = list(a)`.\n\n## Pertenencia\n\n`in` comprueba si un valor está en la lista:\n\n```python\nif \"pera\" in frutas:\n    print(\"Hay pera\")\n```\n\nLa comprobación recorre la lista por dentro. Para listas pequeñas es perfecta; con miles de elementos, un diccionario o un conjunto responde más rápido.\n\n## Rebanadas fuera de rango\n\nA diferencia de un índice suelto, una rebanada tolera límites exagerados: `frutas[0:100]` devuelve lo que haya sin lanzar error. Esto es cómodo, pero puede ocultar que esperabas más elementos. Comprueba `len` si el tamaño importa.\n\n## Listas vacías\n\nUna lista vacía es `[]`. Puedes crearla y llenarla con `append`; el bucle que la recorre no hace nada si no hay elementos. No es un error, es un caso que también debes probar.\n\n## Errores típicos\n\n- Pedir un índice que no existe: `IndexError`.\n- Usar `remove` con un valor ausente: `ValueError`.\n- Guardar el resultado de `sort` y quedarte con `None`.\n- Creer que `b = a` copia la lista.\n- Recorrer con `range(len(lista))` cuando bastaba con recorrer la lista.\n\n## Practica\n\nCrea una lista con cinco números, muestra el mayor, el menor y la suma, y después ordénala y muéstrala al revés. Comprueba con `print` intermedios que la lista original cambia solo cuando usas `sort`.",
+          "exercises": [
+            {
+              "slug": "mayor-menor-suma",
+              "title": "Mayor, menor y suma",
+              "kind": "stdout",
+              "prompt_md": "Lee un número `n`, después `n` enteros (uno por línea) y guárdalos en una lista. Muestra tres líneas:\n\n```\nMayor: 9\nMenor: 2\nSuma: 20\n```\n\nPuedes usar `max`, `min` y `sum` sobre la lista.",
+              "starter_code": "# Lee n números en una lista y muestra mayor, menor y suma\nn = int(input())\nnumeros = []\nfor _ in range(n):\n    # Añade cada número a la lista\n",
+              "solution_code": "n = int(input())\nnumeros = []\nfor _ in range(n):\n    numeros.append(int(input()))\nprint(\"Mayor:\", max(numeros))\nprint(\"Menor:\", min(numeros))\nprint(\"Suma:\", sum(numeros))\n",
+              "tests": [
+                {
+                  "name": "Cuatro números",
+                  "stdin": "4\n5\n2\n9\n4\n",
+                  "expected_stdout": "Mayor: 9\nMenor: 2\nSuma: 20"
+                },
+                {
+                  "name": "Un solo número",
+                  "stdin": "1\n7\n",
+                  "expected_stdout": "Mayor: 7\nMenor: 7\nSuma: 7"
+                }
+              ],
+              "hints": [
+                "Empieza con una lista vacía y usa append dentro del bucle.",
+                "max, min y sum aceptan la lista completa.",
+                "Cada print muestra una etiqueta y el resultado."
+              ]
+            },
+            {
+              "slug": "invertir-palabras",
+              "title": "Invertir palabras",
+              "kind": "stdout",
+              "prompt_md": "Lee un número `n` y después `n` palabras, una por línea. Muestra las palabras en orden inverso, separadas por un espacio y en una sola línea.\n\nPara las palabras `uno`, `dos` y `tres`, muestra `tres dos uno`.",
+              "starter_code": "# Lee n palabras y muéstralas al revés\nn = int(input())\npalabras = []\nfor _ in range(n):\n    palabras.append(input())\n# Invierte y une con espacios\n",
+              "solution_code": "n = int(input())\npalabras = []\nfor _ in range(n):\n    palabras.append(input())\npalabras.reverse()\nprint(\" \".join(palabras))\n",
+              "tests": [
+                {
+                  "name": "Tres palabras",
+                  "stdin": "3\nuno\ndos\ntres\n",
+                  "expected_stdout": "tres dos uno"
+                },
+                {
+                  "name": "Dos palabras",
+                  "stdin": "2\nhola\nmundo\n",
+                  "expected_stdout": "mundo hola"
+                }
+              ],
+              "hints": [
+                "reverse() invierte la lista en el sitio.",
+                "También puedes usar palabras[::-1].",
+                "join une los elementos con el separador que elijas."
+              ]
+            }
+          ],
+          "quiz": [
+            {
+              "question": "¿Qué índice tiene el primer elemento de una lista?",
+              "options": [
+                "0",
+                "1",
+                "-1",
+                "Depende del tamaño"
+              ],
+              "answer_index": 0,
+              "explanation": "Python cuenta desde 0; el último índice es len(lista) - 1."
+            },
+            {
+              "question": "¿Qué hace `lista.append(valor)`?",
+              "options": [
+                "Añade el valor al final",
+                "Añade el valor al principio",
+                "Ordena la lista",
+                "Elimina el último valor"
+              ],
+              "answer_index": 0,
+              "explanation": "append siempre añade al final y no devuelve nada útil."
+            }
+          ]
+        },
+        {
+          "slug": "diccionarios",
+          "title": "Diccionarios",
+          "summary": "Asociar claves con valores, buscar sin recorrer y contar apariciones.",
+          "minutes": 15,
+          "objectives": [
+            "Crear diccionarios y acceder a sus valores por clave.",
+            "Usar get para manejar claves ausentes sin errores.",
+            "Recorrer y construir diccionarios con el patrón de conteo."
+          ],
+          "body_md": "## Pares clave-valor\n\nUn diccionario guarda valores asociados a una clave. En lugar de acceder por posición, accedes por nombre:\n\n```python\nedades = {\"Ana\": 30, \"Luis\": 25}\nprint(edades[\"Ana\"])\n```\n\nLas claves son únicas. Si repites una, el valor anterior se sobrescribe. Desde Python 3.7 los diccionarios conservan el orden de inserción, aunque la idea siga siendo buscar por clave, no por posición.\n\n## Añadir y actualizar\n\n```python\nedades[\"Marta\"] = 28\nedades[\"Ana\"] = 31\n```\n\nSi la clave no existe, se crea. Si existe, se actualiza. No hay que avisar del tamaño: el diccionario crece solo.\n\n## Acceder sin romper el programa\n\nPedir una clave ausente con corchetes lanza `KeyError`. `get` permite un valor por defecto:\n\n```python\nprint(edades.get(\"Pedro\"))\nprint(edades.get(\"Pedro\", 0))\n```\n\nLa primera línea imprime `None`; la segunda, `0`. Usa corchetes cuando la clave deba existir sí o sí, y `get` cuando la ausencia sea un caso normal.\n\n## Recorrer un diccionario\n\n```python\nfor nombre, edad in edades.items():\n    print(nombre, edad)\n```\n\n`items()` devuelve pares de clave y valor. También existen `keys()` y `values()` cuando solo necesitas una parte.\n\n## Contar con un diccionario\n\nEste patrón aparece constantemente:\n\n```python\nconteo = {}\nfor palabra in [\"pan\", \"pan\", \"leche\"]:\n    conteo[palabra] = conteo.get(palabra, 0) + 1\nprint(conteo)\n```\n\n`get(palabra, 0)` devuelve 0 la primera vez y el conteo actual después. Así no necesitas comprobar si la clave existe antes de sumar.\n\n## Pertenencia y borrado\n\n`clave in diccionario` comprueba si existe. `del` elimina una entrada y `pop` la elimina devolviendo su valor:\n\n```python\nif \"Luis\" in edades:\n    print(\"Esta en la agenda\")\nedad = edades.pop(\"Luis\", None)\n```\n\n## Claves y valores por separado\n\n`for nombre in edades:` recorre las claves. `edades.values()` recorre los valores y `edades.items()` los pares. Elegir el adecuado evita escribir `edades[clave]` dentro del bucle cuando no hace falta.\n\n## Un diccionario como ficha\n\nPuedes guardar los datos de una entidad en un diccionario:\n\n```python\ncontacto = {\"nombre\": \"Ana\", \"telefono\": \"555-1234\"}\nprint(contacto[\"nombre\"])\n```\n\nLas claves actúan como campos con nombre. Es más legible que una lista donde tienes que recordar que la posición 0 era el nombre.\n\n## Claves inmutables\n\nLas claves deben ser inmutables: texto, números o tuplas. Una lista no puede ser clave porque cambia, y Python necesita que su identidad sea estable para encontrarla.\n\n## Errores típicos\n\n- Usar una clave inexistente con corchetes y provocar `KeyError`.\n- Intentar usar una lista como clave: las claves deben ser inmutables.\n- Modificar el diccionario mientras lo recorres.\n- Confundir `get` con los corchetes y esperar una excepción.\n\n## Practica\n\nCrea un diccionario con tres productos y sus precios. Añade uno nuevo, actualiza otro, busca uno que no exista con `get` y recorre el resultado con `items`. Después cuenta cuántas veces aparece cada palabra en una frase usando el patrón de conteo.",
+          "exercises": [
+            {
+              "slug": "contar-frutas",
+              "title": "Contar frutas",
+              "kind": "stdout",
+              "prompt_md": "Lee un número `n` y después `n` nombres de frutas, uno por línea. Muestra cuántas veces aparece cada fruta, en el orden en que apareció por primera vez:\n\n```\nmanzana: 2\npera: 1\nuva: 1\n```\n\nRespeta el formato `fruta: cantidad`.",
+              "starter_code": "# Cuenta las frutas con un diccionario\nn = int(input())\nconteo = {}\nfor _ in range(n):\n    fruta = input()\n    # Actualiza el conteo\n",
+              "solution_code": "n = int(input())\nconteo = {}\nfor _ in range(n):\n    fruta = input()\n    conteo[fruta] = conteo.get(fruta, 0) + 1\nfor fruta, veces in conteo.items():\n    print(fruta + \":\", veces)\n",
+              "tests": [
+                {
+                  "name": "Tres frutas",
+                  "stdin": "5\nmanzana\npera\nmanzana\nuva\npera\n",
+                  "expected_stdout": "manzana: 2\npera: 2\nuva: 1"
+                },
+                {
+                  "name": "Repetida",
+                  "stdin": "2\nkiwi\nkiwi\n",
+                  "expected_stdout": "kiwi: 2"
+                }
+              ],
+              "hints": [
+                "get(fruta, 0) devuelve 0 si la clave no existe.",
+                "Asigna el nuevo conteo a conteo[fruta].",
+                "items() te da clave y valor para imprimir cada línea."
+              ]
+            },
+            {
+              "slug": "buscar-precio",
+              "title": "Buscar precio",
+              "kind": "stdout",
+              "prompt_md": "Lee un número `n` y después `n` líneas con el formato `producto precio`. Después lee el nombre de un producto y muestra su precio como `leche: 3`. Si no existe, muestra `No encontrado`.\n\nEjemplo de entrada:\n\n```\n3\npan 2\nleche 3\nhuevos 4\nleche\n```\n\nMuestra `leche: 3`.",
+              "starter_code": "# Guarda precios en un diccionario y busca uno\nn = int(input())\nprecios = {}\nfor _ in range(n):\n    linea = input()\n    # Separa el nombre y el precio, y guárdalos\nbuscado = input()\n# Muestra el precio o No encontrado\n",
+              "solution_code": "n = int(input())\nprecios = {}\nfor _ in range(n):\n    linea = input()\n    partes = linea.split()\n    precios[partes[0]] = int(partes[1])\nbuscado = input()\nif buscado in precios:\n    print(buscado + \": \" + str(precios[buscado]))\nelse:\n    print(\"No encontrado\")\n",
+              "tests": [
+                {
+                  "name": "Producto existente",
+                  "stdin": "3\npan 2\nleche 3\nhuevos 4\nleche\n",
+                  "expected_stdout": "leche: 3"
+                },
+                {
+                  "name": "Producto ausente",
+                  "stdin": "2\npan 2\nleche 3\nagua\n",
+                  "expected_stdout": "No encontrado"
+                }
+              ],
+              "hints": [
+                "split() separa la línea por el espacio.",
+                "La clave es la primera parte y el precio, la segunda convertida a int.",
+                "Comprueba con in antes de imprimir; si no está, muestra No encontrado."
+              ]
+            }
+          ],
+          "quiz": [
+            {
+              "question": "¿Qué ocurre al leer `edades[\"Pedro\"]` si esa clave no existe?",
+              "options": [
+                "Lanza KeyError",
+                "Devuelve None",
+                "Devuelve 0",
+                "Crea la clave"
+              ],
+              "answer_index": 0,
+              "explanation": "Los corchetes exigen que la clave exista; para ausencias está get."
+            },
+            {
+              "question": "¿Qué devuelve `edades.get(\"Pedro\", 0)` si no hay clave Pedro?",
+              "options": [
+                "0",
+                "None",
+                "KeyError",
+                "Una lista vacía"
+              ],
+              "answer_index": 0,
+              "explanation": "get devuelve el segundo argumento cuando la clave no existe."
+            }
+          ]
+        },
+        {
+          "slug": "cadenas-de-texto",
+          "title": "Cadenas de texto",
+          "summary": "Limpiar, buscar, separar y unir texto con los métodos de str.",
+          "minutes": 14,
+          "objectives": [
+            "Aplicar métodos de cadena sin perder el valor devuelto.",
+            "Separar y unir texto con split y join.",
+            "Recorrer caracteres y construir resultados nuevos."
+          ],
+          "body_md": "## Texto inmutable\n\nUna cadena es una secuencia de caracteres. Puedes acceder a posiciones y rebanadas igual que en una lista, pero no modificarla en el sitio:\n\n```python\nsaludo = \"Hola\"\nprint(saludo[0])\nprint(saludo[-1])\nprint(len(saludo))\n```\n\n`saludo[0] = \"h\"` lanza `TypeError`. Los métodos de texto devuelven una cadena nueva; no cambian la original.\n\n## Métodos que usarás a diario\n\n```python\ntexto = \"  Hola Mundo  \"\nprint(texto.strip())\nprint(texto.lower())\nprint(texto.upper())\nprint(texto.replace(\"Mundo\", \"Python\"))\n```\n\n`strip` quita espacios de los extremos, `lower` y `upper` cambian mayúsculas, y `replace` sustituye todas las apariciones. Como devuelven valores nuevos, debes guardarlos o imprimirlos si quieres conservar el cambio.\n\n## Buscar y comprobar\n\n```python\nfrase = \"aprender python desde cero\"\nprint(\"python\" in frase)\nprint(frase.startswith(\"aprender\"))\nprint(frase.find(\"python\"))\n```\n\n`in` responde sí o no. `find` devuelve la posición o -1 si no encuentra. Para comparar textos, recuerda que las mayúsculas importan: `\"Hola\" == \"hola\"` es `False`.\n\n## Separar y unir\n\n```python\npartes = frase.split()\nprint(partes)\nprint(\"-\".join(partes))\n```\n\n`split()` sin argumentos separa por espacios y descarta los vacíos. `split(\",\")` separa por coma. `join` hace lo contrario: pega una lista de textos usando el separador indicado.\n\n## Rebanadas\n\n```python\nprint(frase[0:8])\nprint(frase[::-1])\n```\n\nLa primera toma los primeros ocho caracteres; la segunda invierte la cadena. El final del rango no se incluye, igual que en las listas.\n\n## f-strings con texto\n\n```python\nnombre = \"Ana\"\nprint(f\"Hola, {nombre}. Tienes {len(nombre)} letras.\")\n```\n\nPuedes llamar a funciones dentro de las llaves. Para alinear o redondear hay mini-formatos, pero no los necesitas todavía.\n\n## Limpiar antes de comparar\n\nLos datos que llegan del usuario suelen traer espacios y mayúsculas inconsistentes:\n\n```python\nrespuesta = input().strip().lower()\nif respuesta == \"si\":\n    print(\"Adelante\")\n```\n\nAsí `\" Si \"` y `\"SI\"` cuentan como la misma respuesta. Limpia una vez, al entrar el dato, y no en cada comparación.\n\n## Convertir texto y número\n\n`str(42)` produce `\"42\"` y `int(\"42\")` produce 42. Al mostrar números dentro de una frase, la f-string hace la conversión sola; al unir con `+`, debes usar `str`. Mezclar ambos sin cuidado produce `TypeError`.\n\n## Recorrer y construir\n\nPara invertir o transformar texto, recorre la cadena y acumula en una lista; al final, `join`. Es más claro que intentar modificar la cadena posición a posición, porque las cadenas son inmutables y cada método devuelve una nueva.\n\n## Errores típicos\n\n- Acceder a un índice fuera del rango: `IndexError`.\n- Olvidar guardar el resultado de `upper` o `replace`.\n- Comparar textos con mayúsculas distintas.\n- Llamar a `split(\"\")`: el separador no puede estar vacío.\n- Creer que `find` lanza un error cuando no encuentra el texto: devuelve -1.\n\n## Practica\n\nPide una frase, muestra cuántas palabras tiene, cuál es la más larga y la frase invertida. Después pide un nombre completo y genera sus iniciales en mayúsculas separadas por puntos.",
+          "exercises": [
+            {
+              "slug": "contar-vocales",
+              "title": "Contar vocales",
+              "kind": "stdout",
+              "prompt_md": "Lee una frase y cuenta cuántas vocales contiene, sin distinguir mayúsculas de minúsculas. Muestra una sola línea:\n\n```\nVocales: 4\n```\n\nCuenta solo a, e, i, o, u. No cuentes vocales con tilde.",
+              "starter_code": "# Cuenta las vocales de una frase\nfrase = input().lower()\nvocales = 0\nfor letra in frase:\n    # Comprueba si la letra es una vocal\n",
+              "solution_code": "frase = input().lower()\nvocales = 0\nfor letra in frase:\n    if letra in \"aeiou\":\n        vocales += 1\nprint(\"Vocales:\", vocales)\n",
+              "tests": [
+                {
+                  "name": "Dos palabras",
+                  "stdin": "Hola Mundo\n",
+                  "expected_stdout": "Vocales: 4"
+                },
+                {
+                  "name": "Mayúsculas",
+                  "stdin": "PYTHON\n",
+                  "expected_stdout": "Vocales: 1"
+                },
+                {
+                  "name": "Sin vocales",
+                  "stdin": "xyz\n",
+                  "expected_stdout": "Vocales: 0"
+                }
+              ],
+              "hints": [
+                "lower() convierte todo a minúsculas antes de contar.",
+                "Puedes recorrer la cadena letra por letra con for.",
+                "La condición letra in \"aeiou\" comprueba si es vocal."
+              ]
+            },
+            {
+              "slug": "iniciales",
+              "title": "Iniciales",
+              "kind": "stdout",
+              "prompt_md": "Lee un nombre completo y muestra sus iniciales en mayúsculas, separadas por puntos y terminadas en punto.\n\nPara `ana maria lopez`, muestra `A.M.L.`.",
+              "starter_code": "# Genera las iniciales de un nombre completo\nnombre = input()\npartes = nombre.split()\niniciales = []\nfor parte in partes:\n    # Guarda la primera letra en mayúscula\n# Une con puntos y añade el punto final\n",
+              "solution_code": "nombre = input()\npartes = nombre.split()\niniciales = []\nfor parte in partes:\n    iniciales.append(parte[0].upper())\nprint(\".\".join(iniciales) + \".\")\n",
+              "tests": [
+                {
+                  "name": "Tres nombres",
+                  "stdin": "ana maria lopez\n",
+                  "expected_stdout": "A.M.L."
+                },
+                {
+                  "name": "Dos nombres",
+                  "stdin": "Luis Perez\n",
+                  "expected_stdout": "L.P."
+                }
+              ],
+              "hints": [
+                "split() separa el nombre en palabras.",
+                "parte[0] es la primera letra de cada palabra.",
+                "join con \".\" une las iniciales; añade un punto al final."
+              ]
+            }
+          ],
+          "quiz": [
+            {
+              "question": "¿Qué devuelve `\"Hola\".upper()`?",
+              "options": [
+                "HOLA",
+                "hola",
+                "Hola",
+                "None"
+              ],
+              "answer_index": 0,
+              "explanation": "upper devuelve una cadena nueva en mayúsculas; no modifica la original."
+            },
+            {
+              "question": "¿Qué devuelve `\"uno dos tres\".split()`?",
+              "options": [
+                "[\"uno\", \"dos\", \"tres\"]",
+                "\"uno-dos-tres\"",
+                "3",
+                "\"uno dos tres\""
+              ],
+              "answer_index": 0,
+              "explanation": "split separa por espacios y devuelve una lista de palabras."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Funciones y errores",
+      "summary": "Reutilizar código con funciones y responder a los fallos sin romper el programa.",
+      "lessons": [
+        {
+          "slug": "funciones",
+          "title": "Funciones",
+          "summary": "Agrupar instrucciones, recibir parámetros y devolver resultados.",
+          "minutes": 16,
+          "objectives": [
+            "Definir y llamar funciones con parámetros.",
+            "Distinguir entre imprimir y devolver un valor.",
+            "Dividir un problema en funciones pequeñas y comprobables."
+          ],
+          "body_md": "## Empaquetar instrucciones\n\nUna función agrupa instrucciones bajo un nombre para reutilizarlas. Se define con `def` y se ejecuta solo cuando la llamas:\n\n```python\ndef saludar():\n    print(\"Hola\")\n\nsaludar()\nsaludar()\n```\n\nDefinir la función no muestra nada. El `print` ocurre en cada llamada. Esa separación entre definir y ejecutar es la base de todo lo demás.\n\n## Pasar datos\n\nLos parámetros permiten que la función trabaje con valores distintos:\n\n```python\ndef saludar(nombre):\n    print(\"Hola,\", nombre)\n\nsaludar(\"Ana\")\nsaludar(\"Luis\")\n```\n\n`nombre` existe dentro de la función y toma el valor que le pasas en cada llamada. El número de argumentos debe coincidir con el de parámetros, salvo que uses valores por defecto.\n\n## Devolver un resultado\n\n`return` entrega un valor a quien llamó y termina la función:\n\n```python\ndef sumar(a, b):\n    return a + b\n\nresultado = sumar(2, 3)\nprint(resultado * 10)\n```\n\nLa diferencia con `print` es fundamental: `print` muestra algo en pantalla, `return` devuelve un valor que puedes guardar, sumar o pasar a otra función. Una función que solo imprime no sirve para calcular dentro de un programa más grande.\n\n## Valores por defecto\n\n```python\ndef saludar(nombre, saludo=\"Hola\"):\n    print(saludo + \", \" + nombre)\n\nsaludar(\"Ana\")\nsaludar(\"Luis\", \"Buenas\")\n```\n\nEl parámetro con valor por defecto es opcional al llamar. No uses listas o diccionarios como valor por defecto: se comparten entre llamadas y acumulan datos sin que lo notes.\n\n## Ámbito\n\nLas variables creadas dentro de una función son locales: existen mientras la función se ejecuta y desaparecen al terminar. Los parámetros también son locales. Esto evita que dos funciones se pisen los nombres. Si necesitas un valor fuera, devuélvelo con `return` en lugar de depender de variables globales.\n\n## Funciones que usan funciones\n\n```python\ndef es_par(numero):\n    return numero % 2 == 0\n\ndef describir(numero):\n    if es_par(numero):\n        return \"par\"\n    return \"impar\"\n\nprint(describir(7))\n```\n\nDividir el trabajo en funciones pequeñas hace que cada pieza se pueda probar sola. Esa es la razón práctica para usarlas, además de evitar copiar y pegar.\n\n## Errores típicos\n\n- Imprimir dentro de la función cuando necesitas devolver el valor.\n- Olvidar los paréntesis al llamar: `resultado = sumar` guarda la función, no el resultado.\n- Llamar a una función antes de definirla.\n- Usar una lista como valor por defecto y arrastrar datos entre llamadas.\n- Reutilizar nombres de funciones integradas como `sum` o `max`.\n\n## Practica\n\nEscribe una función `es_primo` que devuelva `True` o `False`, y otra que reciba un número y use la primera para imprimir \"Primo\" o \"No primo\". Separa el cálculo de la presentación: es una costumbre que te acompañará en todos los lenguajes.\n\n## Una función, una tarea\n\nSi al describir una función necesitas la palabra \"y\", probablemente son dos funciones. `leer_datos` y `calcular_total` se prueban por separado; una función que hace ambas cosas es más difícil de depurar y de reutilizar.\n\n## Documentar en una línea\n\nUn comentario al inicio de la función puede explicar qué recibe y qué devuelve:\n\n```python\ndef es_par(numero):\n    # Devuelve True si el número es divisible por 2.\n    return numero % 2 == 0\n```\n\nNo hace falta escribir un manual: una línea con el contrato evita malentendidos.",
+          "exercises": [
+            {
+              "slug": "funcion-sumar",
+              "title": "Una función para sumar",
+              "kind": "stdout",
+              "prompt_md": "Define una función `sumar(a, b)` que devuelva la suma de dos enteros. Después lee dos números, llama a la función y muestra el resultado.\n\nLa salida debe ser solo el número, por ejemplo `5`.",
+              "starter_code": "# Define sumar(a, b) y úsala con dos números leídos\ndef sumar(a, b):\n    # Devuelve la suma\n    pass\n\na = int(input())\nb = int(input())\n# Llama a la función e imprime el resultado\n",
+              "solution_code": "def sumar(a, b):\n    return a + b\n\na = int(input())\nb = int(input())\nprint(sumar(a, b))\n",
+              "tests": [
+                {
+                  "name": "Dos positivos",
+                  "stdin": "2\n3\n",
+                  "expected_stdout": "5"
+                },
+                {
+                  "name": "Con negativo",
+                  "stdin": "-4\n10\n",
+                  "expected_stdout": "6"
+                }
+              ],
+              "hints": [
+                "La función debe usar return, no print.",
+                "Llama a sumar(a, b) y guarda o imprime el resultado.",
+                "El orden de los argumentos no altera la suma, pero sí la lectura."
+              ]
+            },
+            {
+              "slug": "funcion-primo",
+              "title": "Función que detecta primos",
+              "kind": "stdout",
+              "prompt_md": "Define una función `es_primo(numero)` que devuelva `True` si el número es primo y `False` en caso contrario. Después lee un entero y muestra `Primo` o `No primo`.\n\nRecuerda que 1 no es primo y que 2 sí lo es.",
+              "starter_code": "# Define es_primo y úsala para clasificar el número leído\ndef es_primo(numero):\n    # Devuelve True o False\n    pass\n\nnumero = int(input())\nif es_primo(numero):\n    print(\"Primo\")\nelse:\n    print(\"No primo\")\n",
+              "solution_code": "def es_primo(numero):\n    if numero < 2:\n        return False\n    for divisor in range(2, numero):\n        if numero % divisor == 0:\n            return False\n    return True\n\nnumero = int(input())\nif es_primo(numero):\n    print(\"Primo\")\nelse:\n    print(\"No primo\")\n",
+              "tests": [
+                {
+                  "name": "Siete",
+                  "stdin": "7\n",
+                  "expected_stdout": "Primo"
+                },
+                {
+                  "name": "Ocho",
+                  "stdin": "8\n",
+                  "expected_stdout": "No primo"
+                },
+                {
+                  "name": "Dos",
+                  "stdin": "2\n",
+                  "expected_stdout": "Primo"
+                },
+                {
+                  "name": "Uno",
+                  "stdin": "1\n",
+                  "expected_stdout": "No primo"
+                }
+              ],
+              "hints": [
+                "Los números menores que 2 no son primos.",
+                "Prueba divisores desde 2 hasta numero - 1.",
+                "Si encuentras un divisor exacto, devuelve False de inmediato."
+              ]
+            }
+          ],
+          "quiz": [
+            {
+              "question": "¿Qué hace `return` en una función?",
+              "options": [
+                "Devuelve un valor y termina la función",
+                "Imprime el valor en pantalla",
+                "Reinicia la función",
+                "Guarda el valor en un archivo"
+              ],
+              "answer_index": 0,
+              "explanation": "return entrega el resultado a quien llamó y sale de la función."
+            },
+            {
+              "question": "¿Cuál es la diferencia entre print y return?",
+              "options": [
+                "print muestra; return devuelve un valor usable",
+                "Son sinónimos",
+                "return solo funciona con números",
+                "print termina la función"
+              ],
+              "answer_index": 0,
+              "explanation": "Puedes guardar un return y operar con él; un print no deja valor reutilizable."
+            }
+          ]
+        },
+        {
+          "slug": "errores-y-depuracion",
+          "title": "Errores y depuración",
+          "summary": "Leer tracebacks, capturar fallos previsibles y encontrar la causa de un resultado raro.",
+          "minutes": 15,
+          "objectives": [
+            "Interpretar un traceback y localizar la línea del fallo.",
+            "Usar try, except y else para validar entradas.",
+            "Depurar con prints etiquetados y casos mínimos."
+          ],
+          "body_md": "## Los errores son información\n\nCuando Python no puede ejecutar algo, muestra un rastro de llamadas (traceback). Se lee de abajo arriba: la última línea dice el tipo de error y el mensaje; justo encima aparece el archivo y la línea donde ocurrió. No es un castigo, es una pista concreta.\n\n```python\ndef dividir(a, b):\n    return a / b\n\nprint(dividir(10, 0))\n```\n\nEl resultado termina en `ZeroDivisionError: division by zero`. Sabes qué pasó, dónde y por qué. Los errores más comunes al empezar son `SyntaxError` (algo mal escrito), `NameError` (nombre inexistente), `TypeError` (tipos incompatibles), `ValueError` (valor inadecuado), `IndexError` (índice fuera de rango) y `KeyError` (clave ausente).\n\n## Capturar lo previsible\n\nSi un dato puede venir mal, puedes anticiparlo con `try` y `except`:\n\n```python\ntry:\n    numero = int(input())\n    print(10 // numero)\nexcept ValueError:\n    print(\"No es un entero\")\nexcept ZeroDivisionError:\n    print(\"No se puede dividir por cero\")\n```\n\nSolo se ejecuta el `except` que corresponde al error producido. Captura las excepciones que esperas, no todas: un `except Exception` oculta fallos que deberías ver.\n\n## El bloque else\n\n`else` se ejecuta si no hubo error, y `finally` siempre:\n\n```python\ntry:\n    numero = int(input())\nexcept ValueError:\n    print(\"Entrada invalida\")\nelse:\n    print(\"Entero:\", numero)\nfinally:\n    print(\"Fin del intento\")\n```\n\nAsí separas el camino correcto del tratamiento del error, sin duplicar código.\n\n## Depurar con prints\n\nMuchas veces el error no es una excepción, sino un resultado equivocado. Imprime valores intermedios con etiquetas:\n\n```python\ntotal = 0\nfor numero in [3, 4, 5]:\n    total += numero\n    print(f\"tras sumar {numero}, total = {total}\")\n```\n\nCuando entiendas qué pasa, quita los prints. Dejarlos en un programa largo ensucia la salida y puede confundir a quien lo use.\n\n## Cambiar de estrategia\n\nSi un error no cede, reduce el problema: comenta partes, prueba con datos mínimos, ejecuta una sola línea en la consola. Explicar el código en voz alta también funciona: al describir lo que crees que hace, suele aparecer la diferencia con lo que hace de verdad.\n\n## Errores de lógica\n\nNo todos los fallos lanzan una excepción. Un programa puede ejecutarse sin quejarse y dar un resultado equivocado: sumaste cuando debías restar, inicializaste el contador dentro del bucle o comparaste con `>` en lugar de `>=`. Para eso sirven los casos de prueba: fijan el resultado esperado y te obligan a comparar.\n\n## Un método para depurar\n\n1. Reproduce el fallo con el caso más pequeño posible.\n2. Comprueba los valores con prints etiquetados.\n3. Formula una hipótesis y cámbiala de una en una.\n4. Vuelve a ejecutar y confirma.\n\nSi el fallo desaparece al cambiar algo, ya sabes dónde mirar. Si no, la hipótesis era falsa y toca otra.\n\n## Errores típicos\n\n- Envolver demasiado código en un solo `try` y no saber qué falló.\n- Capturar cualquier excepción y no hacer nada con ella.\n- Suponer que la entrada siempre será válida.\n- Confundir el mensaje del error con la causa.\n- Comparar textos de error en lugar de capturar el tipo.\n\n## Practica\n\nPide dos números y divide el primero entre el segundo, controlando la división por cero. Después pide un texto y comprueba si es un entero, mostrando un mensaje distinto en cada caso. Son los dos usos de `try` que más verás.",
+          "exercises": [
+            {
+              "slug": "division-segura",
+              "title": "División segura",
+              "kind": "stdout",
+              "prompt_md": "Lee dos enteros, uno por línea, y muestra el resultado de la división entera del primero entre el segundo. Si el segundo es 0, muestra `Error: division por cero`.\n\nEjemplo con 10 y 2: `5`. Con 7 y 0: `Error: division por cero`.",
+              "starter_code": "# Divide el primer número entre el segundo sin romperte si es 0\na = int(input())\nb = int(input())\n# Usa try y except ZeroDivisionError\n",
+              "solution_code": "a = int(input())\nb = int(input())\ntry:\n    print(a // b)\nexcept ZeroDivisionError:\n    print(\"Error: division por cero\")\n",
+              "tests": [
+                {
+                  "name": "División exacta",
+                  "stdin": "10\n2\n",
+                  "expected_stdout": "5"
+                },
+                {
+                  "name": "División entera",
+                  "stdin": "9\n2\n",
+                  "expected_stdout": "4"
+                },
+                {
+                  "name": "División por cero",
+                  "stdin": "7\n0\n",
+                  "expected_stdout": "Error: division por cero"
+                }
+              ],
+              "hints": [
+                "La operación que puede fallar es a // b.",
+                "Coloca el print dentro del try.",
+                "Captura solo ZeroDivisionError."
+              ]
+            },
+            {
+              "slug": "validar-entero",
+              "title": "Validar un entero",
+              "kind": "stdout",
+              "prompt_md": "Lee un texto y comprueba si representa un número entero. Si es así, muestra `Entero: 42`. Si no, muestra `No es un entero`.\n\nEjemplos: con `42` muestra `Entero: 42`; con `hola` muestra `No es un entero`. Se aceptan números negativos.",
+              "starter_code": "# Comprueba si el texto es un entero\ntexto = input()\n# Usa int() dentro de un try\n",
+              "solution_code": "texto = input()\ntry:\n    numero = int(texto)\n    print(\"Entero:\", numero)\nexcept ValueError:\n    print(\"No es un entero\")\n",
+              "tests": [
+                {
+                  "name": "Entero positivo",
+                  "stdin": "42\n",
+                  "expected_stdout": "Entero: 42"
+                },
+                {
+                  "name": "Entero negativo",
+                  "stdin": "-7\n",
+                  "expected_stdout": "Entero: -7"
+                },
+                {
+                  "name": "Texto",
+                  "stdin": "hola\n",
+                  "expected_stdout": "No es un entero"
+                }
+              ],
+              "hints": [
+                "int(texto) lanza ValueError si el texto no es un entero.",
+                "Si la conversión funciona, imprime el número normalizado.",
+                "El except debe capturar ValueError, no cualquier error."
+              ]
+            }
+          ],
+          "quiz": [
+            {
+              "question": "¿Qué error produce `10 / 0`?",
+              "options": [
+                "ZeroDivisionError",
+                "ValueError",
+                "TypeError",
+                "IndexError"
+              ],
+              "answer_index": 0,
+              "explanation": "Dividir entre cero lanza ZeroDivisionError."
+            },
+            {
+              "question": "¿Para qué sirve try/except?",
+              "options": [
+                "Para anticipar un error y responder sin detener el programa",
+                "Para que los errores desaparezcan",
+                "Para ejecutar el código más rápido",
+                "Para imprimir el traceback"
+              ],
+              "answer_index": 0,
+              "explanation": "try/except maneja errores esperados y permite continuar con una alternativa."
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "labs": [
+    {
+      "slug": "calculadora-consola",
+      "title": "Calculadora de consola",
+      "summary": "Construye paso a paso una calculadora que lee operaciones y controla los errores.",
+      "minutes": 45,
+      "steps": [
+        {
+          "title": "Leer dos números y sumar",
+          "instructions_md": "Empieza por lo mínimo: el programa lee dos enteros, uno por línea, y muestra su suma. Nada de mensajes como \"Ingresa un número\": la salida debe ser solo el resultado.\n\nPara 7 y 5, la salida es `12`.",
+          "kind": "stdout",
+          "starter_code": "# Lee dos enteros, uno por línea, y muestra su suma\na = int(input())\nb = int(input())\n# TODO: muestra la suma\n",
+          "tests": [
+            {
+              "name": "Siete y cinco",
+              "stdin": "7\n5\n",
+              "expected_stdout": "12"
+            },
+            {
+              "name": "Negativo y positivo",
+              "stdin": "-3\n8\n",
+              "expected_stdout": "5"
+            }
+          ]
+        },
+        {
+          "title": "Las cuatro operaciones",
+          "instructions_md": "Amplía el programa para mostrar la suma, la resta, el producto y la división entera, cada uno con su etiqueta:\n\n```\nSuma: 11\nResta: 5\nProducto: 24\nDivision: 2\n```\n\nPara 8 y 3. Usa `//` en la división para obtener un entero.",
+          "kind": "stdout",
+          "starter_code": "# Lee dos enteros y muestra las cuatro operaciones\na = int(input())\nb = int(input())\nprint(\"Suma:\", a + b)\n# TODO: resta, producto y division entera\n",
+          "tests": [
+            {
+              "name": "Ocho y tres",
+              "stdin": "8\n3\n",
+              "expected_stdout": "Suma: 11\nResta: 5\nProducto: 24\nDivision: 2"
+            },
+            {
+              "name": "Diez y cuatro",
+              "stdin": "10\n4\n",
+              "expected_stdout": "Suma: 14\nResta: 6\nProducto: 40\nDivision: 2"
+            }
+          ]
+        },
+        {
+          "title": "Elegir la operación",
+          "instructions_md": "Ahora el programa lee primero un código de operación (`s`, `r`, `m` o `d`) y después los dos enteros. Debe mostrar solo el resultado de la operación elegida.\n\nEntrada para una suma:\n\n```\ns\n9\n4\n```\n\nSalida: `13`.\n\nUsa `if` y `elif` para cada código.",
+          "kind": "stdout",
+          "starter_code": "# Lee la operación (s, r, m, d) y dos enteros\noperacion = input()\na = int(input())\nb = int(input())\n# TODO: calcula según la operación y muestra solo el resultado\n",
+          "tests": [
+            {
+              "name": "Suma",
+              "stdin": "s\n9\n4\n",
+              "expected_stdout": "13"
+            },
+            {
+              "name": "Resta",
+              "stdin": "r\n9\n4\n",
+              "expected_stdout": "5"
+            },
+            {
+              "name": "Producto",
+              "stdin": "m\n6\n7\n",
+              "expected_stdout": "42"
+            },
+            {
+              "name": "Division",
+              "stdin": "d\n9\n4\n",
+              "expected_stdout": "2"
+            }
+          ]
+        },
+        {
+          "title": "Controlar los errores",
+          "instructions_md": "Un usuario puede escribir un código que no existe o intentar dividir entre cero. Añade esos dos controles:\n\n- Operador desconocido: `Error: operador no valido`\n- División entre cero: `Error: division por cero`\n\nLas operaciones válidas siguen mostrando solo su resultado.",
+          "kind": "stdout",
+          "starter_code": "# Lee la operación y dos enteros, y controla los errores\noperacion = input()\na = int(input())\nb = int(input())\nif operacion == \"s\":\n    print(a + b)\nelif operacion == \"r\":\n    print(a - b)\nelif operacion == \"m\":\n    print(a * b)\nelif operacion == \"d\":\n    print(a // b)\n# TODO: operador inválido y división por cero\n",
+          "tests": [
+            {
+              "name": "División por cero",
+              "stdin": "d\n5\n0\n",
+              "expected_stdout": "Error: division por cero"
+            },
+            {
+              "name": "Operador inválido",
+              "stdin": "x\n2\n3\n",
+              "expected_stdout": "Error: operador no valido"
+            },
+            {
+              "name": "Suma válida",
+              "stdin": "s\n2\n3\n",
+              "expected_stdout": "5"
+            }
+          ]
+        },
+        {
+          "title": "Repetir hasta fin",
+          "instructions_md": "Convierte la calculadora en un ciclo: lee operaciones hasta recibir la palabra `fin` en una línea. Por cada operación válida muestra el resultado y cuenta una operación. Al terminar, muestra `Operaciones: N`.\n\nEntrada:\n\n```\ns\n2\n3\nm\n4\n5\nfin\n```\n\nSalida:\n\n```\n5\n20\nOperaciones: 2\n```\n\nLos errores se muestran, pero no cuentan como operación.",
+          "kind": "stdout",
+          "starter_code": "# Procesa operaciones hasta leer \"fin\"\noperaciones = 0\nwhile True:\n    operacion = input()\n    if operacion == \"fin\":\n        break\n    a = int(input())\n    b = int(input())\n    # TODO: calcula, muestra el resultado y cuenta solo las válidas\nprint(\"Operaciones:\", operaciones)\n",
+          "tests": [
+            {
+              "name": "Dos operaciones",
+              "stdin": "s\n2\n3\nm\n4\n5\nfin\n",
+              "expected_stdout": "5\n20\nOperaciones: 2"
+            },
+            {
+              "name": "Solo error",
+              "stdin": "d\n7\n0\nfin\n",
+              "expected_stdout": "Error: division por cero\nOperaciones: 0"
+            },
+            {
+              "name": "Error y acierto",
+              "stdin": "x\n2\n3\ns\n4\n5\nfin\n",
+              "expected_stdout": "Error: operador no valido\n9\nOperaciones: 1"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "agenda-contactos",
+      "title": "Agenda de contactos",
+      "summary": "Gestiona contactos en memoria con un diccionario: añade, busca, elimina y ordena.",
+      "minutes": 50,
+      "steps": [
+        {
+          "title": "Guardar un contacto",
+          "instructions_md": "Crea un diccionario vacío, lee un nombre y un teléfono (dos líneas) y guárdalos. Después muestra el contacto con el formato `Ana: 555-1234`.\n\nEl teléfono se guarda como texto: puede llevar guiones y no se opera con él.",
+          "kind": "stdout",
+          "starter_code": "# Lee un nombre y un teléfono y muéstralos\nagenda = {}\nnombre = input()\ntelefono = input()\n# TODO: guarda el contacto y muéstralo\n",
+          "tests": [
+            {
+              "name": "Ana",
+              "stdin": "Ana\n555-1234\n",
+              "expected_stdout": "Ana: 555-1234"
+            },
+            {
+              "name": "Luis",
+              "stdin": "Luis\n555-9999\n",
+              "expected_stdout": "Luis: 555-9999"
+            }
+          ]
+        },
+        {
+          "title": "Varios contactos",
+          "instructions_md": "Lee un número `n` y después `n` pares de nombre y teléfono. Guarda todos en el diccionario y muestra `Contactos: 3`.\n\nCada nombre ocupa una línea y su teléfono, la siguiente.",
+          "kind": "stdout",
+          "starter_code": "# Lee n contactos y muestra cuántos hay\nn = int(input())\nagenda = {}\nfor _ in range(n):\n    nombre = input()\n    telefono = input()\n    # TODO: guarda el contacto\n# TODO: muestra el total\n",
+          "tests": [
+            {
+              "name": "Tres contactos",
+              "stdin": "3\nana\n111\nluis\n222\nmarta\n333\n",
+              "expected_stdout": "Contactos: 3"
+            },
+            {
+              "name": "Uno solo",
+              "stdin": "1\nana\n111\n",
+              "expected_stdout": "Contactos: 1"
+            }
+          ]
+        },
+        {
+          "title": "Buscar un contacto",
+          "instructions_md": "Después de leer los contactos, lee un nombre y busca su teléfono. Si existe, muestra solo el teléfono; si no, muestra `No encontrado`.\n\nEntrada:\n\n```\n3\nana\n111\nluis\n222\nmarta\n333\nluis\n```\n\nSalida: `222`.",
+          "kind": "stdout",
+          "starter_code": "# Busca el teléfono de un contacto\nn = int(input())\nagenda = {}\nfor _ in range(n):\n    nombre = input()\n    telefono = input()\n    agenda[nombre] = telefono\nbuscado = input()\n# TODO: muestra el teléfono o No encontrado\n",
+          "tests": [
+            {
+              "name": "Contacto existente",
+              "stdin": "3\nana\n111\nluis\n222\nmarta\n333\nluis\n",
+              "expected_stdout": "222"
+            },
+            {
+              "name": "Contacto ausente",
+              "stdin": "2\nana\n111\nluis\n222\npedro\n",
+              "expected_stdout": "No encontrado"
+            }
+          ]
+        },
+        {
+          "title": "Eliminar un contacto",
+          "instructions_md": "Lee los contactos y después un nombre para eliminar. Borra esa entrada y muestra cuántos quedan, seguido de cada contacto restante en el orden en que se guardaron:\n\n```\nContactos: 2\nana: 111\nmarta: 333\n```\n\nSi el nombre no existe, no cambies nada y muestra la agenda completa.",
+          "kind": "stdout",
+          "starter_code": "# Elimina un contacto y muestra la agenda restante\nn = int(input())\nagenda = {}\nfor _ in range(n):\n    nombre = input()\n    telefono = input()\n    agenda[nombre] = telefono\neliminar = input()\n# TODO: elimina si existe y muestra el resultado\n",
+          "tests": [
+            {
+              "name": "Eliminar a luis",
+              "stdin": "3\nana\n111\nluis\n222\nmarta\n333\nluis\n",
+              "expected_stdout": "Contactos: 2\nana: 111\nmarta: 333"
+            },
+            {
+              "name": "Eliminar a pedro",
+              "stdin": "2\nana\n111\nluis\n222\npedro\n",
+              "expected_stdout": "Contactos: 2\nana: 111\nluis: 222"
+            }
+          ]
+        },
+        {
+          "title": "Ordenar la agenda",
+          "instructions_md": "Lee los contactos y muestra solo los nombres ordenados alfabéticamente, uno por línea. No muestres los teléfonos.\n\nUsa `sorted` sobre las claves del diccionario.",
+          "kind": "stdout",
+          "starter_code": "# Muestra los nombres ordenados alfabéticamente\nn = int(input())\nagenda = {}\nfor _ in range(n):\n    nombre = input()\n    telefono = input()\n    agenda[nombre] = telefono\n# TODO: recorre las claves ordenadas e imprime cada nombre\n",
+          "tests": [
+            {
+              "name": "Orden alfabético",
+              "stdin": "3\nluis\n222\nana\n111\nmarta\n333\n",
+              "expected_stdout": "ana\nluis\nmarta"
+            },
+            {
+              "name": "Ya ordenados",
+              "stdin": "2\nana\n111\nluis\n222\n",
+              "expected_stdout": "ana\nluis"
+            }
+          ]
+        },
+        {
+          "title": "Menú de comandos",
+          "instructions_md": "Cierra el laboratorio con un menú que lee comandos hasta `fin`:\n\n- `add nombre telefono`: guarda y muestra `Guardado: nombre`.\n- `list`: muestra cada contacto como `nombre: telefono`.\n- `find nombre`: muestra el teléfono o `No encontrado`.\n- `del nombre`: elimina y muestra `Eliminado: nombre`, o `No encontrado`.\n- `fin`: termina y muestra `Contactos: N`.\n\nEntrada:\n\n```\nadd Ana 555-1111\nadd Luis 555-2222\nlist\nfind Ana\ndel Luis\nlist\nfin\n```\n\nSalida:\n\n```\nGuardado: Ana\nGuardado: Luis\nAna: 555-1111\nLuis: 555-2222\n555-1111\nEliminado: Luis\nAna: 555-1111\nContactos: 1\n```",
+          "kind": "stdout",
+          "starter_code": "# Menú de agenda hasta leer \"fin\"\nagenda = {}\nwhile True:\n    linea = input()\n    if linea == \"fin\":\n        break\n    partes = linea.split()\n    comando = partes[0]\n    if comando == \"add\":\n        # TODO: guarda y avisa\n        pass\n    elif comando == \"list\":\n        # TODO: muestra la agenda\n        pass\n    elif comando == \"find\":\n        # TODO: busca y muestra\n        pass\n    elif comando == \"del\":\n        # TODO: elimina y avisa\n        pass\nprint(\"Contactos:\", len(agenda))\n",
+          "tests": [
+            {
+              "name": "Recorrido completo",
+              "stdin": "add Ana 555-1111\nadd Luis 555-2222\nlist\nfind Ana\ndel Luis\nlist\nfin\n",
+              "expected_stdout": "Guardado: Ana\nGuardado: Luis\nAna: 555-1111\nLuis: 555-2222\n555-1111\nEliminado: Luis\nAna: 555-1111\nContactos: 1"
+            },
+            {
+              "name": "Búsqueda fallida",
+              "stdin": "add Ana 1\nfind Pedro\ndel Pedro\nfin\n",
+              "expected_stdout": "Guardado: Ana\nNo encontrado\nNo encontrado\nContactos: 1"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

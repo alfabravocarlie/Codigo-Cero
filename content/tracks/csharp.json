@@ -1,0 +1,815 @@
+{
+  "track": "csharp",
+  "title": "C# desde cero",
+  "language": "csharp",
+  "description": "Aprende C# con programas de consola: variables, decisiones, bucles, métodos, clases y archivos.",
+  "level": "principiante",
+  "modules": [
+    {
+      "title": "Primeros pasos",
+      "summary": "Crear un proyecto, guardar datos y tomar decisiones.",
+      "lessons": [
+        {
+          "slug": "primer-programa",
+          "title": "Tu primer programa en C#",
+          "summary": "Instala el SDK, crea un proyecto de consola y muestra tu primera salida.",
+          "minutes": 12,
+          "objectives": [
+            "Crear y ejecutar un proyecto de consola con dotnet.",
+            "Escribir instrucciones de nivel superior con Console.WriteLine.",
+            "Leer un error de compilación y localizar la línea que lo provoca."
+          ],
+          "body_md": "## C# y .NET en dos frases\n\nC# es un lenguaje compilado: escribes código en un archivo de texto, un compilador lo traduce y después se ejecuta. .NET es la plataforma que trae ese compilador, la biblioteca estándar y las herramientas. Al instalar el SDK de .NET obtienes el comando `dotnet`, que crea proyectos, compila y ejecuta.\n\n```bash\ndotnet new console -o MiPrimeraApp\ncd MiPrimeraApp\ndotnet run\n```\n\nLos tres comandos crean una carpeta con un proyecto de consola, entran en ella y ejecutan el programa. El archivo que te interesa es `Program.cs`.\n\n## El primer programa\n\nUn programa de consola moderno puede ser tan corto como esto:\n\n```csharp\nusing System;\n\nConsole.WriteLine(\"Hola, mundo\");\nConsole.WriteLine(\"Estoy aprendiendo C#\");\n```\n\n`using System;` importa el espacio de nombres donde vive `Console`. `Console.WriteLine` escribe una línea y salta a la siguiente; `Console.Write` escribe sin saltar. Cada instrucción termina en punto y coma.\n\nEsas líneas sueltas son las «instrucciones de nivel superior»: el compilador genera por ti el método `Main` y las ejecuta en orden, de arriba abajo.\n\n## Qué ocurre al ejecutar\n\n`dotnet run` compila el proyecto y lanza el programa. Si hay un error de sintaxis no se ejecuta nada: el compilador señala el archivo y la línea.\n\n```\nProgram.cs(5,1): error CS1002: ; expected\n```\n\nLa primera parte indica dónde ocurre; después vienen el código del error y una explicación corta. Esa línea es la que debes leer primero.\n\n## Comentarios y orden\n\nLos comentarios de una línea empiezan por `//` y los de bloque van entre `/*` y `*/`. Sirven para explicar decisiones, no para repetir lo que el código ya dice.\n\nEl orden de las instrucciones importa: se ejecutan de arriba abajo. Una variable no existe antes de la línea que la declara. El proyecto debe tener un único punto de entrada; dos `Main` en el mismo proyecto son un error.\n\n## Practicar en esta app\n\nEl editor te entrega un archivo `Program.cs` vacío o con una pista comentada. Escribe el programa completo, ejecútalo y compara la salida. Si el SDK de .NET no está instalado, la app te avisa y el ejercicio queda en modo lectura: podrás leer la solución, pero no ejecutarla.\n\n## Los archivos del proyecto\n\n`dotnet new console` crea dos archivos: `MiPrimeraApp.csproj`, que describe el proyecto y su versión de .NET, y `Program.cs`, donde escribes el código. También aparece una carpeta `obj` con archivos temporales de compilación; no la edites. Puedes compilar sin ejecutar con `dotnet build` y ejecutar sin recompilar con `dotnet run --no-build`.\n\n## Errores típicos\n\n- Olvidar el punto y coma al final de una instrucción.\n- Escribir `console` en minúsculas: C# distingue mayúsculas y minúsculas.\n- Usar comillas simples para texto: `'Hola'` es un carácter; para cadenas se usan comillas dobles.\n- Ejecutar `dotnet run` fuera de la carpeta del proyecto.\n- Confundir `WriteLine` con `Write` y obtener la salida pegada.",
+          "exercises": [
+            {
+              "slug": "hola-mundo",
+              "title": "Hola, mundo",
+              "kind": "stdout",
+              "prompt_md": "Escribe un programa que muestre exactamente estas dos líneas, en este orden:\n\n```\nHola, mundo\nEstoy aprendiendo C#\n```\n\nCada línea se escribe con `Console.WriteLine`.",
+              "starter_code": "// Muestra dos lineas con Console.WriteLine\n",
+              "solution_code": "using System;\n\nConsole.WriteLine(\"Hola, mundo\");\nConsole.WriteLine(\"Estoy aprendiendo C#\");\n",
+              "tests": [
+                {
+                  "name": "Dos líneas",
+                  "stdin": "",
+                  "expected_stdout": "Hola, mundo\nEstoy aprendiendo C#"
+                }
+              ],
+              "hints": [
+                "Cada Console.WriteLine escribe una línea y salta a la siguiente.",
+                "El texto va entre comillas dobles."
+              ]
+            },
+            {
+              "slug": "saludo-con-nombre",
+              "title": "Saludo con nombre",
+              "kind": "stdout",
+              "prompt_md": "Escribe un programa que lea un nombre con `Console.ReadLine()` y muestre `Hola, ` seguido del nombre.\n\nEjemplo: si la entrada es `Ana`, la salida es `Hola, Ana`.",
+              "starter_code": "// Lee un nombre y saluda\n",
+              "solution_code": "using System;\n\nstring nombre = Console.ReadLine() ?? \"\";\nConsole.WriteLine(\"Hola, \" + nombre);\n",
+              "tests": [
+                {
+                  "name": "Ana",
+                  "stdin": "Ana\n",
+                  "expected_stdout": "Hola, Ana"
+                },
+                {
+                  "name": "Marco",
+                  "stdin": "Marco\n",
+                  "expected_stdout": "Hola, Marco"
+                }
+              ],
+              "hints": [
+                "Console.ReadLine() devuelve el texto que escribe el usuario.",
+                "El operador ?? cambia un null por un texto vacío."
+              ]
+            }
+          ],
+          "quiz": [
+            {
+              "question": "¿Qué comando crea un proyecto de consola nuevo?",
+              "options": [
+                "dotnet run console",
+                "dotnet new console",
+                "dotnet build --console",
+                "dotnet create app"
+              ],
+              "answer_index": 1,
+              "explanation": "dotnet new console crea la plantilla del proyecto."
+            },
+            {
+              "question": "¿Qué diferencia hay entre Console.Write y Console.WriteLine?",
+              "options": [
+                "WriteLine añade un salto de línea al final",
+                "Write solo acepta números",
+                "WriteLine borra la línea anterior",
+                "No hay ninguna diferencia"
+              ],
+              "answer_index": 0,
+              "explanation": "WriteLine escribe y salta de línea; Write no salta."
+            }
+          ]
+        },
+        {
+          "slug": "variables-y-tipos",
+          "title": "Variables y tipos",
+          "summary": "Guarda datos con el tipo correcto y conviértelos al leerlos de la consola.",
+          "minutes": 14,
+          "objectives": [
+            "Declarar variables de tipo int, double, string y bool.",
+            "Convertir la entrada de Console.ReadLine al tipo que necesitas.",
+            "Explicar por qué la división entre enteros pierde los decimales."
+          ],
+          "body_md": "## Variables con tipo\n\nEn C# toda variable declara su tipo antes de usarse:\n\n```csharp\nint edad = 30;\ndouble precio = 19.95;\nstring nombre = \"Ana\";\nbool activo = true;\n```\n\n`int` guarda enteros, `double` decimales, `string` texto y `bool` verdadero o falso. El tipo decide qué operaciones tienen sentido y cuánta memoria ocupa el valor. También existen `char` para un carácter y `decimal` para dinero, más preciso que `double`.\n\n## Leer de la consola\n\n`Console.ReadLine()` devuelve texto, siempre. Si esperas un número, hay que convertirlo:\n\n```csharp\nConsole.WriteLine(\"Edad:\");\nint edad = Convert.ToInt32(Console.ReadLine());\n```\n\n`Convert.ToInt32` transforma el texto en entero y lanza una excepción si no es un número válido. Más adelante verás cómo manejar ese fallo sin que el programa se detenga.\n\n`ReadLine` puede devolver `null` si la entrada termina. La expresión `??` sustituye `null` por un valor por defecto:\n\n```csharp\nstring nombre = Console.ReadLine() ?? \"\";\n```\n\n## Interpolar cadenas\n\nPara mezclar texto y variables, el prefijo `$` activa la interpolación:\n\n```csharp\nConsole.WriteLine($\"{nombre} tiene {edad} años\");\n```\n\nLas llaves contienen expresiones, no solo variables: `$\"El doble es {edad * 2}\"` también funciona. Sin el prefijo, las llaves se imprimen literales.\n\n## var y constantes\n\n`var` deja que el compilador deduzca el tipo:\n\n```csharp\nvar ciudad = \"Lima\";      // string\nvar contador = 0;         // int\n```\n\nNo es un tipo dinámico: el tipo se fija al compilar y no cambia. Para valores que no deben modificarse existe `const`:\n\n```csharp\nconst int Limite = 10;\n```\n\n## Conversiones y división\n\nMezclar tipos tiene trampas. Si divides dos `int`, el resultado es entero: `7 / 2` da `3`. Para obtener decimales, al menos uno de los operandos debe ser `double`:\n\n```csharp\ndouble mitad = 7.0 / 2;   // 3.5\n```\n\nY no puedes guardar un decimal en un `int` sin convertir: `int x = 3.5;` no compila. Con `(int)3.5` sí, aunque se pierde la parte decimal.\n\n## Operadores aritméticos\n\nSuma `+`, resta `-`, multiplica `*`, divide `/` y obtiene el resto con `%`. La precedencia es la habitual: primero multiplicación y división, después suma y resta, y los paréntesis mandan. El resto es útil para saber si un número es par: `numero % 2 == 0`.\n\n```csharp\nint total = 2 + 3 * 4;   // 14\nint resto = 17 % 5;      // 2\n```\n\n## Nombres que se entienden\n\nUsa `camelCase` para variables locales (`salarioMensual`) y `PascalCase` para métodos y clases (`CalcularTotal`). Un nombre descriptivo ahorra comentarios. Evita `a`, `b` y `x` salvo en fórmulas cortas.\n\n## Errores típicos\n\n- Asignar un decimal a un `int` sin convertir: `int x = 3.5;` no compila.\n- Dividir dos `int` y esperar decimales: `7 / 2` da `3`.\n- Usar `=` (asignación) donde querías `==` (comparación).\n- Olvidar que `ReadLine` devuelve texto y concatenar en lugar de sumar.\n- Nombrar variables con acentos o espacios: usa letras sin tilde y `camelCase`.",
+          "exercises": [
+            {
+              "slug": "doble-de-un-numero",
+              "title": "El doble de un número",
+              "kind": "stdout",
+              "prompt_md": "Escribe un programa que lea un número entero y muestre su doble con el formato `Doble: N`.\n\nEjemplo: con la entrada `7`, la salida es `Doble: 14`.",
+              "starter_code": "// Lee un entero y muestra su doble\n",
+              "solution_code": "using System;\n\nint numero = Convert.ToInt32(Console.ReadLine());\nConsole.WriteLine(\"Doble: \" + (numero * 2));\n",
+              "tests": [
+                {
+                  "name": "Siete",
+                  "stdin": "7\n",
+                  "expected_stdout": "Doble: 14"
+                },
+                {
+                  "name": "Negativo",
+                  "stdin": "-4\n",
+                  "expected_stdout": "Doble: -8"
+                }
+              ],
+              "hints": [
+                "Convert.ToInt32 transforma el texto de ReadLine en un entero.",
+                "Multiplica por 2 y concatena con el texto 'Doble: '."
+              ]
+            },
+            {
+              "slug": "ficha-personal",
+              "title": "Ficha personal",
+              "kind": "stdout",
+              "prompt_md": "Escribe un programa que lea un nombre y una edad, y muestre dos líneas:\n\n```\nNombre: Ana\nEdad: 30\n```\n\nLa primera entrada es el nombre y la segunda la edad.",
+              "starter_code": "// Lee nombre y edad, y muestra dos lineas\n",
+              "solution_code": "using System;\n\nstring nombre = Console.ReadLine() ?? \"\";\nint edad = Convert.ToInt32(Console.ReadLine());\nConsole.WriteLine(\"Nombre: \" + nombre);\nConsole.WriteLine(\"Edad: \" + edad);\n",
+              "tests": [
+                {
+                  "name": "Ana",
+                  "stdin": "Ana\n30\n",
+                  "expected_stdout": "Nombre: Ana\nEdad: 30"
+                },
+                {
+                  "name": "Luis",
+                  "stdin": "Luis\n41\n",
+                  "expected_stdout": "Nombre: Luis\nEdad: 41"
+                }
+              ],
+              "hints": [
+                "El nombre se lee como texto y la edad hay que convertirla.",
+                "Cada dato se muestra con su propio Console.WriteLine."
+              ]
+            }
+          ],
+          "quiz": [
+            {
+              "question": "¿Qué tipo usarías para guardar un nombre?",
+              "options": [
+                "int",
+                "double",
+                "string",
+                "bool"
+              ],
+              "answer_index": 2,
+              "explanation": "string guarda texto; int y double son numéricos y bool es verdadero o falso."
+            },
+            {
+              "question": "¿Cuánto vale `7 / 2` si los dos operandos son `int`?",
+              "options": [
+                "3.5",
+                "3",
+                "4",
+                "2"
+              ],
+              "answer_index": 1,
+              "explanation": "La división entera descarta los decimales; para 3.5 hace falta un double."
+            }
+          ]
+        },
+        {
+          "slug": "condicionales",
+          "title": "Condicionales",
+          "summary": "Haz que el programa elija entre caminos con if, else y switch.",
+          "minutes": 13,
+          "objectives": [
+            "Escribir condiciones con if, else if y else en el orden correcto.",
+            "Combinar condiciones con los operadores lógicos && y ||.",
+            "Elegir entre varias opciones con switch y su break."
+          ],
+          "body_md": "## Tomar decisiones\n\nUn programa deja de ser una lista fija cuando puede elegir. `if` evalúa una expresión booleana y ejecuta un bloque solo si es verdadera:\n\n```csharp\nint edad = 20;\nif (edad >= 18)\n{\n    Console.WriteLine(\"Mayor de edad\");\n}\n```\n\nLas llaves delimitan el bloque. Si el bloque tiene una sola instrucción puedes omitirlas, pero incluirlas siempre evita errores al añadir líneas después.\n\n## else y else if\n\n```csharp\nif (edad >= 18)\n{\n    Console.WriteLine(\"Mayor de edad\");\n}\nelse if (edad >= 13)\n{\n    Console.WriteLine(\"Adolescente\");\n}\nelse\n{\n    Console.WriteLine(\"Menor de edad\");\n}\n```\n\nLas condiciones se evalúan en orden y se ejecuta la primera que se cumple. Por eso el orden importa: si empiezas por `edad >= 13`, un adulto caería en esa rama.\n\n## Operadores lógicos\n\n`&&` significa «y», `||` significa «o», `!` niega. Se combinan con comparaciones:\n\n```csharp\nif (edad >= 18 && tieneEntrada)\n{\n    Console.WriteLine(\"Puede pasar\");\n}\n```\n\n`&&` y `||` se evalúan en cortocircuito: si la primera parte decide el resultado, la segunda no se evalúa. Eso protege de accesos peligrosos, como comprobar `lista != null && lista.Count > 0`.\n\n## switch para muchos casos\n\nCuando comparas una misma variable con varios valores, `switch` es más legible:\n\n```csharp\nswitch (opcion)\n{\n    case \"1\":\n        Console.WriteLine(\"Saldo\");\n        break;\n    case \"2\":\n        Console.WriteLine(\"Retirar\");\n        break;\n    default:\n        Console.WriteLine(\"Opcion no valida\");\n        break;\n}\n```\n\nCada `case` termina con `break`; sin él, la ejecución continúa en el siguiente caso. `default` recoge lo que no coincide con ninguno.\n\n## El operador ternario\n\nPara elegir entre dos valores cabe en una línea:\n\n```csharp\nstring estado = edad >= 18 ? \"adulto\" : \"menor\";\n```\n\nÚsalo cuando la condición y los dos resultados se leen de un vistazo; si no, un `if` es más claro.\n\n## Comparar texto\n\nLas cadenas se comparan con `==` y `!=`, distinguiendo mayúsculas: `\"Ana\"` y `\"ana\"` son distintas. Si quieres ignorar mayúsculas, compara con `string.Equals(a, b, StringComparison.OrdinalIgnoreCase)`. Para ordenar alfabéticamente no uses `<` ni `>`: las cadenas no admiten esos operadores.\n\n## Comprobar rangos\n\nPara saber si un valor está entre dos límites, combina dos comparaciones:\n\n```csharp\nif (edad >= 13 && edad <= 19)\n{\n    Console.WriteLine(\"Adolescente\");\n}\n```\n\nNo existe una sintaxis `13 <= edad <= 19` como en matemáticas: hay que escribir las dos condiciones y unirlas con `&&`.\n\nEn C# moderno también existe la expresión `switch`, que devuelve un valor, pero para empezar el `switch` clásico es más claro.\n\n## Errores típicos\n\n- Escribir `if (edad = 18)`: asigna en lugar de comparar.\n- Poner punto y coma después de `if (condicion)`, lo que deja el bloque vacío.\n- Olvidar `break` en un `case` y ejecutar dos ramas.\n- Comparar texto con `==` esperando ignorar mayúsculas: «Ana» y «ana» son distintas.\n- Anidar muchos `if` en lugar de usar `else if` o `switch`.",
+          "exercises": [
+            {
+              "slug": "mayor-de-edad",
+              "title": "Mayor de edad",
+              "kind": "stdout",
+              "prompt_md": "Escribe un programa que lea una edad y muestre `Mayor de edad` si es 18 o más, o `Menor de edad` en caso contrario.",
+              "starter_code": "// Lee una edad y decide con if\n",
+              "solution_code": "using System;\n\nint edad = Convert.ToInt32(Console.ReadLine());\nif (edad >= 18)\n{\n    Console.WriteLine(\"Mayor de edad\");\n}\nelse\n{\n    Console.WriteLine(\"Menor de edad\");\n}\n",
+              "tests": [
+                {
+                  "name": "Veinte",
+                  "stdin": "20\n",
+                  "expected_stdout": "Mayor de edad"
+                },
+                {
+                  "name": "Quince",
+                  "stdin": "15\n",
+                  "expected_stdout": "Menor de edad"
+                },
+                {
+                  "name": "Justo dieciocho",
+                  "stdin": "18\n",
+                  "expected_stdout": "Mayor de edad"
+                }
+              ],
+              "hints": [
+                "La condición es edad >= 18.",
+                "Cuida el caso límite: 18 ya es mayor de edad."
+              ]
+            },
+            {
+              "slug": "par-o-impar",
+              "title": "Par o impar",
+              "kind": "stdout",
+              "prompt_md": "Escribe un programa que lea un número entero y muestre `Par` si es divisible entre 2, o `Impar` si no lo es.",
+              "starter_code": "// Usa el resto de la division entre 2\n",
+              "solution_code": "using System;\n\nint numero = Convert.ToInt32(Console.ReadLine());\nif (numero % 2 == 0)\n{\n    Console.WriteLine(\"Par\");\n}\nelse\n{\n    Console.WriteLine(\"Impar\");\n}\n",
+              "tests": [
+                {
+                  "name": "Siete",
+                  "stdin": "7\n",
+                  "expected_stdout": "Impar"
+                },
+                {
+                  "name": "Diez",
+                  "stdin": "10\n",
+                  "expected_stdout": "Par"
+                }
+              ],
+              "hints": [
+                "El operador % devuelve el resto de la división.",
+                "Un número es par cuando numero % 2 == 0."
+              ]
+            }
+          ],
+          "quiz": [
+            {
+              "question": "¿Qué operador significa «y» lógico en C#?",
+              "options": [
+                "&",
+                "&&",
+                "||",
+                "!"
+              ],
+              "answer_index": 1,
+              "explanation": "&& es el y lógico con cortocircuito; || es el o y ! es la negación."
+            },
+            {
+              "question": "¿Qué hace `switch`?",
+              "options": [
+                "Repite un bloque un número de veces",
+                "Ejecuta el caso que coincide con un valor",
+                "Declara una variable nueva",
+                "Convierte un texto en número"
+              ],
+              "answer_index": 1,
+              "explanation": "switch compara un valor con varios case y ejecuta el que coincide."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Control y estructura",
+      "summary": "Repetir instrucciones, dividir el programa en métodos y manejar listas.",
+      "lessons": [
+        {
+          "slug": "bucles",
+          "title": "Bucles",
+          "summary": "Repite instrucciones con for, while y do-while, y acumula resultados.",
+          "minutes": 14,
+          "objectives": [
+            "Escribir bucles for con inicialización, condición y paso.",
+            "Acumular valores en una variable declarada fuera del bucle.",
+            "Elegir entre for, while y do-while según el problema."
+          ],
+          "body_md": "## Repetir sin copiar y pegar\n\n`for` repite un bloque un número conocido de veces:\n\n```csharp\nfor (int i = 1; i <= 5; i++)\n{\n    Console.WriteLine(i);\n}\n```\n\nLas tres partes del paréntesis son: inicialización, condición y paso. La variable `i` vive solo dentro del bucle. La condición se comprueba antes de cada vuelta; cuando deja de cumplirse, el bucle termina.\n\n## Acumular resultados\n\nUn patrón que usarás constantemente: empezar en cero y sumar dentro del bucle.\n\n```csharp\nint suma = 0;\nfor (int i = 1; i <= 10; i++)\n{\n    suma += i;\n}\nConsole.WriteLine($\"Suma: {suma}\");\n```\n\n`suma += i` equivale a `suma = suma + i`. El acumulador se declara antes del bucle para no perder su valor en cada vuelta.\n\n## while y do-while\n\n`while` repite mientras se cumpla una condición, sin contador obligatorio:\n\n```csharp\nstring linea = Console.ReadLine() ?? \"\";\nwhile (linea != \"salir\")\n{\n    Console.WriteLine(linea);\n    linea = Console.ReadLine() ?? \"\";\n}\n```\n\nHay que actualizar algo dentro del bucle o se repite para siempre. `do-while` comprueba la condición al final, así que ejecuta el cuerpo al menos una vez:\n\n```csharp\nint numero;\ndo\n{\n    numero = Convert.ToInt32(Console.ReadLine());\n} while (numero <= 0);\n```\n\n## break y continue\n\n`break` sale del bucle antes de tiempo; `continue` salta a la siguiente vuelta. Se usan con moderación porque pueden hacer difícil seguir el flujo, pero un menú que termina al elegir «salir» es un caso claro:\n\n```csharp\nwhile (true)\n{\n    string opcion = Console.ReadLine() ?? \"\";\n    if (opcion == \"3\") break;\n    Console.WriteLine(\"Opcion: \" + opcion);\n}\n```\n\n## foreach\n\nCuando solo necesitas recorrer una colección, `foreach` evita el contador:\n\n```csharp\nint[] numeros = { 3, 5, 8 };\nforeach (int numero in numeros)\n{\n    Console.WriteLine(numero);\n}\n```\n\nLo verás con listas en la lección correspondiente.\n\n## Elegir el bucle adecuado\n\nUsa `for` cuando sabes cuántas vueltas hay, `while` cuando dependes de una condición y `foreach` cuando recorres una colección completa. Cambiar de uno a otro no es un capricho: el que describes mejor la intención es el que menos errores produce.\n\n## Bucles anidados\n\nUn bucle dentro de otro recorre combinaciones. La tabla de multiplicar completa es el ejemplo típico:\n\n```csharp\nfor (int tabla = 1; tabla <= 3; tabla++)\n{\n    for (int i = 1; i <= 3; i++)\n    {\n        Console.WriteLine($\"{tabla} x {i} = {tabla * i}\");\n    }\n}\n```\n\nEl bucle interior se ejecuta completo por cada vuelta del exterior. Si añades un tercer nivel, revisa si el problema se puede dividir en métodos.\n\n## Errores típicos\n\n- Bucle infinito por no modificar la variable de control.\n- Empezar en 1 cuando el índice debe empezar en 0, o al revés.\n- Declarar el acumulador dentro del bucle y perder la suma anterior.\n- Usar `<=` cuando el rango debe excluir el límite superior.\n- Modificar la colección mientras se recorre con `foreach`.",
+          "exercises": [
+            {
+              "slug": "suma-hasta-n",
+              "title": "Suma del 1 al N",
+              "kind": "stdout",
+              "prompt_md": "Escribe un programa que lea un número entero `n` y muestre la suma de todos los enteros desde 1 hasta `n`, con el formato `Suma: N`.\n\nEjemplo: con la entrada `5`, la salida es `Suma: 15`.",
+              "starter_code": "// Acumula del 1 al n con un for\n",
+              "solution_code": "using System;\n\nint n = Convert.ToInt32(Console.ReadLine());\nint suma = 0;\nfor (int i = 1; i <= n; i++)\n{\n    suma += i;\n}\nConsole.WriteLine(\"Suma: \" + suma);\n",
+              "tests": [
+                {
+                  "name": "Cinco",
+                  "stdin": "5\n",
+                  "expected_stdout": "Suma: 15"
+                },
+                {
+                  "name": "Uno",
+                  "stdin": "1\n",
+                  "expected_stdout": "Suma: 1"
+                }
+              ],
+              "hints": [
+                "Declara la suma antes del bucle y súmale i en cada vuelta.",
+                "La condición del for es i <= n."
+              ]
+            },
+            {
+              "slug": "tabla-de-multiplicar",
+              "title": "Tabla de multiplicar",
+              "kind": "stdout",
+              "prompt_md": "Escribe un programa que lea un número `n` y muestre su tabla de multiplicar del 1 al 5, una línea por producto:\n\n```\n3 x 1 = 3\n3 x 2 = 6\n3 x 3 = 9\n3 x 4 = 12\n3 x 5 = 15\n```",
+              "starter_code": "// Recorre del 1 al 5 y muestra cada producto\n",
+              "solution_code": "using System;\n\nint n = Convert.ToInt32(Console.ReadLine());\nfor (int i = 1; i <= 5; i++)\n{\n    Console.WriteLine($\"{n} x {i} = {n * i}\");\n}\n",
+              "tests": [
+                {
+                  "name": "Tabla del tres",
+                  "stdin": "3\n",
+                  "expected_stdout": "3 x 1 = 3\n3 x 2 = 6\n3 x 3 = 9\n3 x 4 = 12\n3 x 5 = 15"
+                },
+                {
+                  "name": "Tabla del siete",
+                  "stdin": "7\n",
+                  "expected_stdout": "7 x 1 = 7\n7 x 2 = 14\n7 x 3 = 21\n7 x 4 = 28\n7 x 5 = 35"
+                }
+              ],
+              "hints": [
+                "El bucle va de 1 a 5 inclusive.",
+                "La interpolación permite escribir $\"{n} x {i} = {n * i}\"."
+              ]
+            }
+          ],
+          "quiz": [
+            {
+              "question": "¿Cuántas veces se ejecuta el cuerpo de `for (int i = 1; i <= 5; i++)`?",
+              "options": [
+                "4",
+                "5",
+                "6",
+                "Infinitas"
+              ],
+              "answer_index": 1,
+              "explanation": "i toma los valores 1, 2, 3, 4 y 5: cinco vueltas."
+            },
+            {
+              "question": "¿Qué hace `break` dentro de un bucle?",
+              "options": [
+                "Salta a la siguiente vuelta",
+                "Termina el bucle por completo",
+                "Reinicia el contador",
+                "Detiene el programa entero"
+              ],
+              "answer_index": 1,
+              "explanation": "break sale del bucle; continue salta a la siguiente vuelta."
+            }
+          ]
+        },
+        {
+          "slug": "metodos",
+          "title": "Métodos",
+          "summary": "Divide el programa en piezas con nombre, parámetros y valor de retorno.",
+          "minutes": 15,
+          "objectives": [
+            "Declarar métodos static con parámetros y tipo de retorno.",
+            "Separar el cálculo de la impresión por consola.",
+            "Reutilizar un método en varios puntos del programa."
+          ],
+          "body_md": "## Empaquetar lógica con nombre\n\nUn método agrupa instrucciones que hacen una tarea y les pone nombre. Así no repites código y puedes probar cada pieza por separado. En un programa de nivel superior, los métodos se declaran después de las instrucciones y se marcan `static`:\n\n```csharp\nConsole.WriteLine(Sumar(2, 3));\n\nstatic int Sumar(int a, int b)\n{\n    return a + b;\n}\n```\n\nLa firma dice mucho: recibe dos `int`, devuelve un `int`. `return` entrega el resultado y termina el método.\n\n## Parámetros y valores de retorno\n\n```csharp\nstatic double CalcularPromedio(int total, int cantidad)\n{\n    return (double)total / cantidad;\n}\n```\n\nLa conversión `(double)total` evita la división entera: sin ella, `7 / 2` daría `3` y no `3.5`. Un método sin resultado se declara `void`:\n\n```csharp\nstatic void Saludar(string nombre)\n{\n    Console.WriteLine(\"Hola, \" + nombre);\n}\n```\n\n## Variables locales y ámbito\n\nLo que declaras dentro de un método existe solo ahí. Si necesitas un valor fuera, devuélvelo con `return`; no uses variables «globales» para todo. Esa regla mantiene los métodos fáciles de leer y de probar. Un método con cinco parámetros suele esconder una estructura que falta: quizá esos datos formen un objeto.\n\n## Cálculo y salida separados\n\n```csharp\nstatic int Factorial(int n)\n{\n    int resultado = 1;\n    for (int i = 2; i <= n; i++)\n    {\n        resultado = resultado * i;\n    }\n    return resultado;\n}\n```\n\nEl método no imprime nada: calcula y devuelve. Separar cálculo de salida permite reutilizarlo y probarlo con tests. La impresión se queda en quien llama.\n\n## Sobrecarga\n\nPuedes tener dos métodos con el mismo nombre si cambian sus parámetros:\n\n```csharp\nstatic int Sumar(int a, int b) => a + b;\nstatic double Sumar(double a, double b) => a + b;\n```\n\nEl compilador elige según los tipos de los argumentos. La forma `=> expresión` es un cuerpo de expresión, útil para métodos de una línea. No abuses de la sobrecarga con métodos que hacen cosas distintas: confunde a quien lee.\n\n## Métodos pequeños\n\nUn método debería hacer una cosa y hacerla bien. Si necesitas un comentario para explicar tres bloques, probablemente sean tres métodos. Los nombres en `PascalCase` y los verbos ayudan: `CalcularTotal`, `MostrarMenu`, `LeerEntero`.\n\n```csharp\nstatic int LeerEntero()\n{\n    return Convert.ToInt32(Console.ReadLine());\n}\n```\n\nEse método concentra la conversión y evita repetirla cinco veces. Si un día cambias la forma de leer, cambias un solo sitio.\n\n## Errores típicos\n\n- Olvidar `return` en un método que declara un tipo de retorno.\n- Pasar argumentos de tipo distinto sin convertir: `Sumar(\"2\", 3)` no compila.\n- Confundir el nombre del parámetro con el de la variable del llamador.\n- Dividir enteros y perder los decimales.\n- Repetir el mismo cálculo en tres sitios en lugar de crear un método.",
+          "exercises": [
+            {
+              "slug": "metodo-sumar",
+              "title": "Un método para sumar",
+              "kind": "stdout",
+              "prompt_md": "Escribe un programa con un método `Sumar` que reciba dos enteros y devuelva su suma. El programa lee dos números y muestra `Suma: N`.\n\nEjemplo: con las entradas `2` y `3`, la salida es `Suma: 5`.",
+              "starter_code": "// Declara static int Sumar(int a, int b) y usalo\n",
+              "solution_code": "using System;\n\nint a = Convert.ToInt32(Console.ReadLine());\nint b = Convert.ToInt32(Console.ReadLine());\nConsole.WriteLine(\"Suma: \" + Sumar(a, b));\n\nstatic int Sumar(int a, int b)\n{\n    return a + b;\n}\n",
+              "tests": [
+                {
+                  "name": "Dos y tres",
+                  "stdin": "2\n3\n",
+                  "expected_stdout": "Suma: 5"
+                },
+                {
+                  "name": "Diez y cinco",
+                  "stdin": "10\n5\n",
+                  "expected_stdout": "Suma: 15"
+                }
+              ],
+              "hints": [
+                "El método se declara después de las instrucciones que lo usan.",
+                "return a + b; entrega el resultado."
+              ]
+            },
+            {
+              "slug": "metodo-factorial",
+              "title": "Factorial con un método",
+              "kind": "stdout",
+              "prompt_md": "Escribe un programa con un método `Factorial` que reciba un entero y devuelva su factorial. Lee un número y muestra `Factorial: N`.\n\nEjemplo: con la entrada `5`, la salida es `Factorial: 120`.",
+              "starter_code": "// Recuerda que el factorial de 0 es 1\n",
+              "solution_code": "using System;\n\nint n = Convert.ToInt32(Console.ReadLine());\nConsole.WriteLine(\"Factorial: \" + Factorial(n));\n\nstatic int Factorial(int n)\n{\n    int resultado = 1;\n    for (int i = 2; i <= n; i++)\n    {\n        resultado = resultado * i;\n    }\n    return resultado;\n}\n",
+              "tests": [
+                {
+                  "name": "Cinco",
+                  "stdin": "5\n",
+                  "expected_stdout": "Factorial: 120"
+                },
+                {
+                  "name": "Uno",
+                  "stdin": "1\n",
+                  "expected_stdout": "Factorial: 1"
+                }
+              ],
+              "hints": [
+                "Empieza el resultado en 1 y multiplica desde 2 hasta n.",
+                "El bucle puede empezar en 2 porque multiplicar por 1 no cambia nada."
+              ]
+            }
+          ],
+          "quiz": [
+            {
+              "question": "¿Qué devuelve un método declarado `void`?",
+              "options": [
+                "Un cero",
+                "Un valor nulo",
+                "Nada, no devuelve valor",
+                "El último parámetro"
+              ],
+              "answer_index": 2,
+              "explanation": "void indica que el método no devuelve ningún valor."
+            },
+            {
+              "question": "¿Qué palabra clave entrega el resultado de un método?",
+              "options": [
+                "yield",
+                "return",
+                "break",
+                "out"
+              ],
+              "answer_index": 1,
+              "explanation": "return termina el método y entrega el valor indicado."
+            }
+          ]
+        },
+        {
+          "slug": "listas",
+          "title": "Listas",
+          "summary": "Guarda varios valores en una List<T> y recórrelos con foreach.",
+          "minutes": 14,
+          "objectives": [
+            "Crear una List<T> y añadir elementos con Add.",
+            "Recorrer la lista con foreach y acumular un resultado.",
+            "Evitar los índices fuera de rango al leer elementos."
+          ],
+          "body_md": "## Una colección que crece\n\nUn array tiene tamaño fijo; una `List<T>` crece y se encoge. Es la estructura que usarás para guardar varios valores cuando no sabes cuántos son. Necesita el espacio de nombres `System.Collections.Generic`:\n\n```csharp\nusing System.Collections.Generic;\n\nList<int> numeros = new List<int>();\nnumeros.Add(10);\nnumeros.Add(20);\nConsole.WriteLine(numeros.Count);  // 2\n```\n\n`Count` es el número de elementos. `Add` añade al final; `Remove` quita la primera aparición de un valor; `Contains` dice si está. El índice empieza en cero: `numeros[0]` es el primero y `numeros[numeros.Count - 1]` el último.\n\n## Recorrer con foreach\n\n```csharp\nforeach (int numero in numeros)\n{\n    Console.WriteLine(numero);\n}\n```\n\n`foreach` es la forma recomendada de leer una lista completa: no hay índice que desbordar. Si necesitas la posición, usa `for`.\n\n## Leer varios valores\n\nUn patrón habitual: pedir cuántos valores vienen y leerlos en un bucle.\n\n```csharp\nList<int> precios = new List<int>();\nfor (int i = 0; i < 3; i++)\n{\n    precios.Add(Convert.ToInt32(Console.ReadLine()));\n}\n\nint total = 0;\nforeach (int precio in precios)\n{\n    total += precio;\n}\nConsole.WriteLine(\"Total: \" + total);\n```\n\n## Buscar el mayor\n\n```csharp\nint mayor = numeros[0];\nforeach (int numero in numeros)\n{\n    if (numero > mayor)\n    {\n        mayor = numero;\n    }\n}\n```\n\nSe arranca con el primer elemento, no con cero: si todos los números fueran negativos, cero daría un resultado falso. Y hay que asegurarse de que la lista no esté vacía antes de leer `[0]`.\n\n## Listas de texto\n\nEl tipo puede ser cualquier cosa, también `string`:\n\n```csharp\nList<string> tareas = new List<string>();\ntareas.Add(\"Estudiar\");\ntareas.Add(\"Practicar\");\ntareas.Remove(\"Estudiar\");\n```\n\nPara unir los elementos en un texto, `string.Join(\", \", tareas)` devuelve una cadena separada por comas.\n\n## Operaciones que ahorran código\n\nAdemás de `Add`, `Remove` y `Contains`, una lista ofrece `IndexOf` (posición de un valor, -1 si no está), `Sort` (ordena en el sitio) y `Clear` (vacía la lista).\n\n```csharp\nList<int> notas = new List<int> { 7, 4, 9 };\nnotas.Sort();\nConsole.WriteLine(notas[0]);        // 4\nConsole.WriteLine(notas.IndexOf(9)); // 2\n```\n\n`Insert` coloca un elemento en una posición concreta y `RemoveAt` borra por índice. Para recorrer al revés, empieza en `Count - 1` y baja hasta 0.\n\n## Listas y arrays\n\nUn array se declara con corchetes y tamaño fijo: `int[] datos = new int[3];`. Una lista se crea con `new List<int>()` y crece sola. Ambas se recorren con `foreach`; lo que cambia es cómo se crean y cómo se añaden elementos. Cuando el número de elementos depende de la entrada del usuario, la lista es la opción natural.\n\n## Errores típicos\n\n- Acceder a un índice que no existe: `ArgumentOutOfRangeException`.\n- Confundir `Count` (listas) con `Length` (arrays).\n- Olvidar `using System.Collections.Generic;`.\n- Recorrer con `for` y usar `<=` en lugar de `<`.\n- Tomar el primer elemento de una lista vacía.",
+          "exercises": [
+            {
+              "slug": "total-de-la-lista",
+              "title": "Total de la lista",
+              "kind": "stdout",
+              "prompt_md": "Escribe un programa que lea tres precios enteros, los guarde en una `List<int>` y muestre su suma con el formato `Total: N`.\n\nEjemplo: con las entradas `10`, `20` y `30`, la salida es `Total: 60`.",
+              "starter_code": "// Guarda tres precios en una List<int> y suma\n",
+              "solution_code": "using System;\nusing System.Collections.Generic;\n\nList<int> precios = new List<int>();\nfor (int i = 0; i < 3; i++)\n{\n    precios.Add(Convert.ToInt32(Console.ReadLine()));\n}\n\nint total = 0;\nforeach (int precio in precios)\n{\n    total += precio;\n}\nConsole.WriteLine(\"Total: \" + total);\n",
+              "tests": [
+                {
+                  "name": "Diez, veinte, treinta",
+                  "stdin": "10\n20\n30\n",
+                  "expected_stdout": "Total: 60"
+                },
+                {
+                  "name": "Uno, dos, tres",
+                  "stdin": "1\n2\n3\n",
+                  "expected_stdout": "Total: 6"
+                }
+              ],
+              "hints": [
+                "Crea la lista antes del bucle y añade con Add.",
+                "Suma los elementos con un foreach, no con un índice fijo."
+              ]
+            },
+            {
+              "slug": "mayor-de-la-lista",
+              "title": "El mayor de la lista",
+              "kind": "stdout",
+              "prompt_md": "Escribe un programa que lea cuatro números enteros, los guarde en una lista y muestre el mayor con el formato `Mayor: N`.\n\nEjemplo: con las entradas `4`, `9`, `2` y `7`, la salida es `Mayor: 9`.",
+              "starter_code": "// Empieza por el primer elemento, no por cero\n",
+              "solution_code": "using System;\nusing System.Collections.Generic;\n\nList<int> numeros = new List<int>();\nfor (int i = 0; i < 4; i++)\n{\n    numeros.Add(Convert.ToInt32(Console.ReadLine()));\n}\n\nint mayor = numeros[0];\nforeach (int numero in numeros)\n{\n    if (numero > mayor)\n    {\n        mayor = numero;\n    }\n}\nConsole.WriteLine(\"Mayor: \" + mayor);\n",
+              "tests": [
+                {
+                  "name": "Cuatro, nueve, dos, siete",
+                  "stdin": "4\n9\n2\n7\n",
+                  "expected_stdout": "Mayor: 9"
+                },
+                {
+                  "name": "Todos negativos",
+                  "stdin": "-5\n-2\n-9\n-1\n",
+                  "expected_stdout": "Mayor: -1"
+                }
+              ],
+              "hints": [
+                "Inicializa el mayor con numeros[0], no con 0.",
+                "Compara cada elemento con el mayor actual y actualízalo si es más grande."
+              ]
+            }
+          ],
+          "quiz": [
+            {
+              "question": "¿Qué propiedad da la cantidad de elementos de una `List<int>`?",
+              "options": [
+                "Length",
+                "Count",
+                "Size",
+                "Total"
+              ],
+              "answer_index": 1,
+              "explanation": "Las listas usan Count; los arrays usan Length."
+            },
+            {
+              "question": "¿Qué índice tiene el primer elemento de una lista?",
+              "options": [
+                "1",
+                "0",
+                "Depende del tipo",
+                "Count - 1"
+              ],
+              "answer_index": 1,
+              "explanation": "Los índices empiezan en 0; Count - 1 es el último."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Objetos y robustez",
+      "summary": "Modelar datos con clases y controlar errores y archivos.",
+      "lessons": [
+        {
+          "slug": "clases-y-objetos",
+          "title": "Clases y objetos",
+          "summary": "Crea tus propios tipos con propiedades, constructor y métodos.",
+          "minutes": 16,
+          "objectives": [
+            "Declarar una clase con propiedades y un constructor.",
+            "Crear objetos con new y llamar a sus métodos.",
+            "Explicar qué es el estado de un objeto y cómo se protege."
+          ],
+          "body_md": "## Modelar el mundo con clases\n\nUna clase es un molde que describe datos y comportamiento. Cada objeto creado a partir de ella tiene su propio estado. En C# se declara con `class` y suele ir al final del archivo, después de las instrucciones de nivel superior:\n\n```csharp\nLibro libro = new Libro(\"Ficciones\", \"Borges\", 1944);\nConsole.WriteLine(libro.Describir());\n\nclass Libro\n{\n    public string Titulo { get; set; }\n    public string Autor { get; set; }\n    public int Anio { get; set; }\n\n    public Libro(string titulo, string autor, int anio)\n    {\n        Titulo = titulo;\n        Autor = autor;\n        Anio = anio;\n    }\n\n    public string Describir()\n    {\n        return $\"{Titulo} - {Autor} - {Anio}\";\n    }\n}\n```\n\n`Titulo`, `Autor` y `Anio` son propiedades: datos con acceso controlado. `public` significa que se pueden leer desde fuera. El constructor tiene el mismo nombre que la clase y se ejecuta al crear el objeto con `new`.\n\n## Estado propio\n\nDos objetos de la misma clase guardan valores distintos:\n\n```csharp\nLibro uno = new Libro(\"Rayuela\", \"Cortazar\", 1963);\nLibro dos = new Libro(\"Pedro Paramo\", \"Rulfo\", 1955);\n```\n\nCambiar el título de `uno` no afecta a `dos`. Esa independencia es la razón de usar objetos en lugar de variables sueltas.\n\n## Métodos que usan el estado\n\nUn método dentro de la clase accede a sus propiedades sin repetirlas como parámetro:\n\n```csharp\nclass Cuenta\n{\n    public int Saldo { get; private set; }\n\n    public Cuenta(int saldoInicial)\n    {\n        Saldo = saldoInicial;\n    }\n\n    public void Depositar(int monto)\n    {\n        Saldo = Saldo + monto;\n    }\n}\n```\n\n`private set` impide cambiar `Saldo` desde fuera: solo la propia clase lo modifica. Esa es la encapsulación en la práctica.\n\n## Propiedades calculadas\n\nUna propiedad no tiene por qué guardar un valor: puede calcularlo.\n\n```csharp\nclass Rectangulo\n{\n    public int Ancho { get; set; }\n    public int Alto { get; set; }\n    public int Area => Ancho * Alto;\n}\n```\n\n`Area` se recalcula cada vez que se lee. Es útil para datos derivados que no quieres mantener sincronizados a mano.\n\n## Objetos y clases no son lo mismo\n\nLa clase es el plano; el objeto es la casa construida. Puedes crear tantos objetos como necesites, y cada uno ocupa su propia memoria. Una lista de objetos es una combinación muy habitual: `List<Libro>` guarda un catálogo entero. También puedes sobrescribir `ToString()` para que un objeto se muestre con un texto legible al imprimirlo.\n\n## Errores típicos\n\n- Olvidar `new` al crear el objeto.\n- Declarar el constructor con tipo de retorno: los constructores no lo llevan.\n- Usar propiedades sin `{ get; set; }` y esperar que se comporten como variables.\n- Hacer públicas todas las propiedades y perder el control del estado.\n- Confundir el nombre de la clase con el de una variable.",
+          "exercises": [
+            {
+              "slug": "clase-libro",
+              "title": "La clase Libro",
+              "kind": "stdout",
+              "prompt_md": "Escribe un programa con una clase `Libro` que tenga las propiedades `Titulo`, `Autor` y `Precio`, un constructor con esos tres datos y un método `Describir`.\n\nEl programa lee título, autor y precio (en ese orden) y muestra el resultado de `Describir`, con el formato `Titulo - Autor - Precio`.",
+              "starter_code": "// Declara la clase Libro al final del archivo\n",
+              "solution_code": "using System;\n\nstring titulo = Console.ReadLine() ?? \"\";\nstring autor = Console.ReadLine() ?? \"\";\nint precio = Convert.ToInt32(Console.ReadLine());\n\nLibro libro = new Libro(titulo, autor, precio);\nConsole.WriteLine(libro.Describir());\n\nclass Libro\n{\n    public string Titulo { get; set; }\n    public string Autor { get; set; }\n    public int Precio { get; set; }\n\n    public Libro(string titulo, string autor, int precio)\n    {\n        Titulo = titulo;\n        Autor = autor;\n        Precio = precio;\n    }\n\n    public string Describir()\n    {\n        return $\"{Titulo} - {Autor} - {Precio}\";\n    }\n}\n",
+              "tests": [
+                {
+                  "name": "El principito",
+                  "stdin": "El principito\nSaint-Exupery\n15\n",
+                  "expected_stdout": "El principito - Saint-Exupery - 15"
+                },
+                {
+                  "name": "Rayuela",
+                  "stdin": "Rayuela\nCortazar\n20\n",
+                  "expected_stdout": "Rayuela - Cortazar - 20"
+                }
+              ],
+              "hints": [
+                "El constructor asigna los tres parámetros a las propiedades.",
+                "Describir devuelve una cadena con la interpolación de las tres propiedades."
+              ]
+            },
+            {
+              "slug": "clase-cuenta",
+              "title": "La clase Cuenta",
+              "kind": "stdout",
+              "prompt_md": "Escribe un programa con una clase `Cuenta` que guarde un `Saldo` y tenga un método `Depositar(int monto)`.\n\nEl programa lee el saldo inicial y un depósito, y muestra `Saldo: N` después de depositar.",
+              "starter_code": "// El saldo solo cambia a traves de Depositar\n",
+              "solution_code": "using System;\n\nint inicial = Convert.ToInt32(Console.ReadLine());\nint deposito = Convert.ToInt32(Console.ReadLine());\n\nCuenta cuenta = new Cuenta(inicial);\ncuenta.Depositar(deposito);\nConsole.WriteLine(\"Saldo: \" + cuenta.Saldo);\n\nclass Cuenta\n{\n    public int Saldo { get; private set; }\n\n    public Cuenta(int saldoInicial)\n    {\n        Saldo = saldoInicial;\n    }\n\n    public void Depositar(int monto)\n    {\n        Saldo = Saldo + monto;\n    }\n}\n",
+              "tests": [
+                {
+                  "name": "Cien y cincuenta",
+                  "stdin": "100\n50\n",
+                  "expected_stdout": "Saldo: 150"
+                },
+                {
+                  "name": "Cero y doscientos",
+                  "stdin": "0\n200\n",
+                  "expected_stdout": "Saldo: 200"
+                }
+              ],
+              "hints": [
+                "El constructor recibe el saldo inicial.",
+                "Depositar suma el monto al saldo actual."
+              ]
+            }
+          ],
+          "quiz": [
+            {
+              "question": "¿Qué crea la expresión `new Libro(...)`?",
+              "options": [
+                "Una clase nueva",
+                "Un objeto (instancia) de la clase Libro",
+                "Un método nuevo",
+                "Una variable estática"
+              ],
+              "answer_index": 1,
+              "explanation": "new crea un objeto con su propio estado a partir del molde de la clase."
+            },
+            {
+              "question": "¿Cómo se llama el método que se ejecuta al crear un objeto?",
+              "options": [
+                "Destructor",
+                "Constructor",
+                "Inicializador",
+                "Main"
+              ],
+              "answer_index": 1,
+              "explanation": "El constructor tiene el nombre de la clase y se ejecuta con new."
+            }
+          ]
+        },
+        {
+          "slug": "errores-y-archivos",
+          "title": "Errores y archivos",
+          "summary": "Controla las excepciones y guarda datos en archivos de texto.",
+          "minutes": 16,
+          "objectives": [
+            "Capturar excepciones concretas con try y catch.",
+            "Validar una entrada con int.TryParse antes de usarla.",
+            "Escribir y leer archivos de texto con System.IO."
+          ],
+          "body_md": "## Cuando algo sale mal\n\nUn programa real recibe datos que no esperaba. C# señala esos fallos con excepciones: si nadie las captura, el programa termina y muestra el error. `try` y `catch` permiten reaccionar:\n\n```csharp\ntry\n{\n    int numero = Convert.ToInt32(Console.ReadLine());\n    Console.WriteLine(\"Numero: \" + numero);\n}\ncatch (FormatException)\n{\n    Console.WriteLine(\"Eso no es un numero\");\n}\n```\n\nEl bloque `catch` solo se ejecuta si el `try` lanza esa excepción. `finally` se ejecuta siempre, haya error o no, y sirve para liberar recursos.\n\n## Validar antes de convertir\n\nConvertir texto a número con `int.TryParse` evita la excepción y deja el código más claro:\n\n```csharp\nstring texto = Console.ReadLine() ?? \"\";\nif (int.TryParse(texto, out int numero))\n{\n    Console.WriteLine(\"Numero: \" + numero);\n}\nelse\n{\n    Console.WriteLine(\"Numero invalido\");\n}\n```\n\n`TryParse` devuelve `true` si pudo convertir y guarda el resultado en la variable de salida. Para dividir, comprueba el divisor antes de operar.\n\n## Leer y escribir archivos\n\n`System.IO` trae las clases para trabajar con archivos:\n\n```csharp\nusing System.IO;\n\nFile.WriteAllText(\"notas.txt\", \"Primera linea\");\nstring contenido = File.ReadAllText(\"notas.txt\");\nConsole.WriteLine(contenido);\n```\n\n`WriteAllLines` y `ReadAllLines` trabajan con arrays de líneas. `File.Exists` comprueba si el archivo está antes de leerlo:\n\n```csharp\nif (File.Exists(\"notas.txt\"))\n{\n    Console.WriteLine(File.ReadAllText(\"notas.txt\"));\n}\n```\n\nLas rutas relativas se resuelven desde la carpeta donde se ejecuta el programa. Un archivo escrito en una ejecución sigue ahí en la siguiente, así que conviene decidir qué hacer con el contenido anterior. Para datos simples, un archivo de texto con una línea por registro es suficiente.\n\n## Elegir el catch correcto\n\nCaptura la excepción más específica que sepas manejar: `FormatException`, `DivideByZeroException`, `FileNotFoundException`. Un `catch (Exception)` atrapa todo y esconde errores que deberías ver durante el desarrollo. Recuerda que `try` no sustituye a la validación: si puedes comprobar algo con un `if`, hazlo antes de operar.\n\n## Añadir sin borrar\n\n`WriteAllText` reemplaza el contenido del archivo. Para añadir al final existe `AppendAllText`:\n\n```csharp\nFile.AppendAllText(\"notas.txt\", \"Segunda linea\\n\");\n```\n\nY `File.ReadAllLines` devuelve un array con una entrada por línea, cómodo para recorrer con `foreach`. Si el archivo no existe, `AppendAllText` lo crea.\n\n## Un archivo por registro\n\nGuardar una línea por dato es suficiente para muchos programas pequeños. Al leer, separa por comas o por el separador que hayas elegido y convierte cada campo con `int.TryParse`. Si el formato se complica, conviene pasar a JSON, pero para practicar el texto plano es un buen comienzo.\n\n## Errores típicos\n\n- Capturar `Exception` para todo y ocultar el problema real.\n- Dejar el `catch` vacío: el programa sigue como si nada hubiera pasado.\n- Leer un archivo que no existe sin comprobarlo: `FileNotFoundException`.\n- Escribir en una ruta sin permisos o con carpetas que no existen.\n- Comparar texto con `<` o `>`: las cadenas no admiten esos operadores.",
+          "exercises": [
+            {
+              "slug": "numero-invalido",
+              "title": "Entrada inválida",
+              "kind": "stdout",
+              "prompt_md": "Escribe un programa que lea un texto. Si es un número entero, muestra `Numero: N`; si no lo es, muestra `Numero invalido`.\n\nUsa `int.TryParse` en lugar de `Convert.ToInt32`.",
+              "starter_code": "// int.TryParse devuelve true si pudo convertir\n",
+              "solution_code": "using System;\n\nstring texto = Console.ReadLine() ?? \"\";\nif (int.TryParse(texto, out int numero))\n{\n    Console.WriteLine(\"Numero: \" + numero);\n}\nelse\n{\n    Console.WriteLine(\"Numero invalido\");\n}\n",
+              "tests": [
+                {
+                  "name": "Cuarenta y dos",
+                  "stdin": "42\n",
+                  "expected_stdout": "Numero: 42"
+                },
+                {
+                  "name": "Texto",
+                  "stdin": "abc\n",
+                  "expected_stdout": "Numero invalido"
+                }
+              ],
+              "hints": [
+                "TryParse recibe el texto y una variable de salida con out.",
+                "Si devuelve true, la variable ya contiene el número."
+              ]
+            },
+            {
+              "slug": "division-segura",
+              "title": "División segura",
+              "kind": "stdout",
+              "prompt_md": "Escribe un programa que lea dos enteros y muestre `Resultado: N` con su división entera. Si el segundo es cero, muestra `No se puede dividir entre cero`.\n\nResuelve el caso con `try` y `catch (DivideByZeroException)`.",
+              "starter_code": "// Envuelve la division en try/catch\n",
+              "solution_code": "using System;\n\nint a = Convert.ToInt32(Console.ReadLine());\nint b = Convert.ToInt32(Console.ReadLine());\ntry\n{\n    Console.WriteLine(\"Resultado: \" + (a / b));\n}\ncatch (DivideByZeroException)\n{\n    Console.WriteLine(\"No se puede dividir entre cero\");\n}\n",
+              "tests": [
+                {
+                  "name": "Diez entre dos",
+                  "stdin": "10\n2\n",
+                  "expected_stdout": "Resultado: 5"
+                },
+                {
+                  "name": "Divisor cero",
+                  "stdin": "10\n0\n",
+                  "expected_stdout": "No se puede dividir entre cero"
+                }
+              ],
+              "hints": [
+                "La división entera 10 / 2 es 5.",
+                "El catch atrapa solo la excepción que declares."
+              ]
+            }
+          ],
+          "quiz": [
+            {
+              "question": "¿Qué bloque se ejecuta siempre, haya error o no?",
+              "options": [
+                "try",
+                "catch",
+                "finally",
+                "throw"
+              ],
+              "answer_index": 2,
+              "explanation": "finally se ejecuta en ambos casos y se usa para liberar recursos."
+            },
+            {
+              "question": "¿Qué método convierte texto a número devolviendo true o false?",
+              "options": [
+                "Convert.ToInt32",
+                "int.Parse",
+                "int.TryParse",
+                "ToString"
+              ],
+              "answer_index": 2,
+              "explanation": "TryParse no lanza excepción: devuelve true si la conversión funcionó."
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "labs": [
+    {
+      "slug": "cajero",
+      "title": "Cajero automático de consola",
+      "summary": "Construye por etapas un cajero que muestra un menú, consulta el saldo, valida retiros y repite las operaciones hasta que el usuario sale.",
+      "minutes": 55,
+      "steps": [
+        {
+          "title": "Mostrar el menú",
+          "instructions_md": "Empieza por la pantalla que verá el usuario. El programa debe imprimir estas tres líneas, luego `Opcion:`, leer la opción y mostrar `Elegiste: ` seguido de lo que se escribió.\n\n```\n1. Consultar saldo\n2. Retirar\n3. Salir\nOpcion:\n```\n\nUsa `Console.WriteLine` para cada línea y `Console.ReadLine()` para la opción.",
+          "kind": "stdout",
+          "starter_code": "// Imprime el menu y lee la opcion\n",
+          "solution_code": "using System;\n\nConsole.WriteLine(\"1. Consultar saldo\");\nConsole.WriteLine(\"2. Retirar\");\nConsole.WriteLine(\"3. Salir\");\nConsole.WriteLine(\"Opcion:\");\nstring opcion = Console.ReadLine() ?? \"\";\nConsole.WriteLine(\"Elegiste: \" + opcion);\n",
+          "tests": [
+            {
+              "name": "Opcion uno",
+              "stdin": "1\n",
+              "expected_stdout": "1. Consultar saldo\n2. Retirar\n3. Salir\nOpcion:\nElegiste: 1"
+            }
+          ]
+        },
+        {
+          "title": "Consultar el saldo",
+          "instructions_md": "El cajero arranca con 1000 de saldo. Muestra `Saldo: 1000` y nada más.\n\nDeclara una variable entera para el saldo y muéstrala con `Console.WriteLine`. Este es el programa base que irá creciendo en los siguientes pasos.",
+          "kind": "stdout",
+          "starter_code": "// Declara int saldo = 1000 y muestralo\n",
+          "solution_code": "using System;\n\nint saldo = 1000;\nConsole.WriteLine(\"Saldo: \" + saldo);\n",
+          "tests": [
+            {
+              "name": "Saldo inicial",
+              "stdin": "",
+              "expected_stdout": "Saldo: 1000"
+            }
+          ]
+        },
+        {
+          "title": "Retirar con validación",
+          "instructions_md": "Ahora un retiro. Muestra `Monto:`, lee un entero y comprueba si hay saldo suficiente.\n\nSi el monto es menor o igual al saldo, resta y muestra `Retiro exitoso. Saldo: N`; si no, muestra `Fondos insuficientes`.\n\nEl saldo inicial sigue siendo 1000.",
+          "kind": "stdout",
+          "starter_code": "// Valida el monto antes de restar\n",
+          "solution_code": "using System;\n\nint saldo = 1000;\nConsole.WriteLine(\"Monto:\");\nint monto = Convert.ToInt32(Console.ReadLine());\nif (monto <= saldo)\n{\n    saldo = saldo - monto;\n    Console.WriteLine(\"Retiro exitoso. Saldo: \" + saldo);\n}\nelse\n{\n    Console.WriteLine(\"Fondos insuficientes\");\n}\n",
+          "tests": [
+            {
+              "name": "Retiro de 300",
+              "stdin": "300\n",
+              "expected_stdout": "Monto:\nRetiro exitoso. Saldo: 700"
+            },
+            {
+              "name": "Retiro de 1500",
+              "stdin": "1500\n",
+              "expected_stdout": "Monto:\nFondos insuficientes"
+            }
+          ]
+        },
+        {
+          "title": "Menú completo con switch",
+          "instructions_md": "Une las piezas: muestra el menú, lee la opción y decide con `switch`.\n\n- `1`: muestra `Saldo: 1000`.\n- `2`: muestra `Monto:`, lee el monto, valida y responde como en el paso anterior.\n- `3`: muestra `Gracias por su visita`.\n- Cualquier otro valor: muestra `Opcion no valida`.\n\nRecuerda el `break` en cada caso.",
+          "kind": "stdout",
+          "starter_code": "// switch (opcion) con un case por operacion\n",
+          "solution_code": "using System;\n\nint saldo = 1000;\nConsole.WriteLine(\"1. Consultar saldo\");\nConsole.WriteLine(\"2. Retirar\");\nConsole.WriteLine(\"3. Salir\");\nConsole.WriteLine(\"Opcion:\");\nstring opcion = Console.ReadLine() ?? \"\";\n\nswitch (opcion)\n{\n    case \"1\":\n        Console.WriteLine(\"Saldo: \" + saldo);\n        break;\n    case \"2\":\n    {\n        Console.WriteLine(\"Monto:\");\n        int monto = Convert.ToInt32(Console.ReadLine());\n        if (monto <= saldo)\n        {\n            saldo = saldo - monto;\n            Console.WriteLine(\"Retiro exitoso. Saldo: \" + saldo);\n        }\n        else\n        {\n            Console.WriteLine(\"Fondos insuficientes\");\n        }\n        break;\n    }\n    case \"3\":\n        Console.WriteLine(\"Gracias por su visita\");\n        break;\n    default:\n        Console.WriteLine(\"Opcion no valida\");\n        break;\n}\n",
+          "tests": [
+            {
+              "name": "Consultar",
+              "stdin": "1\n",
+              "expected_stdout": "1. Consultar saldo\n2. Retirar\n3. Salir\nOpcion:\nSaldo: 1000"
+            },
+            {
+              "name": "Retirar 200",
+              "stdin": "2\n200\n",
+              "expected_stdout": "1. Consultar saldo\n2. Retirar\n3. Salir\nOpcion:\nMonto:\nRetiro exitoso. Saldo: 800"
+            },
+            {
+              "name": "Salir",
+              "stdin": "3\n",
+              "expected_stdout": "1. Consultar saldo\n2. Retirar\n3. Salir\nOpcion:\nGracias por su visita"
+            }
+          ]
+        },
+        {
+          "title": "Repetir hasta salir",
+          "instructions_md": "Un cajero no se cierra después de una operación. Envuelve el menú en un bucle `while` que se repita hasta elegir `3`.\n\nCon la entrada `1`, `2`, `300`, `3` el programa consulta el saldo, retira y termina. Usa una variable `bool activo` o un `while (true)` con `break`.",
+          "kind": "stdout",
+          "starter_code": "// while (activo) { menu; switch; }\n",
+          "solution_code": "using System;\n\nint saldo = 1000;\nbool activo = true;\nwhile (activo)\n{\n    Console.WriteLine(\"1. Consultar saldo\");\n    Console.WriteLine(\"2. Retirar\");\n    Console.WriteLine(\"3. Salir\");\n    Console.WriteLine(\"Opcion:\");\n    string opcion = Console.ReadLine() ?? \"3\";\n\n    if (opcion == \"1\")\n    {\n        Console.WriteLine(\"Saldo: \" + saldo);\n    }\n    else if (opcion == \"2\")\n    {\n        Console.WriteLine(\"Monto:\");\n        int monto = Convert.ToInt32(Console.ReadLine());\n        if (monto <= saldo)\n        {\n            saldo = saldo - monto;\n            Console.WriteLine(\"Retiro exitoso. Saldo: \" + saldo);\n        }\n        else\n        {\n            Console.WriteLine(\"Fondos insuficientes\");\n        }\n    }\n    else\n    {\n        Console.WriteLine(\"Gracias por su visita\");\n        activo = false;\n    }\n}\n",
+          "tests": [
+            {
+              "name": "Consultar, retirar y salir",
+              "stdin": "1\n2\n300\n3\n",
+              "expected_stdout": "1. Consultar saldo\n2. Retirar\n3. Salir\nOpcion:\nSaldo: 1000\n1. Consultar saldo\n2. Retirar\n3. Salir\nOpcion:\nMonto:\nRetiro exitoso. Saldo: 700\n1. Consultar saldo\n2. Retirar\n3. Salir\nOpcion:\nGracias por su visita"
+            },
+            {
+              "name": "Retiro rechazado y salir",
+              "stdin": "2\n2000\n3\n",
+              "expected_stdout": "1. Consultar saldo\n2. Retirar\n3. Salir\nOpcion:\nMonto:\nFondos insuficientes\n1. Consultar saldo\n2. Retirar\n3. Salir\nOpcion:\nGracias por su visita"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
