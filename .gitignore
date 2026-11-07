@@ -1,0 +1,17 @@
+# Build del .exe portable (PyInstaller)
+dist/
+build/
+*.spec.bak
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Modelos: pesan gigabytes, no van al repo (solo models/README.md)
+*.gguf
+
+# Sistema
+.DS_Store
+Thumbs.db
