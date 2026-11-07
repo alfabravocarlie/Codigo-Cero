@@ -1,0 +1,26 @@
+Código Cero — versión portable para Windows
+============================================
+
+1. Descomprime este ZIP en una carpeta, por ejemplo C:\Codigo-Cero
+2. Haz doble clic en Codigo-Cero.exe
+3. Se abre el navegador en http://127.0.0.1:8765
+4. Para cerrar, cierra la ventana negra de Codigo-Cero.
+
+No necesitas instalar Python ni Flask: ya van dentro del .exe.
+
+PROFESOR DE IA (OPCIONAL)
+-------------------------
+Sin profesor, las lecciones y ejercicios funcionan igual.
+Para tener profesor:
+1. Instala Ollama desde https://ollama.com
+2. Copia tu modelo .gguf en la carpeta models/ que está junto al .exe
+   (recomendado: Qwen2.5-Coder-3B en Q4_K_M, unos 2 GB)
+   O usa un modelo que ya tengas en Ollama.
+3. En la app: Ajustes -> Profesor -> Escanear carpeta -> Importar
+   -> Usar como profesor.
+
+TUS DATOS
+---------
+Tu progreso se guarda en data/app.db, junto al .exe.
+Tus modelos van en models/, junto al .exe.
+No borres esas carpetas si no quieres perder tu progreso.

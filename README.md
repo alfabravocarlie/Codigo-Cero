@@ -69,6 +69,27 @@ python run.py
 Se abrirá en `http://127.0.0.1:8765`. Si el puerto está ocupado, la app busca el
 siguiente libre.
 
+## Versión portable Windows (.exe)
+
+Para clientes que no quieren instalar Python: descarga
+**`Codigo-Cero-Windows.zip`** desde la pestaña Releases (o desde Actions,
+si aún no hay release) y descomprímelo en una carpeta. Haz doble clic en
+**`Codigo-Cero.exe`** y se abre el navegador. Para cerrar, cierra la
+ventana negra de Código Cero.
+
+Qué lleva dentro: Python, Flask y `requests`, todo empaquetado. No hay
+que instalar nada ni correr `pip`.
+
+Qué **no** lleva: Ollama ni ningún modelo. Sin profesor, lecciones y
+ejercicios funcionan igual. Para tener profesor, instala Ollama aparte
+y copia tu `.gguf` en la carpeta `models/` que queda junto al `.exe`
+(ver "Añadir un profesor" abajo), o elige un modelo que ya tengas en Ollama.
+
+Tu progreso se guarda en `data/app.db`, junto al `.exe`. No borres
+`data/` ni `models/` si no quieres perderlo. El `.exe` se genera en
+GitHub Actions (`.github/workflows/build-windows-exe.yml`, Python 3.12)
+y se verifica con un smoke test que pide la portada por HTTP.
+
 ## Añadir un profesor
 
 La app no incluye ningún modelo; el profesor lo eliges tú.
